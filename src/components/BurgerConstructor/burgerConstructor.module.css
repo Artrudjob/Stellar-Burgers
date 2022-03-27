@@ -1,0 +1,42 @@
+.burgersMenu {
+    width: 600px;
+}
+
+.burgersMenu__button {
+    width: 33.3%;
+    border: none;
+    border-bottom: 1px solid grey;
+    background: none;
+    color: white;
+    cursor: pointer;
+}
+
+.burgersMenu__gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 272px));
+    row-gap: 32px;
+    justify-content: center;
+}
+
+.burgersMenu__flexBox {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+}
+
+.burgersMenu__image {
+    margin: 0 auto 0 auto;
+    max-width: 240px;
+    max-height: 120px;
+    object-fit: contain;
+}
+
+.burgersMenu__miniFlexBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.burgersMenu__text_position {
+    text-align: center;
+}
