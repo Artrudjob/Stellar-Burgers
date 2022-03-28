@@ -1,8 +1,8 @@
 import React from 'react';
-import burgersStyle from './burgerConstructor.module.css';
+import burgersStyle from './burgerIngredients.module.css';
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
-function BurgerConstructor(props) {
+function BurgerIngredients(props) {
     const bunsList = props.data.filter(dataItem => dataItem.type === "bun").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox}>
@@ -70,5 +70,5 @@ function BurgerConstructor(props) {
     )
 }
 
-export default BurgerConstructor;
+export default BurgerIngredients;
 
