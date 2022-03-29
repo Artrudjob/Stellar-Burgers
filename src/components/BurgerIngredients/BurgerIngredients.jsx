@@ -1,8 +1,10 @@
 import React from 'react';
 import burgersStyle from './burgerIngredients.module.css';
-import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 
 function BurgerIngredients(props) {
+    const [current, setCurrent] = React.useState('one')
+
     const bunsList = props.data.filter(dataItem => dataItem.type === "bun").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox}>
@@ -48,17 +50,22 @@ function BurgerIngredients(props) {
     return (
             <section className={burgersStyle.burgersMenu}>
                 <h1 className={'text text_type_main-large mt-10'}>{props.title}</h1>
-                <button
-                    className={`${burgersStyle.burgersMenu__button} mt-5 pt-4 pb-4 text_type_main-small`}>{props.buns}</button>
-                <button
-                    className={`${burgersStyle.burgersMenu__button} mt-5 pt-4 pb-4 text_type_main-small`}>{props.sauces}</button>
-                <button
-                    className={`${burgersStyle.burgersMenu__button} mt-5 pt-4 pb-4 text_type_main-small`}>{props.toppings}</button>
+                <div style={{ display: 'flex', marginTop: '20px' }}>
+                    <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+                        {props.buns}
+                    </Tab>
+                    <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+                        {props.sauces}
+                    </Tab>
+                    <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+                        {props.toppings}
+                    </Tab>
+                </div>
                 <h2 className={'text text_type_main-medium mt-10'}>{props.buns}</h2>
                 <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
                     {bunsList}
                 </div>
-                <h2 className={'text text_type_main-medium mt-10'}>{props.sauces}</h2>
+                <h2 className={'text text_type_main-medium mt-15'}>{props.sauces}</h2>
                 <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
                     {saucesList}
                 </div>

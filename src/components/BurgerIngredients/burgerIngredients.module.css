@@ -19,6 +19,7 @@
 }
 
 .burgersMenu__flexBox {
+    position: relative;
     flex-direction: column;
     display: flex;
     justify-content: center;
