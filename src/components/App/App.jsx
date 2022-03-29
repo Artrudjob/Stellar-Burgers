@@ -9,9 +9,9 @@ function App() {
   return (
     <div className={appStyle.App}>
       <AppHeader />
-      <main>
+      <main className={appStyle.app__main}>
           <BurgerIngredients data={data} title='Соберите бургер' buns='Булки' sauces="Соусы" toppings="Начинки"/>
-          <BurgerConstructor />
+          <BurgerConstructor data={data}/>
       </main>
     </div>
   );
