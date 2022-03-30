@@ -8,7 +8,7 @@ function BurgerIngredients(props) {
     const bunsList = props.data.filter(dataItem => dataItem.type === "bun").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox}>
-                <Counter count={0} size={"default"} />
+                <Counter count={1} size={"default"} />
                 <img className={burgersStyle.burgersMenu__image} src={item.image} alt={item.name} />
                 <div className={`${burgersStyle.burgersMenu__miniFlexBox} mt-2`}>
                     <p className={'text text_type_digits-default pr-2'}>{item.price}</p>
@@ -61,17 +61,19 @@ function BurgerIngredients(props) {
                         {props.toppings}
                     </Tab>
                 </div>
-                <h2 className={'text text_type_main-medium mt-10'}>{props.buns}</h2>
-                <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
+                <div className={burgersStyle.burgersMenu__scrollbar}>
+                    <h2 className={'text text_type_main-medium mt-10'}>{props.buns}</h2>
+                    <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
                     {bunsList}
-                </div>
-                <h2 className={'text text_type_main-medium mt-15'}>{props.sauces}</h2>
-                <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
+                    </div>
+                    <h2 className={'text text_type_main-medium mt-15'}>{props.sauces}</h2>
+                    <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
                     {saucesList}
-                </div>
-                <h2 className={'text text_type_main-medium mt-10'}>{props.toppings}</h2>
-                <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
+                    </div>
+                    <h2 className={'text text_type_main-medium mt-10'}>{props.toppings}</h2>
+                    <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
                     {toppingsList}
+                    </div>
                 </div>
             </section>
     )
