@@ -2,7 +2,6 @@ import React from 'react';
 import constructorStyle from './burgerConstructor.module.css'
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
-
 function BurgerConstructor(props) {
     const constructorElements = props.data.map(element => {
         if (element.name === 'Краторная булка N-200i') {
@@ -47,7 +46,7 @@ function BurgerConstructor(props) {
 
     return (
         <section className={`${constructorStyle.constructor} mt-25`}>
-            <div className={constructorStyle.constructor__boxList}>
+            <div className={`${constructorStyle.constructor__boxList} ${constructorStyle.constructor__boxList_scrollbar}`}>
                 {constructorElements}
             </div>
             <div className={`${constructorStyle.constructor__flexContainer} mt-10`}>
