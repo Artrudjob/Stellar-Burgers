@@ -49,11 +49,13 @@ function BurgerConstructor(props) {
             <div className={`${constructorStyle.constructor__boxList} ${constructorStyle.constructor__boxList_scrollbar}`}>
                 {constructorElements}
             </div>
-            <div className={`${constructorStyle.constructor__flexContainer} mt-10`}>
-                <p className="text text_type_digits-medium">2510</p>
-                <CurrencyIcon type="primary" />
+            <div className={`${constructorStyle.constructor__info} mt-10`}>
+                <div>
+                    <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>2510</p>
+                    <CurrencyIcon type="primary" />
+                </div>
                 <Button type="primary" size="medium">
-                    Нажми на меня
+                    Оформить заказ
                 </Button>
             </div>
         </section>

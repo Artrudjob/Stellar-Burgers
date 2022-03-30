@@ -37,6 +37,18 @@
     align-items: center;
 }
 
+.constructor__info {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 48px;
+}
+
+.constructor__infoText {
+    display: inline;
+    margin-right: 9px;
+}
 
 .constructor_position {
     align-self: flex-end;
