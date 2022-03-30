@@ -61,7 +61,7 @@ function BurgerIngredients(props) {
                         {props.toppings}
                     </Tab>
                 </div>
-                <div className={burgersStyle.burgersMenu__scrollbar}>
+                <div className={burgersStyle.burgersMenu_scrollbar}>
                     <h2 className={'text text_type_main-medium mt-10'}>{props.buns}</h2>
                     <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
                     {bunsList}
