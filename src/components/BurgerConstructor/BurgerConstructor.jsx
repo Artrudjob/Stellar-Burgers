@@ -7,7 +7,7 @@ function BurgerConstructor(props) {
     const constructorElements = props.data.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
-                <div className={constructorStyle.constructor_position}>
+                <div className={constructorStyle.constructor_position} key={element._id}>
                     <ConstructorElement
                         key={element._id}
                         type="top"
@@ -23,6 +23,7 @@ function BurgerConstructor(props) {
                 <div className={constructorStyle.constructor__flexContainer} key={element._id}>
                     <DragIcon type="primary" />
                     <ConstructorElement
+                        key={element._id}
                         text={element.name}
                         price={element.price}
                         thumbnail={element.image}
@@ -31,7 +32,7 @@ function BurgerConstructor(props) {
             )
         } else if (element.name === 'Флюоресцентная булка R2-D3') {
             return (
-                <div className={constructorStyle.constructor_position}>
+                <div className={constructorStyle.constructor_position} key={element._id}>
                     <ConstructorElement
                         key={element._id}
                         type="bottom"
@@ -66,8 +67,20 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object)
-
+    data: PropTypes.arrayOf(PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.string,
+        type: PropTypes.string,
+        proteins: PropTypes.number,
+        fat: PropTypes.number,
+        carbohydrates: PropTypes.number,
+        calories: PropTypes.number,
+        price: PropTypes.number,
+        image: PropTypes.string,
+        image_mobile: PropTypes.string,
+        image_large: PropTypes.string,
+        __v: PropTypes.number
+    }))
 }
 
 export default BurgerConstructor;
