@@ -6,7 +6,7 @@ function AppHeader() {
     return (
         <section className={appHeaderStyle.header}>
             <header className={appHeaderStyle.header__container}>
-                <nav className={appHeaderStyle.header__containerlinks}>
+                <nav className={appHeaderStyle.header__containerLinks}>
                     <a className={`${appHeaderStyle.header__link} pl-4 pr-4 pb-4 pt-4`} href={'www.#.ru'}>
                         <BurgerIcon type={"primary"} />
                         <p className={`text text_type_main-default p-2 ${appHeaderStyle.header__text}`}>Конструктор</p>
@@ -19,7 +19,7 @@ function AppHeader() {
                 <div>
                     <Logo />
                 </div>
-                <nav className={appHeaderStyle.header__containerlinks}>
+                <nav className={appHeaderStyle.header__containerLinks}>
                     <a className={`${appHeaderStyle.header__link}`} href={'www.#.ru'}>
                         <ProfileIcon type={"secondary"} />
                         <p className={`text text_type_main-default text_color_inactive p-2 ${appHeaderStyle.header__text}`}>Личный кабинет</p>

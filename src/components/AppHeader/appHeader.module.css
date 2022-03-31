@@ -14,7 +14,7 @@
     align-items: center;
 }
 
-.header__containerlinks {
+.header__containerLinks {
     width: 383px;
     display: flex;
     justify-content: flex-end;
