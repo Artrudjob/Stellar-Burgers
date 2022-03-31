@@ -12,8 +12,8 @@ function AppHeader() {
                         <p className={`text text_type_main-default p-2 ${appHeaderStyle.header__text}`}>Конструктор</p>
                     </a>
                     <a className={`${appHeaderStyle.header__link} pl-4`} href={'www.#.ru'}>
-                        <ListIcon type="primary" />
-                        <p className={`text text_type_main-default p-2 ${appHeaderStyle.header__text}`}>Лента заказов</p>
+                        <ListIcon type="secondary" />
+                        <p className={`text text_type_main-default text_color_inactive p-2 ${appHeaderStyle.header__text}`}>Лента заказов</p>
                     </a>
                 </nav>
                 <div>
@@ -21,8 +21,8 @@ function AppHeader() {
                 </div>
                 <nav className={appHeaderStyle.header__containerlinks}>
                     <a className={`${appHeaderStyle.header__link}`} href={'www.#.ru'}>
-                        <ProfileIcon type={"primary"} />
-                        <p className={`text text_type_main-default  p-2 ${appHeaderStyle.header__text}`}>Личный кабинет</p>
+                        <ProfileIcon type={"secondary"} />
+                        <p className={`text text_type_main-default text_color_inactive p-2 ${appHeaderStyle.header__text}`}>Личный кабинет</p>
                     </a>
                 </nav>
             </header>
