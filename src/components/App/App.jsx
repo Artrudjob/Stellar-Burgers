@@ -10,8 +10,8 @@ function App() {
     <div className={appStyle.App}>
       <AppHeader />
       <main className={appStyle.app__main}>
-          <BurgerIngredients data={data} title='Соберите бургер' buns='Булки' sauces="Соусы" toppings="Начинки"/>
-          <BurgerConstructor data={data}/>
+          <BurgerIngredients data={data} />
+          <BurgerConstructor data={data} />
       </main>
     </div>
   );

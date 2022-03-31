@@ -49,28 +49,28 @@ function BurgerIngredients(props) {
 
     return (
             <section className={burgersStyle.burgersMenu}>
-                <h1 className={'text text_type_main-large mt-10'}>{props.title}</h1>
+                <h1 className={'text text_type_main-large mt-10'}>Соберите бургер</h1>
                 <div style={{ display: 'flex', marginTop: '20px' }}>
                     <Tab value="one" active={current === 'one'} onClick={setCurrent}>
-                        {props.buns}
+                        Булки
                     </Tab>
                     <Tab value="two" active={current === 'two'} onClick={setCurrent}>
-                        {props.sauces}
+                        Соусы
                     </Tab>
                     <Tab value="three" active={current === 'three'} onClick={setCurrent}>
-                        {props.toppings}
+                        Начинки
                     </Tab>
                 </div>
                 <div className={burgersStyle.burgersMenu_scrollbar}>
-                    <h2 className={'text text_type_main-medium mt-10'}>{props.buns}</h2>
+                    <h2 className={'text text_type_main-medium mt-10'}>Булки</h2>
                     <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
                     {bunsList}
                     </div>
-                    <h2 className={'text text_type_main-medium mt-15'}>{props.sauces}</h2>
+                    <h2 className={'text text_type_main-medium mt-15'}>Соусы</h2>
                     <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
                     {saucesList}
                     </div>
-                    <h2 className={'text text_type_main-medium mt-10'}>{props.toppings}</h2>
+                    <h2 className={'text text_type_main-medium mt-10'}>Начинки</h2>
                     <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
                     {toppingsList}
                     </div>
