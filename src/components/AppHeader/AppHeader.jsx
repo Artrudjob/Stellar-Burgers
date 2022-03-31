@@ -6,24 +6,24 @@ function AppHeader() {
     return (
         <section className={appHeaderStyle.header}>
             <header className={appHeaderStyle.header__container}>
-                <nav className={appHeaderStyle.header__containerButton }>
-                    <button className={`${appHeaderStyle.header__button} pl-4 pr-4 pb-4 pt-4`} type={"button"}>
+                <nav className={appHeaderStyle.header__containerlinks}>
+                    <a className={`${appHeaderStyle.header__link} pl-4 pr-4 pb-4 pt-4`}>
                         <BurgerIcon type={"primary"} />
                         <p className={`text text_type_main-default p-2 ${appHeaderStyle.header__text}`}>Конструктор</p>
-                    </button>
-                    <button className={`${appHeaderStyle.header__button} pl-4`} type={"button"}>
+                    </a>
+                    <a className={`${appHeaderStyle.header__link} pl-4`}>
                         <ListIcon type="primary" />
                         <p className={`text text_type_main-default p-2 ${appHeaderStyle.header__text}`}>Лента заказов</p>
-                    </button>
+                    </a>
                 </nav>
                 <div>
                     <Logo />
                 </div>
-                <nav className={appHeaderStyle.header__containerButton}>
-                    <button className={`${appHeaderStyle.header__button}`} type={"button"}>
+                <nav className={appHeaderStyle.header__containerlinks}>
+                    <a className={`${appHeaderStyle.header__link}`}>
                         <ProfileIcon type={"primary"} />
                         <p className={`text text_type_main-default  p-2 ${appHeaderStyle.header__text}`}>Личный кабинет</p>
-                    </button>
+                    </a>
                 </nav>
             </header>
         </section>
