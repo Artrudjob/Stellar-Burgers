@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -41,6 +42,8 @@ function BurgerConstructor(props) {
                     />
                 </div>
             )
+        } else {
+            return null;
         }
     })
 
@@ -60,6 +63,11 @@ function BurgerConstructor(props) {
             </div>
         </section>
     )
+}
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object)
+
 }
 
 export default BurgerConstructor;
