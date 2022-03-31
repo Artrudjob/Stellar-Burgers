@@ -11,7 +11,7 @@ function BurgerConstructor(props) {
                         key={element._id}
                         type="top"
                         isLocked={true}
-                        text="Краторная булка N-200i (верх)"
+                        text={`${element.name} (верх)`}
                         price={element.price}
                         thumbnail={element.image}
                     />
@@ -35,7 +35,7 @@ function BurgerConstructor(props) {
                         key={element._id}
                         type="bottom"
                         isLocked={true}
-                        text="Флюоресцентная булка R2-D3 (низ)"
+                        text={`${element.name} (низ)`}
                         price={element.price}
                         thumbnail={element.image}
                     />
