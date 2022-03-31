@@ -4,7 +4,7 @@ import burgersStyle from './burgerIngredients.module.css';
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 
 function BurgerIngredients(props) {
-    const [current, setCurrent] = React.useState('one')
+    const [current, setCurrent] = React.useState('bun')
 
     const bunsList = props.data.filter(dataItem => dataItem.type === "bun").map(item => {
         return (
@@ -52,13 +52,13 @@ function BurgerIngredients(props) {
             <section className={burgersStyle.burgersMenu}>
                 <h1 className={'text text_type_main-large mt-10'}>Соберите бургер</h1>
                 <div style={{ display: 'flex', marginTop: '20px' }}>
-                    <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+                    <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
                         Булки
                     </Tab>
-                    <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+                    <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
                         Соусы
                     </Tab>
-                    <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+                    <Tab value="main" active={current === 'main'} onClick={setCurrent}>
                         Начинки
                     </Tab>
                 </div>
