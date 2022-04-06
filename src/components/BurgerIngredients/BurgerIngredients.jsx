@@ -6,7 +6,7 @@ import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-u
 function BurgerIngredients(props) {
     const [current, setCurrent] = React.useState('bun')
 
-    const bunsList = props.data.filter(dataItem => dataItem.type === "bun").map(item => {
+    const bunsList = props.arrData.filter(dataItem => dataItem.type === "bun").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox}>
                 <Counter count={1} size={"default"} />
@@ -20,7 +20,7 @@ function BurgerIngredients(props) {
         )
     });
 
-    const saucesList = props.data.filter(dataItem => dataItem.type === "sauce").map(item => {
+    const saucesList = props.arrData.filter(dataItem => dataItem.type === "sauce").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox}>
                 <Counter count={1} size={"default"} />
@@ -34,7 +34,7 @@ function BurgerIngredients(props) {
         )
     });
 
-    const toppingsList = props.data.filter(dataItem => dataItem.type === "main").map(item => {
+    const toppingsList = props.arrData.filter(dataItem => dataItem.type === "main").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox}>
                 <Counter count={1} size={"default"} />

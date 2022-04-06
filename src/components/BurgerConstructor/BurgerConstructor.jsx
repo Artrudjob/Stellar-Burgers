@@ -4,7 +4,7 @@ import constructorStyle from './burgerConstructor.module.css'
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function BurgerConstructor(props) {
-    const constructorElements = props.data.map(element => {
+    const constructorElements = props.arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
                 <div className={constructorStyle.constructor_position} key={element._id}>
