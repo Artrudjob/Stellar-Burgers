@@ -1,0 +1,56 @@
+.constructor {
+    width: 600px;
+}
+
+.constructor__boxList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-right: 7px;
+}
+
+.constructor__boxList_scrollbar {
+    width: 600px;
+    height: 656px;
+    overflow: auto;
+}
+
+.constructor__boxList_scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.constructor__boxList_scrollbar::-webkit-scrollbar-track {
+    background: #2F2F37;
+    margin-top: 96px;
+    margin-bottom: 96px;
+}
+
+.constructor__boxList_scrollbar::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    height: 292px;
+}
+
+.constructor__flexContainer {
+    display: flex;
+    column-gap: 8px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.constructor__info {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 48px;
+}
+
+.constructor__infoText {
+    display: inline;
+    margin-right: 9px;
+}
+
+.constructor_position {
+    align-self: flex-end;
+}
+
