@@ -14,19 +14,19 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
             <div className={`${ingredientsDetailsStyle.ingredientsDetails__box} mt-8 mb-15`}>
                 <div>
                     <p className={'text text_type_main-small text_color_inactive'}>Калории. ккал</p>
-                    <p className={'text text_type_digits-default text_color_inactive'}>{props.ingredient.calories}</p>
+                    <p className={'text text_type_digits-default text_color_inactive mt-2'}>{props.ingredient.calories}</p>
                 </div>
                 <div>
                     <p className={'text text_type_main-small text_color_inactive'}>Белки, г</p>
-                    <p className={'text text_type_digits-default text_color_inactive'}>{props.ingredient.proteins}</p>
+                    <p className={'text text_type_digits-default text_color_inactive mt-2'}>{props.ingredient.proteins}</p>
                 </div>
                 <div>
                     <p className={'text text_type_main-small text_color_inactive'}>Жиры, г</p>
-                    <p className={'text text_type_digits-default text_color_inactive'}>{props.ingredient.fat}</p>
+                    <p className={'text text_type_digits-default text_color_inactive mt-2'}>{props.ingredient.fat}</p>
                 </div>
                 <div>
                     <p className={'text text_type_main-small text_color_inactive'}>Углеводы, г</p>
-                    <p className={'text text_type_digits-default text_color_inactive'}>{props.ingredient.carbohydrates}</p>
+                    <p className={'text text_type_digits-default text_color_inactive mt-2'}>{props.ingredient.carbohydrates}</p>
                 </div>
             </div>
         </>
