@@ -37,10 +37,6 @@ function App() {
         setIsOrderDetailsOpened(true)
     }
 
-    function openIngredientsDetails() {
-        setIsIngredientDetailOpened(true)
-    }
-
     function closeModals() {
         setIsOrderDetailsOpened(false)
         setIsIngredientDetailOpened(false)
