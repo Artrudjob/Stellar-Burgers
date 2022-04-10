@@ -7,7 +7,7 @@ function BurgerConstructor(props) {
     const constructorElements = props.arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
-                <div className={constructorStyle.constructor_position} key={element._id}>
+                <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
                     <ConstructorElement
                         key={element._id}
                         type="top"
@@ -20,7 +20,7 @@ function BurgerConstructor(props) {
             )
         } else if ((element.name !== 'Краторная булка N-200i') && (element.name !== 'Флюоресцентная булка R2-D3')) {
             return (
-                <div className={constructorStyle.constructor__flexContainer} key={element._id}>
+                <div className={constructorStyle.constructor__flexContainer} key={element._id} onClick={() => props.onClick(element)}>
                     <DragIcon type="primary" />
                     <ConstructorElement
                         key={element._id}
@@ -32,7 +32,7 @@ function BurgerConstructor(props) {
             )
         } else if (element.name === 'Флюоресцентная булка R2-D3') {
             return (
-                <div className={constructorStyle.constructor_position} key={element._id}>
+                <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
                     <ConstructorElement
                         key={element._id}
                         type="bottom"
@@ -58,7 +58,7 @@ function BurgerConstructor(props) {
                     <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>2510</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="medium">
+                <Button type="primary" size="medium" onClick={props.openOrderDetails}>
                     Оформить заказ
                 </Button>
             </div>

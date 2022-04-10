@@ -1,10 +1,10 @@
 import React from "react";
-import styleModalOverlay from './ModalOverlay.module.css'
+import styleModalOverlay from './modalOverlay.module.css'
 
-function ModalOverlay(props) {
+function ModalOverlay({ onClick }) {
 
     return (
-        <div className={styleModalOverlay.modalOverlay} onClick={props.onClick}></div>
+        <div className={styleModalOverlay.modalOverlay} onClick={onClick}></div>
     )
 }
 

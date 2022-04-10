@@ -35,6 +35,7 @@
     column-gap: 8px;
     justify-content: flex-end;
     align-items: center;
+    cursor: pointer;
 }
 
 .constructor__info {
@@ -52,5 +53,6 @@
 
 .constructor_position {
     align-self: flex-end;
+    cursor: pointer;
 }
 
