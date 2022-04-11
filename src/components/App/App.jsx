@@ -1,14 +1,15 @@
 import React from 'react';
 import appStyle from './app.module.css';
+import baseUrl from '../consts/consts';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
-import OrderDetails from "../OrderDetails/OrderDetails";
-import IngredientsDetails from "../IngredientDetails/IngredientsDetails";
+import OrderDetails from '../OrderDetails/OrderDetails';
+import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 
 function App() {
-  const baseUrl = 'https://norma.nomoreparties.space/api/ingredients';
+  //const baseUrl = 'https://norma.nomoreparties.space/api/ingredients';
   const [state, setState] = React.useState({
       error: null,
       loading: false,
@@ -16,7 +17,7 @@ function App() {
   })
 
   React.useEffect(() => {
-      fetch(baseUrl)
+      fetch(`${baseUrl}ingredients`)
           .then(res => res.json())
           .then((result) => {
               let arrResult = result.data;
