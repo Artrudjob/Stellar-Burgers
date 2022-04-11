@@ -21,7 +21,7 @@ function App() {
           .then(res => res.json())
           .then((result) => {
               let arrResult = result.data;
-              arrResult[1] = arrResult.splice(14, 1, arrResult[1])[0];      /*переставляю местами элементы массива 1 и 14, для того, */
+              arrResult[1] = arrResult.splice(14, 1, arrResult[1])[0];     /*переставляю местами элементы массива 1 и 14, для того, */
               setState({...state, loading: true, items: result.data}) /* чтобы в дальнейшем в нужном порядке расположить их в верстке */
           })
           .catch((err) => {
@@ -43,11 +43,11 @@ function App() {
         setIsIngredientDetailOpened(false)
     }
 
-    function handleEscKeydown(e) {
+    /*function handleEscKeydown(e) {
       if (e.key === 'Escape') {
           closeModals()
       }
-    }
+    } */
 
     function handleIngredientClick(ingredient) {
         setCurrentIngredient(ingredient);
@@ -65,12 +65,12 @@ function App() {
                              /* openIngredientsDetails = {openIngredientsDetails} */ />
       </main>
         {isOrderDetailsOpened && (
-            <Modal onOverlayClick={closeModals} onEscKeydown={handleEscKeydown}>
+            <Modal onOverlayClick={closeModals} closeModals={closeModals}/*onEscKeydown={handleEscKeydown}*/>
                <OrderDetails onOverlayClick={closeModals}/>
             </Modal>
         )}
         {isIngredientDetailOpened && (
-            <Modal onOverlayClick={closeModals} onEscKeydown={handleEscKeydown}>
+            <Modal onOverlayClick={closeModals} closeModals={closeModals}/*onEscKeydown={handleEscKeydown}*/>
                 <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient} />
             </Modal>
         )}

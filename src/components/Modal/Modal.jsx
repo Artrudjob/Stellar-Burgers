@@ -5,18 +5,25 @@ import styleModal from './modal.module.css';
 
 const modalsContainer = document.querySelector('#modals');
 
-function Modal({ onOverlayClick, onEscKeydown, children }) {
+function Modal({ closeModals, onOverlayClick /*onEscKeydown*/, children }) {
+    function handleEscKeydown(e) {
+        if (e.key === 'Escape') {
+            closeModals()
+        }
+    }
+
+
     React.useEffect(() => {
-        document.addEventListener('keydown', onEscKeydown)
+        document.addEventListener('keydown', /*onEscKeydown*/handleEscKeydown)
 
         return () => {
-            document.removeEventListener('keydown', onEscKeydown)
+            document.removeEventListener('keydown', /*onEscKeydown*/handleEscKeydown)
         }
     }, [])
 
     return ReactDOM.createPortal(
         <>
-            <div className={styleModal.popup}>
+            <div className={styleModal.popup} >
                 {children}
             </div>
             <ModalOverlay onClick={onOverlayClick} />
