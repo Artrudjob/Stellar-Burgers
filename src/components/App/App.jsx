@@ -32,7 +32,7 @@ function App() {
 
     const [isIngredientDetailOpened, setIsIngredientDetailOpened] = React.useState(false)
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-    const [currentIngredient, setCurrentIngredient] = React.useState({})
+    const [currentIngredient, setCurrentIngredient] = React.useState(null)
 
     function openOrderDetails() {
         setIsOrderDetailsOpened(true)
