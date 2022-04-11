@@ -1,15 +1,12 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import ingredientsDetailsStyle from './ingredientsDetails.module.css'
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
  function IngredientsDetails(props) {
     return (
         <>
-            <div className={ingredientsDetailsStyle.ingredientsDetails__boxBtn}>
-                <CloseIcon type={"primary"} onClick={props.onOverlayClick}/>
-            </div>
-            <h3 className={`${ingredientsDetailsStyle.ingredientsDetails__title} text text_type_main-large mt-10`}>Детали игредиента</h3>
-            <img src={props.ingredient.image} alt={props.ingredient.name}/>
+            <h3 className={`${ingredientsDetailsStyle.ingredientsDetails__title} text text_type_main-large mt-10`}>{props.title}</h3>
+            <img src={props.ingredient.image} alt={props.ingredient.name} className={ingredientsDetailsStyle.ingredientsDetails__image}/>
             <p className={'text text_type_main-medium mt-4'}>{props.ingredient.name}</p>
             <div className={`${ingredientsDetailsStyle.ingredientsDetails__box} mt-8 mb-15`}>
                 <div>
@@ -32,5 +29,9 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
         </>
     )
 };
+
+IngredientsDetails.propTypes = {
+    props: PropTypes.string
+}
 
 export default IngredientsDetails;

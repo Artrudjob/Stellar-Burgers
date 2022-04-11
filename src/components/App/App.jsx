@@ -9,7 +9,6 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 
 function App() {
-  //const baseUrl = 'https://norma.nomoreparties.space/api/ingredients';
   const [state, setState] = React.useState({
       error: null,
       loading: false,
@@ -18,11 +17,12 @@ function App() {
 
   React.useEffect(() => {
       fetch(`${baseUrl}ingredients`)
-          .then(res => res.json())
+          .then((res) => {
+              if (res.ok) {
+                  return res.json()
+              }})
           .then((result) => {
-              let arrResult = result.data;
-              arrResult[1] = arrResult.splice(14, 1, arrResult[1])[0];     /*переставляю местами элементы массива 1 и 14, для того, */
-              setState({...state, loading: true, items: result.data}) /* чтобы в дальнейшем в нужном порядке расположить их в верстке */
+              setState({...state, loading: true, items: result.data})
           })
           .catch((err) => {
               setState({...state, error: err})
@@ -43,12 +43,6 @@ function App() {
         setIsIngredientDetailOpened(false)
     }
 
-    /*function handleEscKeydown(e) {
-      if (e.key === 'Escape') {
-          closeModals()
-      }
-    } */
-
     function handleIngredientClick(ingredient) {
         setCurrentIngredient(ingredient);
         setIsIngredientDetailOpened(true);
@@ -61,17 +55,16 @@ function App() {
           <BurgerIngredients arrData={state.items} onClick={handleIngredientClick} />
           <BurgerConstructor arrData={state.items}
               onClick={handleIngredientClick}
-              openOrderDetails={openOrderDetails}
-                             /* openIngredientsDetails = {openIngredientsDetails} */ />
+              openOrderDetails={openOrderDetails} />
       </main>
         {isOrderDetailsOpened && (
-            <Modal onOverlayClick={closeModals} closeModals={closeModals}/*onEscKeydown={handleEscKeydown}*/>
-               <OrderDetails onOverlayClick={closeModals}/>
+            <Modal onOverlayClick={closeModals} closeModals={closeModals}>
+               <OrderDetails onOverlayClick={closeModals} title={'034536'}/>
             </Modal>
         )}
         {isIngredientDetailOpened && (
-            <Modal onOverlayClick={closeModals} closeModals={closeModals}/*onEscKeydown={handleEscKeydown}*/>
-                <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient} />
+            <Modal onOverlayClick={closeModals} closeModals={closeModals}>
+                <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient} title={'Детали ингредиента'}/>
             </Modal>
         )}
     </div>
