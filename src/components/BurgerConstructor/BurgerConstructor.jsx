@@ -18,6 +18,8 @@ function BurgerConstructor(props) {
                     />
                 </div>
             )
+        } else {
+            return null;
         }
     })
 
@@ -34,6 +36,8 @@ function BurgerConstructor(props) {
                     />
                 </div>
             )
+        } else {
+            return null;
         }
     })
 
@@ -51,6 +55,8 @@ function BurgerConstructor(props) {
                     />
                 </div>
             )
+        } else {
+            return null;
         }
     })
 
@@ -122,7 +128,7 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
+    arrData: PropTypes.arrayOf(PropTypes.shape({
         _id: PropTypes.string,
         name: PropTypes.string,
         type: PropTypes.string,
@@ -135,7 +141,9 @@ BurgerConstructor.propTypes = {
         image_mobile: PropTypes.string,
         image_large: PropTypes.string,
         __v: PropTypes.number
-    }))
+    })),
+    onClick: PropTypes.func,
+    openOrderDetails: PropTypes.func
 }
 
 export default BurgerConstructor;
