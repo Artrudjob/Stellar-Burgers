@@ -58,7 +58,7 @@ function App() {
     <div className={appStyle.App}>
       <AppHeader />
       <main className={appStyle.app__main}>
-          <BurgerIngredients arrData={state.items} />
+          <BurgerIngredients arrData={state.items} onClick={handleIngredientClick} />
           <BurgerConstructor arrData={state.items}
               onClick={handleIngredientClick}
               openOrderDetails={openOrderDetails}

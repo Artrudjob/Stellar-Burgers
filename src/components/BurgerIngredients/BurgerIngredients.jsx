@@ -8,7 +8,7 @@ function BurgerIngredients(props) {
 
     const bunsList = props.arrData.filter(dataItem => dataItem.type === "bun").map(item => {
         return (
-            <div key={item._id} className={burgersStyle.burgersMenu__flexBox}>
+            <div key={item._id} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(item)}>
                 <Counter count={1} size={"default"} />
                 <img className={burgersStyle.burgersMenu__image} src={item.image} alt={item.name} />
                 <div className={`${burgersStyle.burgersMenu__miniFlexBox} mt-2`}>
@@ -22,7 +22,7 @@ function BurgerIngredients(props) {
 
     const saucesList = props.arrData.filter(dataItem => dataItem.type === "sauce").map(item => {
         return (
-            <div key={item._id} className={burgersStyle.burgersMenu__flexBox}>
+            <div key={item._id} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(item)}>
                 <Counter count={1} size={"default"} />
                 <img className={burgersStyle.burgersMenu__image} src={item.image} alt={item.name} />
                 <div className={`${burgersStyle.burgersMenu__miniFlexBox} mt-2`}>
@@ -36,7 +36,7 @@ function BurgerIngredients(props) {
 
     const toppingsList = props.arrData.filter(dataItem => dataItem.type === "main").map(item => {
         return (
-            <div key={item._id} className={burgersStyle.burgersMenu__flexBox}>
+            <div key={item._id} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(item)}>
                 <Counter count={1} size={"default"} />
                 <img className={burgersStyle.burgersMenu__image} src={item.image} alt={item.name} />
                 <div className={`${burgersStyle.burgersMenu__miniFlexBox} mt-2`}>
@@ -81,7 +81,7 @@ function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
+    arrData: PropTypes.arrayOf(PropTypes.shape({
         _id: PropTypes.string,
         name: PropTypes.string,
         type: PropTypes.string,
