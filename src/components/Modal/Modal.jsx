@@ -24,7 +24,7 @@ function Modal({ closeModals, onOverlayClick, title, children }) {
     }, [closeModals])
 
     return ReactDOM.createPortal(
-        <div style={{display: "flex", justifyContent: "center", alignItems: "center", position: "fixed", top: 0, left: 0, width: '100%', height: '100%'}}>
+        <div className={styleModal.popup__container}>
             <div className={styleModal.popup} >
                 <div className={styleModal.popup__boxBtn}>
                     <CloseIcon type={"primary"} onClick={onOverlayClick}/>
