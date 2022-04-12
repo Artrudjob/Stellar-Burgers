@@ -12,12 +12,3 @@
     display: flex;
     justify-content: space-between;
 }
-
-.ingredientsDetails__boxBtn {
-    width: 18px;
-    height: 18px;
-    position: absolute;
-    right: 40px;
-    top: 50px;
-    cursor: pointer;
-}
