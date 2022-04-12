@@ -41,7 +41,7 @@ function Modal({ closeModals, onOverlayClick, title, children }) {
 Modal.propTypes = {
     closeModals: PropTypes.func.isRequired,
     onOverlayClick: PropTypes.func.isRequired,
-    title: PropTypes.string,
+    title: PropTypes.string.isRequired,
     children: PropTypes.object.isRequired
 }
 

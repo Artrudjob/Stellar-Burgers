@@ -31,7 +31,7 @@ import ingredientsDetailsStyle from './ingredientsDetails.module.css'
 };
 
 IngredientsDetails.propTypes = {
-    props: PropTypes.string
+    props: PropTypes.string.isRequired
 }
 
 export default IngredientsDetails;

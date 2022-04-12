@@ -15,7 +15,7 @@ function OrderDetails({title}) {
 }
 
 OrderDetails.propTypes = {
-    props: PropTypes.string
+    title: PropTypes.string.isRequired
 }
 
 export default OrderDetails;
