@@ -95,7 +95,7 @@ BurgerIngredients.propTypes = {
         image_large: PropTypes.string,
         __v: PropTypes.number
     })),
-    onClick: PropTypes.func
+    onClick: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

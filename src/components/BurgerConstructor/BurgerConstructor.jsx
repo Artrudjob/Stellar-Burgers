@@ -97,8 +97,8 @@ BurgerConstructor.propTypes = {
         image_large: PropTypes.string,
         __v: PropTypes.number
     })),
-    onClick: PropTypes.func,
-    openOrderDetails: PropTypes.func
+    onClick: PropTypes.func.isRequired,
+    openOrderDetails: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;
