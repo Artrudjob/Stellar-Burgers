@@ -9,19 +9,20 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 const modalsContainer = document.querySelector('#modals');
 
 function Modal({ closeModals, onOverlayClick, title, children }) {
-    function handleEscKeydown(e) {
-        if (e.key === 'Escape') {
-            closeModals()
-        }
-    }
 
     React.useEffect(() => {
+        function handleEscKeydown(e) {
+            if (e.key === 'Escape') {
+                closeModals()
+            }
+        }
+
         document.addEventListener('keydown', handleEscKeydown)
 
         return () => {
             document.removeEventListener('keydown', handleEscKeydown)
         }
-    })
+    }, [closeModals])
 
     return ReactDOM.createPortal(
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", position: "fixed", top: 0, left: 0, width: '100%', height: '100%'}}>
