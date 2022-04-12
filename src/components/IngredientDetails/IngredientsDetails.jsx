@@ -5,7 +5,6 @@ import ingredientsDetailsStyle from './ingredientsDetails.module.css'
  function IngredientsDetails(props) {
     return (
         <>
-            <h3 className={`${ingredientsDetailsStyle.ingredientsDetails__title} text text_type_main-large mt-10`}>{props.title}</h3>
             <img src={props.ingredient.image} alt={props.ingredient.name} className={ingredientsDetailsStyle.ingredientsDetails__image}/>
             <p className={'text text_type_main-medium mt-4'}>{props.ingredient.name}</p>
             <div className={`${ingredientsDetailsStyle.ingredientsDetails__box} mt-8 mb-15`}>
@@ -31,7 +30,13 @@ import ingredientsDetailsStyle from './ingredientsDetails.module.css'
 };
 
 IngredientsDetails.propTypes = {
-    props: PropTypes.string.isRequired
+    ingredient: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        calories: PropTypes.number.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired
+    })
 }
 
 export default IngredientsDetails;

@@ -63,8 +63,8 @@ function App() {
             </Modal>
         )}
         {isIngredientDetailOpened && (
-            <Modal onOverlayClick={closeModals} closeModals={closeModals}>
-                <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient} title={'Детали ингредиента'}/>
+            <Modal onOverlayClick={closeModals} closeModals={closeModals} title={'Детали ингредиента'}>
+                <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient}/>
             </Modal>
         )}
     </div>

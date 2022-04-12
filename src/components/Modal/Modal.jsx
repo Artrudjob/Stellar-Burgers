@@ -29,7 +29,7 @@ function Modal({ closeModals, onOverlayClick, title, children }) {
                 <div className={styleModal.popup__boxBtn}>
                     <CloseIcon type={"primary"} onClick={onOverlayClick}/>
                 </div>
-                {title}
+                <h3 className={`${styleModal.popup__title} text text_type_main-large mt-10`}>{title}</h3>
                 {children}
             </div>
             <ModalOverlay onClick={onOverlayClick}></ModalOverlay>
@@ -41,7 +41,7 @@ function Modal({ closeModals, onOverlayClick, title, children }) {
 Modal.propTypes = {
     closeModals: PropTypes.func.isRequired,
     onOverlayClick: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     children: PropTypes.object.isRequired
 }
 
