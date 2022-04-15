@@ -1,0 +1,14 @@
+.ingredientsDetails__title {
+    width: 80.55%;
+}
+
+.ingredientsDetails__image {
+    width: 480px;
+    height: 240px;
+}
+
+.ingredientsDetails__box {
+    width: 72.22%;
+    display: flex;
+    justify-content: space-between;
+}

@@ -43,6 +43,7 @@
     flex-direction: column;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 .burgersMenu__image {

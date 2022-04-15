@@ -3,6 +3,7 @@
 }
 
 .constructor__boxList {
+    max-height: 650px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -21,8 +22,6 @@
 
 .constructor__boxList_scrollbar::-webkit-scrollbar-track {
     background: #2F2F37;
-    margin-top: 96px;
-    margin-bottom: 96px;
 }
 
 .constructor__boxList_scrollbar::-webkit-scrollbar-thumb {
@@ -35,6 +34,7 @@
     column-gap: 8px;
     justify-content: flex-end;
     align-items: center;
+    cursor: pointer;
 }
 
 .constructor__info {
@@ -52,5 +52,6 @@
 
 .constructor_position {
     align-self: flex-end;
+    cursor: pointer;
 }
 

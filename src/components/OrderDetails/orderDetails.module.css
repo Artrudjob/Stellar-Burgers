@@ -1,0 +1,14 @@
+.orderDetails__img {
+    width: 107px;
+    height: 102px;
+    background-image: url("../../images/check.svg");
+}
+
+.orderDetails__boxBtn {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 40px;
+    top: 60px;
+    cursor: pointer;
+}
