@@ -1,6 +1,7 @@
 import React from 'react';
 import appStyle from './app.module.css';
 import baseUrl from '../consts/consts';
+import { stateContext } from './stateContext';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
@@ -30,6 +31,8 @@ function App() {
           })
   }, [])
 
+
+
     const [isIngredientDetailOpened, setIsIngredientDetailOpened] = React.useState(false)
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
     const [currentIngredient, setCurrentIngredient] = React.useState(null)
@@ -52,10 +55,12 @@ function App() {
     <div className={appStyle.App}>
       <AppHeader />
       <main className={appStyle.app__main}>
-          <BurgerIngredients arrData={state.items} onClick={handleIngredientClick} />
-          <BurgerConstructor arrData={state.items}
-              onClick={handleIngredientClick}
-              openOrderDetails={openOrderDetails} />
+          <stateContext.Provider value={state.items}>
+              <BurgerIngredients /*arrData={state.items}*/ onClick={handleIngredientClick} />
+              <BurgerConstructor /*arrData={state.items}*/
+                  onClick={handleIngredientClick}
+                  openOrderDetails={openOrderDetails} />
+          </stateContext.Provider>
       </main>
         {isOrderDetailsOpened && (
             <Modal onOverlayClick={closeModals} closeModals={closeModals}>

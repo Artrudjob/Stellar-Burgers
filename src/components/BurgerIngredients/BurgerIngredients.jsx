@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import burgersStyle from './burgerIngredients.module.css';
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
+import { stateContext } from '../App/stateContext';
 
 function BurgerIngredients(props) {
+    const arrData = useContext(stateContext);
     const [current, setCurrent] = React.useState('bun')
 
-    const bunsList = props.arrData.filter(dataItem => dataItem.type === "bun").map(item => {
+    const bunsList = /*props.*/arrData.filter(dataItem => dataItem.type === "bun").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(item)}>
                 <Counter count={1} size={"default"} />
@@ -20,7 +22,7 @@ function BurgerIngredients(props) {
         )
     });
 
-    const saucesList = props.arrData.filter(dataItem => dataItem.type === "sauce").map(item => {
+    const saucesList = /*props.*/arrData.filter(dataItem => dataItem.type === "sauce").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(item)}>
                 <Counter count={1} size={"default"} />
@@ -34,7 +36,7 @@ function BurgerIngredients(props) {
         )
     });
 
-    const toppingsList = props.arrData.filter(dataItem => dataItem.type === "main").map(item => {
+    const toppingsList = /*props.*/arrData.filter(dataItem => dataItem.type === "main").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(item)}>
                 <Counter count={1} size={"default"} />

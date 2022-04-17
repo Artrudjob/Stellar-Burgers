@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { stateContext } from '../App/stateContext';
 
 function BurgerConstructor(props) {
-    const topBun = props.arrData.map(element => {
+    const arrData = useContext(stateContext)
+
+    const topBun = /*props.*/arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
                 <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
@@ -23,7 +26,7 @@ function BurgerConstructor(props) {
         }
     })
 
-    const allIngredients = props.arrData.map(element => {
+    const allIngredients = /*props.*/arrData.map(element => {
         if (element.name !== 'Краторная булка N-200i') {
             return (
                 <div className={constructorStyle.constructor__flexContainer} key={element._id} onClick={() => props.onClick(element)}>
@@ -41,7 +44,7 @@ function BurgerConstructor(props) {
         }
     })
 
-    const bottomBun = props.arrData.map(element => {
+    const bottomBun = /*props.*/arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
                 <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
