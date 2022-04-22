@@ -1,4 +1,4 @@
-import React, {useContext, useReducer} from 'react';
+import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,6 +6,15 @@ import { burgerIngredientsContext } from '../../context/burger-ingredients-conte
 
 function BurgerConstructor(props) {
     const arrData = useContext(burgerIngredientsContext);
+
+
+    const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
+    React.useEffect(() => {
+        const arrDataPrice = arrData.map(item => item.price);
+        if (arrDataPrice.length !== 0) {
+            setIngredientsPrice(arrDataPrice.reduce((total, value) => total + value));
+        }
+    }, [arrData])
 
     const topBun = /*props.*/arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
@@ -74,7 +83,7 @@ function BurgerConstructor(props) {
             </div>
             <div className={`${constructorStyle.constructor__info} mt-10`}>
                 <div>
-                    <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>0</p>
+                    <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>{ingredientsPrice}</p>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button type="primary" size="medium" onClick={props.openOrderDetails}>
