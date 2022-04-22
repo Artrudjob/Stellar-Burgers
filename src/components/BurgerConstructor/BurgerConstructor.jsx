@@ -16,7 +16,7 @@ function BurgerConstructor(props) {
         }
     }, [arrData])
 
-    const topBun = /*props.*/arrData.map(element => {
+    const topBun = arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
                 <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
@@ -35,7 +35,7 @@ function BurgerConstructor(props) {
         }
     })
 
-   const allIngredients = /*props.*/arrData.map(element => {
+   const allIngredients = arrData.map(element => {
         if (element.name !== 'Краторная булка N-200i') {
             return (
                 <div className={constructorStyle.constructor__flexContainer} key={element._id} onClick={() => props.onClick(element)}>
@@ -53,7 +53,7 @@ function BurgerConstructor(props) {
         }
     })
 
-    const bottomBun = /*props.*/arrData.map(element => {
+    const bottomBun = arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
                 <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>

@@ -78,8 +78,8 @@ function App() {
       <AppHeader />
       <main className={appStyle.app__main}>
           <burgerIngredientsContext.Provider value={state.items}>
-              <BurgerIngredients /*arrData={state.items}*/ onClick={handleIngredientClick} />
-              <BurgerConstructor /*arrData={state.items}*/
+              <BurgerIngredients onClick={handleIngredientClick} />
+              <BurgerConstructor
                   onClick={handleIngredientClick}
                   openOrderDetails={openOrderDetails} />
           </burgerIngredientsContext.Provider>
