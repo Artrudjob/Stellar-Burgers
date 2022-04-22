@@ -2,10 +2,10 @@ import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import burgersStyle from './burgerIngredients.module.css';
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import { stateContext } from '../App/stateContext';
+import { burgerIngredientsContext } from '../../context/burger-ingredients-context';
 
 function BurgerIngredients(props) {
-    const arrData = useContext(stateContext);
+    const arrData = useContext(burgerIngredientsContext);
     const [current, setCurrent] = React.useState('bun')
 
     const bunsList = /*props.*/arrData.filter(dataItem => dataItem.type === "bun").map(item => {

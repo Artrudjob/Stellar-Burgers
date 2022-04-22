@@ -1,7 +1,7 @@
 import React from 'react';
 import appStyle from './app.module.css';
 import baseUrl from '../consts/consts';
-import { stateContext } from './stateContext';
+import { burgerIngredientsContext } from '../../context/burger-ingredients-context';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
@@ -55,12 +55,12 @@ function App() {
     <div className={appStyle.App}>
       <AppHeader />
       <main className={appStyle.app__main}>
-          <stateContext.Provider value={state.items}>
+          <burgerIngredientsContext.Provider value={state.items}>
               <BurgerIngredients /*arrData={state.items}*/ onClick={handleIngredientClick} />
               <BurgerConstructor /*arrData={state.items}*/
                   onClick={handleIngredientClick}
                   openOrderDetails={openOrderDetails} />
-          </stateContext.Provider>
+          </burgerIngredientsContext.Provider>
       </main>
         {isOrderDetailsOpened && (
             <Modal onOverlayClick={closeModals} closeModals={closeModals}>
