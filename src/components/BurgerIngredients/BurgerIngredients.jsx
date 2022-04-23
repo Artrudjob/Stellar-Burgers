@@ -8,7 +8,7 @@ function BurgerIngredients(props) {
     const arrData = useContext(BurgerIngredientsContext);
     const [current, setCurrent] = React.useState('bun')
 
-    const bunsList = /*props.*/arrData.filter(dataItem => dataItem.type === "bun").map(item => {
+    const bunsList = arrData.filter(dataItem => dataItem.type === "bun").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(item)}>
                 <Counter count={1} size={"default"} />
@@ -22,7 +22,7 @@ function BurgerIngredients(props) {
         )
     });
 
-    const saucesList = /*props.*/arrData.filter(dataItem => dataItem.type === "sauce").map(item => {
+    const saucesList = arrData.filter(dataItem => dataItem.type === "sauce").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(item)}>
                 <Counter count={1} size={"default"} />
@@ -36,7 +36,7 @@ function BurgerIngredients(props) {
         )
     });
 
-    const toppingsList = /*props.*/arrData.filter(dataItem => dataItem.type === "main").map(item => {
+    const toppingsList = arrData.filter(dataItem => dataItem.type === "main").map(item => {
         return (
             <div key={item._id} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(item)}>
                 <Counter count={1} size={"default"} />
