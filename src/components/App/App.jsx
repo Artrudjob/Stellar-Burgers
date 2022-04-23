@@ -1,6 +1,6 @@
 import React from 'react';
 import appStyle from './app.module.css';
-import baseUrl from '../../consts/consts';
+import { baseUrl, checkResponse } from '../../consts/consts';
 import { BurgerIngredientsContext } from '../../context/burger-ingredients-context';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
@@ -20,10 +20,7 @@ function App() {
 
   React.useEffect(() => {
       fetch(`${baseUrl}ingredients`)
-          .then((res) => {
-              if (res.ok) {
-                  return res.json()
-              }})
+          .then(checkResponse)
           .then((result) => {
               setState({...state, loading: true, items: result.data})
           })
@@ -50,10 +47,7 @@ function App() {
                 })
             })
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json()
-                }})
+            .then(checkResponse)
             .then(result => {
                 setOrderNumber(result.order.number)
                 setIsOrderDetailsOpened(true) //меняет состояние на true, чтобы открылась модалка
