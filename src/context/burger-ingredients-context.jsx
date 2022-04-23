@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const burgerIngredientsContext = React.createContext([]);
+export const BurgerIngredientsContext = React.createContext([]);

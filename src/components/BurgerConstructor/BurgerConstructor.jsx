@@ -2,10 +2,10 @@ import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { burgerIngredientsContext } from '../../context/burger-ingredients-context';
+import { BurgerIngredientsContext } from '../../context/burger-ingredients-context';
 
 function BurgerConstructor(props) {
-    const arrData = useContext(burgerIngredientsContext);
+    const arrData = useContext(BurgerIngredientsContext);
 
 
     const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
