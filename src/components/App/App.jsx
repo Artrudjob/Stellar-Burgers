@@ -1,6 +1,6 @@
 import React from 'react';
 import appStyle from './app.module.css';
-import baseUrl from '../consts/consts';
+import baseUrl from '../../consts/consts';
 import { BurgerIngredientsContext } from '../../context/burger-ingredients-context';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
