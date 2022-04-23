@@ -36,7 +36,7 @@ function BurgerConstructor(props) {
     })
 
    const allIngredients = arrData.map(element => {
-        if (element.name !== 'Краторная булка N-200i') {
+        if ((element.name !== 'Краторная булка N-200i') && (element.type !== 'bun')) {
             return (
                 <div className={constructorStyle.constructor__flexContainer} key={element._id} onClick={() => props.onClick(element)}>
                     <DragIcon type="primary" />
