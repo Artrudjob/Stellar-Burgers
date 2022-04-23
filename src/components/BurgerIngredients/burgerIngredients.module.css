@@ -46,6 +46,10 @@
     cursor: pointer;
 }
 
+.burgersMenu__flex {
+    display: flex;
+}
+
 .burgersMenu__image {
     margin: 0 auto 0 auto;
     max-width: 240px;
