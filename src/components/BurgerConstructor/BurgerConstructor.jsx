@@ -1,10 +1,22 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerIngredientsContext } from '../../context/burger-ingredients-context';
 
 function BurgerConstructor(props) {
-    const topBun = props.arrData.map(element => {
+    const arrData = useContext(BurgerIngredientsContext);
+
+
+    const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
+    React.useEffect(() => {
+        const arrDataPrice = arrData.map(item => item.price);
+        if (arrDataPrice.length !== 0) {
+            setIngredientsPrice(arrDataPrice.reduce((total, value) => total + value));
+        }
+    }, [arrData])
+
+    const topBun = arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
                 <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
@@ -23,8 +35,8 @@ function BurgerConstructor(props) {
         }
     })
 
-    const allIngredients = props.arrData.map(element => {
-        if (element.name !== 'Краторная булка N-200i') {
+   const allIngredients = arrData.map(element => {
+        if ((element.name !== 'Краторная булка N-200i') && (element.type !== 'bun')) {
             return (
                 <div className={constructorStyle.constructor__flexContainer} key={element._id} onClick={() => props.onClick(element)}>
                     <DragIcon type="primary" />
@@ -41,7 +53,7 @@ function BurgerConstructor(props) {
         }
     })
 
-    const bottomBun = props.arrData.map(element => {
+    const bottomBun = arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
                 <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
@@ -71,7 +83,7 @@ function BurgerConstructor(props) {
             </div>
             <div className={`${constructorStyle.constructor__info} mt-10`}>
                 <div>
-                    <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>2510</p>
+                    <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>{ingredientsPrice}</p>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button type="primary" size="medium" onClick={props.openOrderDetails}>
@@ -83,20 +95,6 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-    arrData: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        __v: PropTypes.number.isRequired
-    })),
     onClick: PropTypes.func.isRequired,
     openOrderDetails: PropTypes.func.isRequired
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import appStyle from './app.module.css';
-import baseUrl from '../consts/consts';
+import { baseUrl, checkResponse } from '../../consts/consts';
+import { BurgerIngredientsContext } from '../../context/burger-ingredients-context';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
@@ -15,12 +16,11 @@ function App() {
       items: []
   })
 
+    const [orderNumber, setOrderNumber] = React.useState(null) // состояние номера заказа
+
   React.useEffect(() => {
       fetch(`${baseUrl}ingredients`)
-          .then((res) => {
-              if (res.ok) {
-                  return res.json()
-              }})
+          .then(checkResponse)
           .then((result) => {
               setState({...state, loading: true, items: result.data})
           })
@@ -28,14 +28,33 @@ function App() {
               setState({...state, error: err})
               console.log(`Что-то пошло не так: ${err}`);
           })
-  }, [])
+  }, [state])
 
     const [isIngredientDetailOpened, setIsIngredientDetailOpened] = React.useState(false)
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
     const [currentIngredient, setCurrentIngredient] = React.useState(null)
 
+    //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
     function openOrderDetails() {
-        setIsOrderDetailsOpened(true)
+        fetch(`${baseUrl}orders`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'ingredients': state.items.map(item => {
+                    return item._id
+                })
+            })
+        })
+            .then(checkResponse)
+            .then(result => {
+                setOrderNumber(result.order.number)
+                setIsOrderDetailsOpened(true) //меняет состояние на true, чтобы открылась модалка
+            })
+            .catch((err) => {
+                console.log(`Что-то пошло не так: ${err}`);
+            })
     }
 
     function closeModals() {
@@ -52,14 +71,16 @@ function App() {
     <div className={appStyle.App}>
       <AppHeader />
       <main className={appStyle.app__main}>
-          <BurgerIngredients arrData={state.items} onClick={handleIngredientClick} />
-          <BurgerConstructor arrData={state.items}
-              onClick={handleIngredientClick}
-              openOrderDetails={openOrderDetails} />
+          <BurgerIngredientsContext.Provider value={state.items}>
+              <BurgerIngredients onClick={handleIngredientClick} />
+              <BurgerConstructor
+                  onClick={handleIngredientClick}
+                  openOrderDetails={openOrderDetails} />
+          </BurgerIngredientsContext.Provider>
       </main>
         {isOrderDetailsOpened && (
             <Modal onOverlayClick={closeModals} closeModals={closeModals}>
-               <OrderDetails onOverlayClick={closeModals} title={'034536'}/>
+               <OrderDetails onOverlayClick={closeModals} title={orderNumber}/>
             </Modal>
         )}
         {isIngredientDetailOpened && (
