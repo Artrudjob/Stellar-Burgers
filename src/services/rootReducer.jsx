@@ -1,7 +1,9 @@
 import {combineReducers} from "redux";
-import getAllIngredients from './reducers/get-all-ingredients'
+import getAllIngredients from './reducers/getAllIngredients'
+import setCurrentIngredients from "./reducers/setCurrentIngredients";
 
 const rootReducer = combineReducers({
-    getAllIngredients
+    getAllIngredients,
+    setCurrentIngredients
 });
 export default rootReducer;

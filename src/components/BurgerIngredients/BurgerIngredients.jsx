@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import {shallowEqual, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import burgersStyle from './burgerIngredients.module.css';
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';

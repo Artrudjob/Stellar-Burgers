@@ -1,4 +1,4 @@
-import GET_ALL_INGREDIENTS from "../actions/get-all-ingredients";
+import GET_ALL_INGREDIENTS from "../actions/getAllIngredients";
 
 const initialState = {
     ingredients: [],

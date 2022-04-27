@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from "prop-types";
 import ingredientsDetailsStyle from './ingredientsDetails.module.css'
 
- function IngredientsDetails(props) {
+function IngredientsDetails(props) {
     return (
         <>
-            <img src={props.ingredient.image} alt={props.ingredient.name} className={ingredientsDetailsStyle.ingredientsDetails__image}/>
+            <img src={props.ingredient.image} alt={props.ingredient.name}
+                 className={ingredientsDetailsStyle.ingredientsDetails__image}/>
             <p className={'text text_type_main-medium mt-4'}>{props.ingredient.name}</p>
             <div className={`${ingredientsDetailsStyle.ingredientsDetails__box} mt-8 mb-15`}>
                 <div>
