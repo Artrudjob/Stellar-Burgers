@@ -11,6 +11,7 @@ import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 import GET_ALL_INGREDIENTS from '../../services/actions/getAllIngredients';
 import CURRENT_INGREDIENT from '../../services/actions/currentIngredient';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import REMOVE_CURRENT_INGREDIENT from "../../services/actions/removeCurrentIngredient";
 
 function App() {
     // const [state, setState] = React.useState({
@@ -71,6 +72,7 @@ function App() {
     function closeModals() {
         setIsOrderDetailsOpened(false)
         setIsIngredientDetailOpened(false)
+        dispatch(REMOVE_CURRENT_INGREDIENT)
     }
 
     function handleIngredientClick(ingredient) {
