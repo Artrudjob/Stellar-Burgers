@@ -1,12 +1,11 @@
-import React, {useContext, useState} from 'react';
+import React, { useState } from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerIngredientsContext } from '../../context/burger-ingredients-context';
 
 function BurgerConstructor(props) {
-    const arrData = useContext(BurgerIngredientsContext);
-
+    const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
 
     const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
     React.useEffect(() => {

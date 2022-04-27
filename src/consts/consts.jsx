@@ -1,4 +1,4 @@
-const baseUrl = 'https://norma.nomoreparties.space/api/';
+const baseUrl = 'http://norma.nomoreparties.space/api/';
 const checkResponse = (res) => {
     if (res.ok) {
         return res.json();

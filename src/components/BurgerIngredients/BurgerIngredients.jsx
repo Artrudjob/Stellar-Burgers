@@ -1,11 +1,12 @@
-import React, {useContext} from 'react';
+import React from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import PropTypes from 'prop-types';
 import burgersStyle from './burgerIngredients.module.css';
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import { BurgerIngredientsContext } from '../../context/burger-ingredients-context';
 
 function BurgerIngredients(props) {
-    const arrData = useContext(BurgerIngredientsContext);
+    const arrData  = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
+
     const [current, setCurrent] = React.useState('bun')
 
     const bunsList = arrData.filter(dataItem => dataItem.type === "bun").map(item => {
