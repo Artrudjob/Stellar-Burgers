@@ -13,9 +13,9 @@ function getAllIngredients(state = initialState, action) {
             ingredients: action.payload,
             loading: true,
         }
-
+    } else {
+        return state;
     }
-    return state;
 }
 
 export default getAllIngredients;

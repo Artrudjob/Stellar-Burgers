@@ -6,15 +6,12 @@ const initialState = {
 }
 
 function setCurrentIngredients(state = initialState, action) {
-    console.log(state.dataIngredient);
     if (action.type === 'ADD_CURRENT_INGREDIENT') {
-        console.log(action.dataIngredient);
         return {
             ...state,
             dataIngredient: action.dataIngredient
         }
     } else if (action.type === 'REMOVE_CURRENT_INGREDIENT') {
-        console.log(action.dataIngredient)
         return {
             ...state,
             dataIngredient: action.dataIngredient //вернуть null
