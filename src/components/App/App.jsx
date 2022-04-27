@@ -78,6 +78,7 @@ function App() {
         /*setCurrentIngredient(ingredient);*/
         setIsIngredientDetailOpened(true);
     }
+
     const currentIngredient = useSelector(store => store.setCurrentIngredients.dataIngredient, shallowEqual)
 
     return (
@@ -98,7 +99,7 @@ function App() {
             )}
             {isIngredientDetailOpened && (
                 <Modal onOverlayClick={closeModals} closeModals={closeModals} title={'Детали ингредиента'}>
-                    <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient} />
+                    <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient}/>
                 </Modal>
             )}
         </div>

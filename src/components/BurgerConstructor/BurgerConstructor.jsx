@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import React, {useState} from 'react';
+import {shallowEqual, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
-import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 function BurgerConstructor(props) {
     const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
@@ -18,7 +18,8 @@ function BurgerConstructor(props) {
     const topBun = arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
-                <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
+                <div className={constructorStyle.constructor_position} key={element._id}
+                     onClick={() => props.onClick(element)}>
                     <ConstructorElement
                         key={element._id}
                         type="top"
@@ -34,11 +35,12 @@ function BurgerConstructor(props) {
         }
     })
 
-   const allIngredients = arrData.map(element => {
+    const allIngredients = arrData.map(element => {
         if ((element.name !== 'Краторная булка N-200i') && (element.type !== 'bun')) {
             return (
-                <div className={constructorStyle.constructor__flexContainer} key={element._id} onClick={() => props.onClick(element)}>
-                    <DragIcon type="primary" />
+                <div className={constructorStyle.constructor__flexContainer} key={element._id}
+                     onClick={() => props.onClick(element)}>
+                    <DragIcon type="primary"/>
                     <ConstructorElement
                         key={element._id}
                         text={element.name}
@@ -55,7 +57,8 @@ function BurgerConstructor(props) {
     const bottomBun = arrData.map(element => {
         if (element.name === 'Краторная булка N-200i') {
             return (
-                <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
+                <div className={constructorStyle.constructor_position} key={element._id}
+                     onClick={() => props.onClick(element)}>
                     <ConstructorElement
                         key={element._id}
                         type="bottom"
@@ -75,7 +78,8 @@ function BurgerConstructor(props) {
         <section className={`${constructorStyle.constructor} mt-25`}>
             <div className={`${constructorStyle.constructor__boxList}`}>
                 {topBun}
-                <div className={`${constructorStyle.constructor__boxList} ${constructorStyle.constructor__boxList_scrollbar}`}>
+                <div
+                    className={`${constructorStyle.constructor__boxList} ${constructorStyle.constructor__boxList_scrollbar}`}>
                     {allIngredients}
                 </div>
                 {bottomBun}
@@ -83,7 +87,7 @@ function BurgerConstructor(props) {
             <div className={`${constructorStyle.constructor__info} mt-10`}>
                 <div>
                     <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>{ingredientsPrice}</p>
-                    <CurrencyIcon type="primary" />
+                    <CurrencyIcon type="primary"/>
                 </div>
                 <Button type="primary" size="medium" onClick={props.openOrderDetails}>
                     Оформить заказ
