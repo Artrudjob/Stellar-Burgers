@@ -9,7 +9,7 @@ import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 import GET_ALL_INGREDIENTS from '../../services/actions/getAllIngredients';
-import CURRENT_INGREDIENT from '../../services/actions/currentIngredient';
+import ADD_CURRENT_INGREDIENT from '../../services/actions/addCurrentIngredient';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import REMOVE_CURRENT_INGREDIENT from "../../services/actions/removeCurrentIngredient";
 
@@ -76,7 +76,7 @@ function App() {
     }
 
     function handleIngredientClick(ingredient) {
-        dispatch(CURRENT_INGREDIENT(ingredient))
+        dispatch(ADD_CURRENT_INGREDIENT(ingredient))
         /*setCurrentIngredient(ingredient);*/
         setIsIngredientDetailOpened(true);
     }

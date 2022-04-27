@@ -1,4 +1,4 @@
-import CURRENT_INGREDIENT from '../actions/currentIngredient';
+import ADD_CURRENT_INGREDIENT from '../actions/addCurrentIngredient';
 import REMOVE_CURRENT_INGREDIENT from '../actions/removeCurrentIngredient';
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
 
 function setCurrentIngredients(state = initialState, action) {
     console.log(state.dataIngredient);
-    if (action.type === 'CURRENT_INGREDIENT') {
+    if (action.type === 'ADD_CURRENT_INGREDIENT') {
         console.log(action.dataIngredient);
         return {
             ...state,
