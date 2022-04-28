@@ -10,17 +10,12 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 import GET_ALL_INGREDIENTS from '../../services/actions/getAllIngredients';
 import ADD_CURRENT_INGREDIENT from '../../services/actions/addCurrentIngredient';
+import ORDER_NUMBER from '../../services/actions/orderNumber';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import REMOVE_CURRENT_INGREDIENT from "../../services/actions/removeCurrentIngredient";
 
 function App() {
-    // const [state, setState] = React.useState({
-    //     error: null,
-    //     loading: false,
-    //     items: []
-    // })
     const dispatch = useDispatch();
-    const [orderNumber, setOrderNumber] = React.useState(null) // состояние номера заказа
 
     function fetchIngredients() {
         return dispatch => {
@@ -40,6 +35,30 @@ function App() {
         store.dispatch(fetchIngredients())
     }, [])
 
+    function fetchOrderNumber() {
+        return dispatch => {
+            fetch(`${baseUrl}orders`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'ingredients': /*state.items*/arrData.map(item => {
+                        return item._id
+                    })
+                })
+            })
+                .then(checkResponse)
+                .then(result => {
+                    dispatch(ORDER_NUMBER(result.order.number))
+                    setIsOrderDetailsOpened(true) //меняет состояние на true, чтобы открылась модалка
+                })
+                .catch((err) => {
+                    console.log(`Что-то пошло не так: ${err}`);
+                })
+        }
+    }
+
     const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
 
     const [isIngredientDetailOpened, setIsIngredientDetailOpened] = React.useState(false)
@@ -48,25 +67,7 @@ function App() {
 
     //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
     function openOrderDetails() {
-        fetch(`${baseUrl}orders`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'ingredients': /*state.items*/arrData.map(item => {
-                    return item._id
-                })
-            })
-        })
-            .then(checkResponse)
-            .then(result => {
-                setOrderNumber(result.order.number)
-                setIsOrderDetailsOpened(true) //меняет состояние на true, чтобы открылась модалка
-            })
-            .catch((err) => {
-                console.log(`Что-то пошло не так: ${err}`);
-            })
+        store.dispatch(fetchOrderNumber());
     }
 
     function closeModals() {
@@ -82,6 +83,7 @@ function App() {
     }
 
     const currentIngredient = useSelector(store => store.setCurrentIngredients.dataIngredient, shallowEqual)
+    const orderNumber = useSelector(store => store.getOrderNumber.data, shallowEqual)
 
     return (
         <div className={appStyle.App}>
