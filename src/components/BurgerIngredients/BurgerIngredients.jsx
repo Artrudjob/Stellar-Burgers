@@ -7,7 +7,8 @@ import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-u
 function BurgerIngredients(props) {
     const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
 
-    const [current, setCurrent] = React.useState('bun')
+    const [current, setCurrent] = React.useState('bun');
+    const ref = React.useRef();
 
     const bunsList = arrData.filter(dataItem => dataItem.type === "bun").map(item => {
         return (
@@ -51,8 +52,21 @@ function BurgerIngredients(props) {
         )
     });
 
+    //меняем активную кнопку, в зависимости от количество пикселей, прокрученных от верха элемента
+    function scrollIngredients() {
+        const scrollTopElement = ref.current.scrollTop;
+
+        if (scrollTopElement < 299) {
+            setCurrent('bun')
+        } else if ((scrollTopElement > 298) && (scrollTopElement < 799)) {
+            setCurrent('sauce')
+        } else {
+            setCurrent('main')
+        }
+    }
+
     return (
-        <section className={burgersStyle.burgersMenu}>
+        <section className={burgersStyle.burgersMenu} onScroll={scrollIngredients}>
             <h1 className={'text text_type_main-large mt-10'}>Соберите бургер</h1>
             <div className={`${burgersStyle.burgersMenu__flex} mt-5`}>
                 <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
@@ -65,7 +79,7 @@ function BurgerIngredients(props) {
                     Начинки
                 </Tab>
             </div>
-            <div className={burgersStyle.burgersMenu_scrollbar}>
+            <div className={burgersStyle.burgersMenu_scrollbar} ref={ref}>
                 <h2 className={'text text_type_main-medium mt-10'}>Булки</h2>
                 <div className={`${burgersStyle.burgersMenu__gridContainer} mt-6`}>
                     {bunsList}
