@@ -1,27 +1,46 @@
 import React, {useState} from 'react';
-import {shallowEqual, useSelector} from 'react-redux';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useDrag, useDrop} from 'react-dnd';
+import ADD_TO_CONSTRUCTOR from '../../services/actions/addToConstructor';
+import REMOVE_TO_CONSTRUCTOR from '../../services/actions/removeToConstructor';
+import {v4 as uuid} from 'uuid'
 
 function BurgerConstructor(props) {
-    const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
+    const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual)
+    const dispatch = useDispatch();
 
     const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
     React.useEffect(() => {
-        const arrDataPrice = arrData.map(item => item.price);
+        const arrDataPrice = ingredientsBurger.map(item => {
+            let cost = item.price;
+            if (item.type === 'bun') {
+                cost = item.price * 2;
+            }
+            return cost;
+        })
         if (arrDataPrice.length !== 0) {
             setIngredientsPrice(arrDataPrice.reduce((total, value) => total + value));
         }
-    }, [arrData])
+    }, [ingredientsBurger])
 
-    const topBun = arrData.map(element => {
-        if (element.name === 'Краторная булка N-200i') {
+    const [{ isOver }, dropTarget] = useDrop({
+        accept: 'NEW_INGREDIENT',
+        drop: (item) => dispatch(ADD_TO_CONSTRUCTOR(item)),
+        collect: monitor => ({
+            isOver: monitor.isOver()
+        })
+    })
+
+    const topBun = ingredientsBurger.map(element => {
+        if (element.type === 'bun') {
             return (
-                <div className={constructorStyle.constructor_position} key={element._id}
+                <div className={constructorStyle.constructor_position} key={uuid()}
                      onClick={() => props.onClick(element)}>
                     <ConstructorElement
-                        key={element._id}
+                        key={uuid()}
                         type="top"
                         isLocked={true}
                         text={`${element.name} (верх)`}
@@ -31,36 +50,42 @@ function BurgerConstructor(props) {
                 </div>
             )
         } else {
-            return null;
+            return null
         }
     })
 
-    const allIngredients = arrData.map(element => {
-        if ((element.name !== 'Краторная булка N-200i') && (element.type !== 'bun')) {
+    function deleteIngredient(e, element) {
+        dispatch(REMOVE_TO_CONSTRUCTOR(element));
+    }
+
+   const allIngredients = ingredientsBurger.map(element => {
+        if (element.type !== 'bun') {
             return (
-                <div className={constructorStyle.constructor__flexContainer} key={element._id}
+                <div className={constructorStyle.constructor__flexContainer} key={uuid()}
                      onClick={() => props.onClick(element)}>
                     <DragIcon type="primary"/>
                     <ConstructorElement
-                        key={element._id}
+                        key={uuid()}
                         text={element.name}
                         price={element.price}
                         thumbnail={element.image}
+                        handleClose={(e) => {e.stopPropagation(); deleteIngredient(e, element.uuid)}}
                     />
+
                 </div>
             )
         } else {
-            return null;
+            return null
         }
     })
 
-    const bottomBun = arrData.map(element => {
-        if (element.name === 'Краторная булка N-200i') {
+    const bottomBun = ingredientsBurger.map(element => {
+        if (element.type === 'bun') {
             return (
-                <div className={constructorStyle.constructor_position} key={element._id}
+                <div className={constructorStyle.constructor_position} key={uuid()}
                      onClick={() => props.onClick(element)}>
                     <ConstructorElement
-                        key={element._id}
+                        key={uuid()}
                         type="bottom"
                         isLocked={true}
                         text={`${element.name} (низ)`}
@@ -70,30 +95,37 @@ function BurgerConstructor(props) {
                 </div>
             )
         } else {
-            return null;
+            return null
         }
     })
 
     return (
-        <section className={`${constructorStyle.constructor} mt-25`}>
-            <div className={`${constructorStyle.constructor__boxList}`}>
-                {topBun}
-                <div
-                    className={`${constructorStyle.constructor__boxList} ${constructorStyle.constructor__boxList_scrollbar}`}>
-                    {allIngredients}
+        <>
+            {ingredientsBurger.length === 0 ?
+                <section className={`${constructorStyle.constructor__vacant} mt-25`} ref={dropTarget}>
+                    <p className={'text text_type_main-medium'}>{isOver ? 'Отпускайте' : 'Перенесите ингредиенты сюда'}</p>
+                </section>
+                :
+                <section className={`${constructorStyle.constructor} mt-25`} ref={dropTarget}>
+                <div className={`${constructorStyle.constructor__boxList}`}>
+                    {topBun}
+                    <div className={`${constructorStyle.constructor__boxList} ${constructorStyle.constructor__boxList_scrollbar}`}>
+                        {allIngredients}
+                    </div>
+                    {bottomBun}
                 </div>
-                {bottomBun}
-            </div>
-            <div className={`${constructorStyle.constructor__info} mt-10`}>
-                <div>
-                    <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>{ingredientsPrice}</p>
-                    <CurrencyIcon type="primary"/>
+                <div className={`${constructorStyle.constructor__info} mt-10`}>
+                    <div>
+                        <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>{ingredientsPrice}</p>
+                        <CurrencyIcon type="primary"/>
+                    </div>
+                    <Button type="primary" size="medium" onClick={props.openOrderDetails}>
+                        Оформить заказ
+                    </Button>
                 </div>
-                <Button type="primary" size="medium" onClick={props.openOrderDetails}>
-                    Оформить заказ
-                </Button>
-            </div>
-        </section>
+            </section>
+            }
+        </>
     )
 }
 

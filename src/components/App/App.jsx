@@ -12,6 +12,8 @@ import GET_ALL_INGREDIENTS from '../../services/actions/getAllIngredients';
 import ADD_CURRENT_INGREDIENT from '../../services/actions/addCurrentIngredient';
 import ORDER_NUMBER from '../../services/actions/orderNumber';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import { DndProvider} from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import REMOVE_CURRENT_INGREDIENT from "../../services/actions/removeCurrentIngredient";
 
 function App() {
@@ -89,12 +91,12 @@ function App() {
         <div className={appStyle.App}>
             <AppHeader/>
             <main className={appStyle.app__main}>
-                {/*<BurgerIngredientsContext.Provider value={state.items}>*/}
-                <BurgerIngredients onClick={handleIngredientClick}/>
-                <BurgerConstructor
-                    onClick={handleIngredientClick}
-                    openOrderDetails={openOrderDetails}/>
-                {/*</BurgerIngredientsContext.Provider>*/}
+                <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients onClick={handleIngredientClick}/>
+                    <BurgerConstructor
+                        onClick={handleIngredientClick}
+                        openOrderDetails={openOrderDetails}/>
+                </DndProvider>
             </main>
             {isOrderDetailsOpened && (
                 <Modal onOverlayClick={closeModals} closeModals={closeModals}>
