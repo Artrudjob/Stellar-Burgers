@@ -5,6 +5,7 @@ import constructorStyle from './ingredientToConstructor.module.css'
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrag, useDrop} from 'react-dnd';
 import REMOVE_TO_CONSTRUCTOR from '../../services/actions/removeToConstructor';
+import SORT_INGREDIENT from '../../services/actions/sortIngredient'
 
 function IngredientToConstructor(props) {
     const ref = useRef(null);
@@ -24,6 +25,8 @@ function IngredientToConstructor(props) {
     const [, dropRef] = useDrop({
         accept: 'SORT_INGREDIENT',
         hover: item => {
+            console.log(item);
+            console.log(`props.index - ${props.index}`);
             props.moveIngredientsToConstructor(item, props.index)
         }
     })
