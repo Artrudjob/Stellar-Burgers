@@ -1,9 +1,11 @@
-const SORT_INGREDIENT = (fromIndex, toIndex) => {
+const SORT_INGREDIENT = (element, toIndex) => {
     return {
         type: 'SORT_INGREDIENT',
         payload: {
-            fromIndex: fromIndex,
+            element: element,
             toIndex: toIndex
         }
     }
 }
+
+export default SORT_INGREDIENT;

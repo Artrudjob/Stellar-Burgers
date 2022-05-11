@@ -1,0 +1,101 @@
+@keyframes anim-constructor__vacant {
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+.constructor__vacant {
+    width: 600px;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.constructor__vacant::before{
+    content: '';
+    position: absolute;
+    z-index: -2;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background-repeat: no-repeat;
+    background-size: 50% 50%, 50% 50%;
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    background-image: linear-gradient(#8585AD, #8585AD), linear-gradient(#4c4cff, #4c4cff), linear-gradient(#8585AD, #8585AD), linear-gradient(#4c4cff, #4c4cff);
+    animation: anim-constructor__vacant 4s linear infinite;
+}
+
+.constructor__vacant::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 6px;
+    top: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+    background: #131316;
+    border-radius: 5px;
+}
+
+.constructor {
+    width: 600px;
+}
+
+.constructor__boxList {
+    max-height: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-right: 7px;
+}
+
+.constructor__boxList_scrollbar {
+    width: 600px;
+    height: 656px;
+    overflow: auto;
+}
+
+.constructor__boxList_scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.constructor__boxList_scrollbar::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.constructor__boxList_scrollbar::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    height: 292px;
+}
+
+.constructor__flexContainer {
+    display: flex;
+    column-gap: 8px;
+    justify-content: flex-end;
+    align-items: center;
+    cursor: pointer;
+}
+
+.constructor__info {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 48px;
+}
+
+.constructor__infoText {
+    display: inline;
+    margin-right: 9px;
+}
+
+.constructor_position {
+    align-self: flex-end;
+    cursor: pointer;
+}
+

@@ -2,14 +2,16 @@ import React, {useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDrag, useDrop} from 'react-dnd';
+import {Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useDrop} from 'react-dnd';
 import ADD_TO_CONSTRUCTOR from '../../services/actions/addToConstructor';
-import REMOVE_TO_CONSTRUCTOR from '../../services/actions/removeToConstructor';
+import SORT_INGREDIENT from '../../services/actions/sortIngredient'
 import {v4 as uuid} from 'uuid'
+import IngredientToConstructor from "../ingredientToConstructor/ingredientToConstructor";
 
 function BurgerConstructor(props) {
-    const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual)
+    const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual);
+    const openIngredient = props.onClick;
     const dispatch = useDispatch();
 
     const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
@@ -34,68 +36,31 @@ function BurgerConstructor(props) {
         })
     })
 
+    function moveIngredientsToConstructor(element, toIndex) {
+        dispatch(SORT_INGREDIENT(element, toIndex))
+    }
+
     const topBun = ingredientsBurger.map(element => {
         if (element.type === 'bun') {
             return (
-                <div className={constructorStyle.constructor_position} key={uuid()}
-                     onClick={() => props.onClick(element)}>
-                    <ConstructorElement
-                        key={uuid()}
-                        type="top"
-                        isLocked={true}
-                        text={`${element.name} (верх)`}
-                        price={element.price}
-                        thumbnail={element.image}
-                    />
-                </div>
+                <IngredientToConstructor element={element} onClick={openIngredient} type={"top"} key={uuid()}/>
             )
-        } else {
-            return null
         }
     })
 
-    function deleteIngredient(e, element) {
-        dispatch(REMOVE_TO_CONSTRUCTOR(element));
-    }
-
-   const allIngredients = ingredientsBurger.map(element => {
-        if (element.type !== 'bun') {
-            return (
-                <div className={constructorStyle.constructor__flexContainer} key={uuid()}
-                     onClick={() => props.onClick(element)}>
-                    <DragIcon type="primary"/>
-                    <ConstructorElement
-                        key={uuid()}
-                        text={element.name}
-                        price={element.price}
-                        thumbnail={element.image}
-                        handleClose={(e) => {e.stopPropagation(); deleteIngredient(e, element.uuid)}}
-                    />
-
-                </div>
-            )
-        } else {
-            return null
-        }
+   const allIngredients = ingredientsBurger.map((element, index) => {
+       if (element.type !== 'bun') {
+           return (
+               <IngredientToConstructor element={element} onClick={openIngredient} index={index} moveIngredientsToConstructor={moveIngredientsToConstructor} key={uuid()}/>
+           )
+       }
     })
 
     const bottomBun = ingredientsBurger.map(element => {
         if (element.type === 'bun') {
             return (
-                <div className={constructorStyle.constructor_position} key={uuid()}
-                     onClick={() => props.onClick(element)}>
-                    <ConstructorElement
-                        key={uuid()}
-                        type="bottom"
-                        isLocked={true}
-                        text={`${element.name} (низ)`}
-                        price={element.price}
-                        thumbnail={element.image}
-                    />
-                </div>
+                <IngredientToConstructor element={element} onClick={openIngredient} type={"bottom"} key={uuid()}/>
             )
-        } else {
-            return null
         }
     })
 

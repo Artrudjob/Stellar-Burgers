@@ -6,7 +6,6 @@ const initialState = {
 
 function burgerConstructor(state = initialState, action) {
     if (action.type === 'ADD_TO_CONSTRUCTOR') {
-        console.log(state.data)
         if (action.payload.type === 'bun') {
             state.data = state.data.filter(item => item.type !== 'bun');
         }
@@ -21,7 +20,8 @@ function burgerConstructor(state = initialState, action) {
         })
     } else if (action.type === 'SORT_INGREDIENT') {
         const arrIngredients = [...state.data];
-        arrIngredients.splice(action.payload.toIndex, 0, ...arrIngredients.splice(action.payload.fromIndex, 1))
+        const indexCurrentIngredients = arrIngredients.indexOf(action.payload.element)
+        arrIngredients.splice(indexCurrentIngredients, 0, ...arrIngredients.splice(action.payload.toIndex, 1))
         return {
             ...state,
             data: arrIngredients,
