@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
-import {Button, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrop} from 'react-dnd';
 import ADD_TO_CONSTRUCTOR from '../../services/actions/addToConstructor';
 import SORT_INGREDIENT from '../../services/actions/sortIngredient'

@@ -1,5 +1,3 @@
-//import ADD_TO_CONSTRUCTOR from '../actions/addToConstructor';
-
 const initialState = {
     data: []
 }

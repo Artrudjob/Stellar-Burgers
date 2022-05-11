@@ -65,7 +65,6 @@ function App() {
 
     const [isIngredientDetailOpened, setIsIngredientDetailOpened] = React.useState(false)
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-    //const [currentIngredient, setCurrentIngredient] = React.useState(null)
 
     //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
     function openOrderDetails() {
@@ -80,7 +79,6 @@ function App() {
 
     function handleIngredientClick(ingredient) {
         dispatch(ADD_CURRENT_INGREDIENT(ingredient))
-        /*setCurrentIngredient(ingredient);*/
         setIsIngredientDetailOpened(true);
     }
 
