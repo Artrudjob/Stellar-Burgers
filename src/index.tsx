@@ -6,6 +6,7 @@ import rootReducer from '../src/services/rootReducer'
 import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
+import store from "./services/store";
 import {Provider} from "react-redux";
 
 declare global {
@@ -13,10 +14,6 @@ declare global {
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
     }
 }
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-const store = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
     <React.StrictMode>
