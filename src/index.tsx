@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { compose, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from '../src/services/rootReducer'
+import { compose } from 'redux';
 import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
