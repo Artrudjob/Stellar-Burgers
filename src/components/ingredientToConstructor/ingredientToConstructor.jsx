@@ -24,8 +24,6 @@ function IngredientToConstructor(props) {
     const [, dropRef] = useDrop({
         accept: 'SORT_INGREDIENT',
         hover: item => {
-            console.log(item);
-            console.log(`props.index - ${props.index}`);
             props.moveIngredientsToConstructor(item, props.index)
         }
     })
@@ -39,10 +37,9 @@ function IngredientToConstructor(props) {
 
         if (element.type === 'bun') {
             return (
-                <div className={constructorStyle.constructor_position} //key={props.key}
+                <div className={constructorStyle.constructor_position}
                      onClick={() => props.onClick(element)}>
                     <ConstructorElement
-                        //key={props.key}
                         type={props.type}
                         isLocked={true}
                         text={`${element.name} (верх)`}

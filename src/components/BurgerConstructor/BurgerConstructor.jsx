@@ -51,7 +51,8 @@ function BurgerConstructor(props) {
    const allIngredients = ingredientsBurger.map((element, index) => {
        if (element.type !== 'bun') {
            return (
-               <IngredientToConstructor element={element} onClick={openIngredient} index={index} moveIngredientsToConstructor={moveIngredientsToConstructor} key={uuid()}/>
+               <IngredientToConstructor element={element} onClick={openIngredient} index={index}
+                                        moveIngredientsToConstructor={moveIngredientsToConstructor} key={element.uuid}/>
            )
        }
     })
