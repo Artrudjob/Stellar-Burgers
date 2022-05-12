@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrop} from 'react-dnd';
-import ADD_TO_CONSTRUCTOR from '../../services/actions/addToConstructor';
-import SORT_INGREDIENT from '../../services/actions/sortIngredient'
+import { addToConstructor } from '../../services/actions/addToConstructor';
+import { sortIngredient } from '../../services/actions/sortIngredient'
 import {v4 as uuid} from 'uuid'
 import IngredientToConstructor from "../ingredientToConstructor/ingredientToConstructor";
 
@@ -30,14 +30,14 @@ function BurgerConstructor(props) {
 
     const [{ isOver }, dropTarget] = useDrop({
         accept: 'NEW_INGREDIENT',
-        drop: (item) => dispatch(ADD_TO_CONSTRUCTOR(item)),
+        drop: (item) => dispatch(addToConstructor(item)),
         collect: monitor => ({
             isOver: monitor.isOver()
         })
     })
 
     function moveIngredientsToConstructor(element, toIndex) {
-        dispatch(SORT_INGREDIENT(element, toIndex))
+        dispatch(sortIngredient(element, toIndex))
     }
 
     const topBun = ingredientsBurger.map(element => {

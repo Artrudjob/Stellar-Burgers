@@ -1,6 +1,7 @@
-const REMOVE_CURRENT_INGREDIENT = {
-    type: 'REMOVE_CURRENT_INGREDIENT',
-    dataIngredient: null
-}
+export const REMOVE_CURRENT_INGREDIENT = 'REMOVE_CURRENT_INGREDIENT';
 
-export default REMOVE_CURRENT_INGREDIENT;
+export const removeCurrentIngredient = {
+    type: REMOVE_CURRENT_INGREDIENT,
+    dataIngredient: null
+};
+

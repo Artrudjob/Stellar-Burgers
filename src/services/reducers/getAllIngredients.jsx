@@ -1,4 +1,4 @@
-import GET_ALL_INGREDIENTS from "../actions/getAllIngredients";
+import { GET_ALL_INGREDIENTS } from "../actions/getAllIngredients";
 
 const initialState = {
     ingredients: [],
@@ -7,7 +7,7 @@ const initialState = {
 }
 
 function getAllIngredients(state = initialState, action) {
-    if (action.type === 'GET_ALL_INGREDIENTS') {
+    if (action.type === GET_ALL_INGREDIENTS) {
         return {
             ...state,
             ingredients: action.payload,

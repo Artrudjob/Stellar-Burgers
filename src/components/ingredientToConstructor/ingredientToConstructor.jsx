@@ -1,11 +1,10 @@
-import React, {useRef} from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import constructorStyle from './ingredientToConstructor.module.css'
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDrag, useDrop} from 'react-dnd';
-import REMOVE_TO_CONSTRUCTOR from '../../services/actions/removeToConstructor';
-import SORT_INGREDIENT from '../../services/actions/sortIngredient'
+import { useDrag, useDrop } from 'react-dnd';
+import { removeToConstructor } from '../../services/actions/removeToConstructor';
 
 function IngredientToConstructor(props) {
     const ref = useRef(null);
@@ -35,7 +34,7 @@ function IngredientToConstructor(props) {
 
 
     function deleteIngredient(e, element) {
-        dispatch(REMOVE_TO_CONSTRUCTOR(element));
+        dispatch(removeToConstructor(element));
     }
 
         if (element.type === 'bun') {

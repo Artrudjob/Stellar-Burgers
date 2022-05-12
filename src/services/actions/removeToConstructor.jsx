@@ -1,6 +1,6 @@
-const REMOVE_TO_CONSTRUCTOR = (uuid) => ({
-    type: 'REMOVE_TO_CONSTRUCTOR',
+export const REMOVE_TO_CONSTRUCTOR = 'REMOVE_TO_CONSTRUCTOR';
+
+export const removeToConstructor = (uuid) => ({
+    type: REMOVE_TO_CONSTRUCTOR,
     payload: uuid
 })
-
-export default REMOVE_TO_CONSTRUCTOR;

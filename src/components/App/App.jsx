@@ -8,13 +8,13 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
-import GET_ALL_INGREDIENTS from '../../services/actions/getAllIngredients';
-import ADD_CURRENT_INGREDIENT from '../../services/actions/addCurrentIngredient';
-import ORDER_NUMBER from '../../services/actions/orderNumber';
+import { getAllIngredients } from "../../services/actions/getAllIngredients";
+import { addCurrentIngredient } from '../../services/actions/addCurrentIngredient';
+import { burgerOrderNumber } from '../../services/actions/orderNumber';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import { DndProvider} from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import REMOVE_CURRENT_INGREDIENT from "../../services/actions/removeCurrentIngredient";
+import { removeCurrentIngredient } from "../../services/actions/removeCurrentIngredient";
 
 function App() {
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ function App() {
             return fetch(`${baseUrl}ingredients`)
                 .then(checkResponse)
                 .then((result) => {
-                    dispatch(GET_ALL_INGREDIENTS(result.data))
+                    dispatch(getAllIngredients(result.data))
                     return result.data
                 })
                 .catch((err) => {
@@ -45,14 +45,14 @@ function App() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    'ingredients': /*state.items*/arrData.map(item => {
+                    'ingredients': arrData.map(item => {
                         return item._id
                     })
                 })
             })
                 .then(checkResponse)
                 .then(result => {
-                    dispatch(ORDER_NUMBER(result.order.number))
+                    dispatch(burgerOrderNumber(result.order.number))
                     setIsOrderDetailsOpened(true) //меняет состояние на true, чтобы открылась модалка
                 })
                 .catch((err) => {
@@ -74,11 +74,11 @@ function App() {
     function closeModals() {
         setIsOrderDetailsOpened(false)
         setIsIngredientDetailOpened(false)
-        dispatch(REMOVE_CURRENT_INGREDIENT)
+        dispatch(removeCurrentIngredient)
     }
 
     function handleIngredientClick(ingredient) {
-        dispatch(ADD_CURRENT_INGREDIENT(ingredient))
+        dispatch(addCurrentIngredient(ingredient))
         setIsIngredientDetailOpened(true);
     }
 
