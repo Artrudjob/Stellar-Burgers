@@ -57,9 +57,6 @@ function App() {
     return (
         <div className={appStyle.App}>
             <AppHeader/>
-            {isLoader && <div className={appStyle.app_overlay}>
-                <div className={appStyle.app_loader}></div>
-            </div>}
             <main className={appStyle.app__main}>
                 <DndProvider backend={HTML5Backend}>
                     <BurgerIngredients onClick={handleIngredientClick}/>
