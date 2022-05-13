@@ -1,6 +1,5 @@
 import React from 'react';
 import appStyle from './app.module.css';
-import {baseUrl, checkResponse} from '../../consts/consts';
 import store from "../../index";
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
@@ -8,12 +7,10 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
-import { getAllIngredients } from "../../services/actions/getAllIngredients";
 import { fetchIngredients } from '../../services/actions/getAllIngredients';
 import { fetchOrderNumber } from '../../services/actions/orderNumber'
 import { addCurrentIngredient } from '../../services/actions/addCurrentIngredient';
 import { removeAllElToConstructor } from '../../services/actions/removeAllElToConstructor';
-import { burgerOrderNumber } from '../../services/actions/orderNumber';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import { DndProvider} from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
