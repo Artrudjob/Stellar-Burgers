@@ -7,7 +7,7 @@ const burgerOrderNumber = (id) => ({
     data: id
 })
 
-const fetchOrderNumber = (ingredients, openModal) => {
+const fetchOrderNumber = (ingredients, openModal, removeIngredients) => {
     return function (dispatch) {
         dispatch({
             type: ORDER_NUMBER,
@@ -27,7 +27,8 @@ const fetchOrderNumber = (ingredients, openModal) => {
             .then(checkResponse)
             .then(result => {
                 dispatch(burgerOrderNumber(result.order.number))
-                openModal(true) //меняет состояние на true, чтобы открылась модалка
+                openModal(true); //меняет состояние на true, чтобы открылась модалка
+                dispatch(removeIngredients)
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);

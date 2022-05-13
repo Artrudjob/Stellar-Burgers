@@ -12,6 +12,7 @@ import { getAllIngredients } from "../../services/actions/getAllIngredients";
 import { fetchIngredients } from '../../services/actions/getAllIngredients';
 import { fetchOrderNumber } from '../../services/actions/orderNumber'
 import { addCurrentIngredient } from '../../services/actions/addCurrentIngredient';
+import { removeAllElToConstructor } from '../../services/actions/removeAllElToConstructor';
 import { burgerOrderNumber } from '../../services/actions/orderNumber';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import { DndProvider} from 'react-dnd';
@@ -33,7 +34,8 @@ function App() {
 
     //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
     function openOrderDetails() {
-        store.dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened));
+        store.dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened, removeAllElToConstructor));
+
     }
 
     function closeModals() {
@@ -56,6 +58,7 @@ function App() {
             <main className={appStyle.app__main}>
                 <DndProvider backend={HTML5Backend}>
                     <BurgerIngredients onClick={handleIngredientClick}/>
+                    {}
                     <BurgerConstructor
                         onClick={handleIngredientClick}
                         openOrderDetails={openOrderDetails}/>

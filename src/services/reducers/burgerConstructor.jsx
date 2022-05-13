@@ -1,6 +1,7 @@
 import { ADD_TO_CONSTRUCTOR } from "../actions/addToConstructor";
 import { REMOVE_TO_CONSTRUCTOR } from "../actions/removeToConstructor";
-import { SORT_INGREDIENT } from "../actions/sortIngredient";
+import { SORT_INGREDIENT } from '../actions/sortIngredient';
+import { REMOVE_ALL_EL_TO_CONSTRUCTOR} from '../actions/removeAllElToConstructor';
 
 const initialState = {
     data: []
@@ -28,6 +29,10 @@ function burgerConstructor(state = initialState, action) {
             ...state,
             data: arrIngredients,
         }
+    } else if (action.type === REMOVE_ALL_EL_TO_CONSTRUCTOR) {
+      return ({
+          data: action.el
+      })
     } else {
         return state;
     }
