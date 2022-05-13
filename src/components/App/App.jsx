@@ -9,6 +9,8 @@ import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 import { getAllIngredients } from "../../services/actions/getAllIngredients";
+import { fetchIngredients } from '../../services/actions/getAllIngredients';
+import { fetchOrderNumber } from '../../services/actions/orderNumber'
 import { addCurrentIngredient } from '../../services/actions/addCurrentIngredient';
 import { burgerOrderNumber } from '../../services/actions/orderNumber';
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
@@ -16,59 +18,22 @@ import { DndProvider} from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { removeCurrentIngredient } from "../../services/actions/removeCurrentIngredient";
 
+export let arrData;
+
 function App() {
     const dispatch = useDispatch();
-
-    function fetchIngredients() {
-        return dispatch => {
-            return fetch(`${baseUrl}ingredients`)
-                .then(checkResponse)
-                .then((result) => {
-                    dispatch(getAllIngredients(result.data))
-                    return result.data
-                })
-                .catch((err) => {
-                    console.log(`Что-то пошло не так: ${err}`);
-                })
-        }
-    }
+    const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
 
     React.useEffect(() => {
-        store.dispatch(fetchIngredients())
+        dispatch(fetchIngredients(arrData))
     }, [])
-
-    function fetchOrderNumber() {
-        return dispatch => {
-            fetch(`${baseUrl}orders`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    'ingredients': arrData.map(item => {
-                        return item._id
-                    })
-                })
-            })
-                .then(checkResponse)
-                .then(result => {
-                    dispatch(burgerOrderNumber(result.order.number))
-                    setIsOrderDetailsOpened(true) //меняет состояние на true, чтобы открылась модалка
-                })
-                .catch((err) => {
-                    console.log(`Что-то пошло не так: ${err}`);
-                })
-        }
-    }
-
-    const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
 
     const [isIngredientDetailOpened, setIsIngredientDetailOpened] = React.useState(false)
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
 
     //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
     function openOrderDetails() {
-        store.dispatch(fetchOrderNumber());
+        store.dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened));
     }
 
     function closeModals() {
