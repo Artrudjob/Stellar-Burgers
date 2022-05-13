@@ -7,12 +7,13 @@ const burgerOrderNumber = (id) => ({
     data: id
 })
 
-const fetchOrderNumber = (ingredients, openModal, removeIngredients) => {
+const fetchOrderNumber = (ingredients, openModal, stateLoader, removeIngredients) => {
     return function (dispatch) {
         dispatch({
             type: ORDER_NUMBER,
             ingredients
         })
+        stateLoader(true)
         fetch(`${baseUrl}orders`, {
             method: 'POST',
             headers: {
@@ -32,6 +33,9 @@ const fetchOrderNumber = (ingredients, openModal, removeIngredients) => {
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);
+            })
+            .finally(() => {
+                stateLoader(false)
             })
     }
 }

@@ -18,6 +18,7 @@ import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import { DndProvider} from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { removeCurrentIngredient } from "../../services/actions/removeCurrentIngredient";
+import Loader from "../Loader/Loader";
 
 export let arrData;
 
@@ -31,10 +32,11 @@ function App() {
 
     const [isIngredientDetailOpened, setIsIngredientDetailOpened] = React.useState(false)
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
+    const [isLoader, setIsLoader] = React.useState(false) //Состояние загрузки
 
     //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
     function openOrderDetails() {
-        store.dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened, removeAllElToConstructor));
+        store.dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
 
     }
 
@@ -55,10 +57,12 @@ function App() {
     return (
         <div className={appStyle.App}>
             <AppHeader/>
+            {isLoader && <div className={appStyle.app_overlay}>
+                <div className={appStyle.app_loader}></div>
+            </div>}
             <main className={appStyle.app__main}>
                 <DndProvider backend={HTML5Backend}>
                     <BurgerIngredients onClick={handleIngredientClick}/>
-                    {}
                     <BurgerConstructor
                         onClick={handleIngredientClick}
                         openOrderDetails={openOrderDetails}/>
@@ -73,6 +77,9 @@ function App() {
                 <Modal onOverlayClick={closeModals} closeModals={closeModals} title={'Детали ингредиента'}>
                     <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient}/>
                 </Modal>
+            )}
+            {isLoader && (
+                <Loader />
             )}
         </div>
     );
