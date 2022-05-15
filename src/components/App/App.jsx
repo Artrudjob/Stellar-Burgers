@@ -1,6 +1,5 @@
 import React from 'react';
 import appStyle from './app.module.css';
-import store from "../../index";
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
@@ -17,7 +16,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { removeCurrentIngredient } from "../../services/actions/removeCurrentIngredient";
 import Loader from "../Loader/Loader";
 
-export let arrData;
+//export let arrData;
 
 function App() {
     const dispatch = useDispatch();
@@ -31,10 +30,16 @@ function App() {
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
     const [isLoader, setIsLoader] = React.useState(false) //Состояние загрузки
 
+    const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual);
+
     //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
     function openOrderDetails() {
-        store.dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
-
+        const ingredientsType = ingredientsBurger.map(item => item.type)
+        if ((ingredientsType.includes('bun')) && ((ingredientsType.includes('sauce')) || (ingredientsType.includes('main')))) {
+            dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
+        } else {
+            return false
+        }
     }
 
     function closeModals() {

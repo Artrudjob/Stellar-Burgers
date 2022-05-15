@@ -99,3 +99,8 @@
     cursor: pointer;
 }
 
+.constructor__error {
+    width: 100%;
+    text-align: right;
+    color: red;
+}

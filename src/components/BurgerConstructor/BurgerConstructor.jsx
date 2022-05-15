@@ -14,6 +14,7 @@ function BurgerConstructor(props) {
     const openIngredient = props.onClick;
     const dispatch = useDispatch();
 
+    const [ingredientsValidation, setIngredientsValidation] = useState(true)
     const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
     React.useEffect(() => {
         const arrDataPrice = ingredientsBurger.map(item => {
@@ -85,10 +86,18 @@ function BurgerConstructor(props) {
                         <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>{ingredientsPrice}</p>
                         <CurrencyIcon type="primary"/>
                     </div>
-                    <Button type="primary" size="medium" onClick={props.openOrderDetails}>
+                    <Button type="primary" size="medium" onClick={() => {
+                        if (props.openOrderDetails() === false) {
+                            setIngredientsValidation(false)
+                        } else {
+                            setIngredientsValidation(true)
+                            props.openOrderDetails()
+                        }
+                    }}>
                         Оформить заказ
                     </Button>
                 </div>
+                    {!ingredientsValidation && <p className={`${constructorStyle.constructor__error} text text_type_main-small mt-2`}>Добавьте булку или ингредиент</p>}
             </section>
             }
         </>
