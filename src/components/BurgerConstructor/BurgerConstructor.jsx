@@ -1,96 +1,106 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
-import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerIngredientsContext } from '../../context/burger-ingredients-context';
+import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useDrop} from 'react-dnd';
+import { addToConstructor } from '../../services/actions/addToConstructor';
+import { sortIngredient } from '../../services/actions/sortIngredient'
+import {v4 as uuid} from 'uuid'
+import IngredientToConstructor from "../ingredientToConstructor/ingredientToConstructor";
 
 function BurgerConstructor(props) {
-    const arrData = useContext(BurgerIngredientsContext);
+    const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual);
+    const openIngredient = props.onClick;
+    const dispatch = useDispatch();
 
-
+    const [ingredientsValidation, setIngredientsValidation] = useState(true)
     const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
     React.useEffect(() => {
-        const arrDataPrice = arrData.map(item => item.price);
+        const arrDataPrice = ingredientsBurger.map(item => {
+            let cost = item.price;
+            if (item.type === 'bun') {
+                cost = item.price * 2;
+            }
+            return cost;
+        })
         if (arrDataPrice.length !== 0) {
             setIngredientsPrice(arrDataPrice.reduce((total, value) => total + value));
         }
-    }, [arrData])
+    }, [ingredientsBurger])
 
-    const topBun = arrData.map(element => {
-        if (element.name === 'Краторная булка N-200i') {
+    const [{ isOver }, dropTarget] = useDrop({
+        accept: 'NEW_INGREDIENT',
+        drop: (item) => dispatch(addToConstructor(item)),
+        collect: monitor => ({
+            isOver: monitor.isOver()
+        })
+    })
+
+    function moveIngredientsToConstructor(element, toIndex) {
+        dispatch(sortIngredient(element, toIndex))
+    }
+
+    const topBun = ingredientsBurger.map(element => {
+        if (element.type === 'bun') {
             return (
-                <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
-                    <ConstructorElement
-                        key={element._id}
-                        type="top"
-                        isLocked={true}
-                        text={`${element.name} (верх)`}
-                        price={element.price}
-                        thumbnail={element.image}
-                    />
-                </div>
+                <IngredientToConstructor element={element} onClick={openIngredient} type={"top"} key={uuid()}/>
             )
-        } else {
-            return null;
         }
     })
 
-   const allIngredients = arrData.map(element => {
-        if ((element.name !== 'Краторная булка N-200i') && (element.type !== 'bun')) {
-            return (
-                <div className={constructorStyle.constructor__flexContainer} key={element._id} onClick={() => props.onClick(element)}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                        key={element._id}
-                        text={element.name}
-                        price={element.price}
-                        thumbnail={element.image}
-                    />
-                </div>
-            )
-        } else {
-            return null;
-        }
+   const allIngredients = ingredientsBurger.map((element, index) => {
+       if (element.type !== 'bun') {
+           return (
+               <IngredientToConstructor element={element} onClick={openIngredient} index={index}
+                                        moveIngredientsToConstructor={moveIngredientsToConstructor} key={element.uuid}/>
+           )
+       }
     })
 
-    const bottomBun = arrData.map(element => {
-        if (element.name === 'Краторная булка N-200i') {
+    const bottomBun = ingredientsBurger.map(element => {
+        if (element.type === 'bun') {
             return (
-                <div className={constructorStyle.constructor_position} key={element._id} onClick={() => props.onClick(element)}>
-                    <ConstructorElement
-                        key={element._id}
-                        type="bottom"
-                        isLocked={true}
-                        text={`${element.name} (низ)`}
-                        price={element.price}
-                        thumbnail={element.image}
-                    />
-                </div>
+                <IngredientToConstructor element={element} onClick={openIngredient} type={"bottom"} key={uuid()}/>
             )
-        } else {
-            return null;
         }
     })
 
     return (
-        <section className={`${constructorStyle.constructor} mt-25`}>
-            <div className={`${constructorStyle.constructor__boxList}`}>
-                {topBun}
-                <div className={`${constructorStyle.constructor__boxList} ${constructorStyle.constructor__boxList_scrollbar}`}>
-                    {allIngredients}
+        <>
+            {ingredientsBurger.length === 0 ?
+                <section className={`${constructorStyle.constructor__vacant} mt-25`} ref={dropTarget}>
+                    <p className={'text text_type_main-medium'}>{isOver ? 'Отпускайте' : 'Перенесите ингредиенты сюда'}</p>
+                </section>
+                :
+                <section className={`${constructorStyle.constructor} mt-25`} ref={dropTarget}>
+                <div className={`${constructorStyle.constructor__boxList}`}>
+                    {topBun}
+                    <div className={`${constructorStyle.constructor__boxList} ${constructorStyle.constructor__boxList_scrollbar}`}>
+                        {allIngredients}
+                    </div>
+                    {bottomBun}
                 </div>
-                {bottomBun}
-            </div>
-            <div className={`${constructorStyle.constructor__info} mt-10`}>
-                <div>
-                    <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>{ingredientsPrice}</p>
-                    <CurrencyIcon type="primary" />
+                <div className={`${constructorStyle.constructor__info} mt-10`}>
+                    <div>
+                        <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>{ingredientsPrice}</p>
+                        <CurrencyIcon type="primary"/>
+                    </div>
+                    <Button type="primary" size="medium" onClick={() => {
+                        if (props.openOrderDetails() === false) {
+                            setIngredientsValidation(false)
+                        } else {
+                            setIngredientsValidation(true)
+                            props.openOrderDetails()
+                        }
+                    }}>
+                        Оформить заказ
+                    </Button>
                 </div>
-                <Button type="primary" size="medium" onClick={props.openOrderDetails}>
-                    Оформить заказ
-                </Button>
-            </div>
-        </section>
+                    {!ingredientsValidation && <p className={`${constructorStyle.constructor__error} text text_type_main-small mt-2`}>Добавьте булку или ингредиент</p>}
+            </section>
+            }
+        </>
     )
 }
 

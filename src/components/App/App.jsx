@@ -1,95 +1,87 @@
 import React from 'react';
 import appStyle from './app.module.css';
-import { baseUrl, checkResponse } from '../../consts/consts';
-import { BurgerIngredientsContext } from '../../context/burger-ingredients-context';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
+import { fetchIngredients } from '../../services/actions/getAllIngredients';
+import { fetchOrderNumber } from '../../services/actions/orderNumber'
+import { addCurrentIngredient } from '../../services/actions/addCurrentIngredient';
+import { removeAllElToConstructor } from '../../services/actions/removeAllElToConstructor';
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import { DndProvider} from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { removeCurrentIngredient } from "../../services/actions/removeCurrentIngredient";
+import Loader from "../Loader/Loader";
+
+//export let arrData;
 
 function App() {
-  const [state, setState] = React.useState({
-      error: null,
-      loading: false,
-      items: []
-  })
+    const dispatch = useDispatch();
+    const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
 
-    const [orderNumber, setOrderNumber] = React.useState(null) // состояние номера заказа
-
-  React.useEffect(() => {
-      fetch(`${baseUrl}ingredients`)
-          .then(checkResponse)
-          .then((result) => {
-              setState({...state, loading: true, items: result.data})
-          })
-          .catch((err) => {
-              setState({...state, error: err})
-              console.log(`Что-то пошло не так: ${err}`);
-          })
-  }, [state])
+    React.useEffect(() => {
+        dispatch(fetchIngredients(arrData))
+    }, [])
 
     const [isIngredientDetailOpened, setIsIngredientDetailOpened] = React.useState(false)
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-    const [currentIngredient, setCurrentIngredient] = React.useState(null)
+    const [isLoader, setIsLoader] = React.useState(false) //Состояние загрузки
+
+    const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual);
 
     //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
     function openOrderDetails() {
-        fetch(`${baseUrl}orders`,{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'ingredients': state.items.map(item => {
-                    return item._id
-                })
-            })
-        })
-            .then(checkResponse)
-            .then(result => {
-                setOrderNumber(result.order.number)
-                setIsOrderDetailsOpened(true) //меняет состояние на true, чтобы открылась модалка
-            })
-            .catch((err) => {
-                console.log(`Что-то пошло не так: ${err}`);
-            })
+        const ingredientsType = ingredientsBurger.map(item => item.type)
+        if ((ingredientsType.includes('bun')) && ((ingredientsType.includes('sauce')) || (ingredientsType.includes('main')))) {
+            dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
+        } else {
+            return false
+        }
     }
 
     function closeModals() {
         setIsOrderDetailsOpened(false)
         setIsIngredientDetailOpened(false)
+        dispatch(removeCurrentIngredient)
     }
 
     function handleIngredientClick(ingredient) {
-        setCurrentIngredient(ingredient);
+        dispatch(addCurrentIngredient(ingredient))
         setIsIngredientDetailOpened(true);
     }
 
-  return (
-    <div className={appStyle.App}>
-      <AppHeader />
-      <main className={appStyle.app__main}>
-          <BurgerIngredientsContext.Provider value={state.items}>
-              <BurgerIngredients onClick={handleIngredientClick} />
-              <BurgerConstructor
-                  onClick={handleIngredientClick}
-                  openOrderDetails={openOrderDetails} />
-          </BurgerIngredientsContext.Provider>
-      </main>
-        {isOrderDetailsOpened && (
-            <Modal onOverlayClick={closeModals} closeModals={closeModals}>
-               <OrderDetails onOverlayClick={closeModals} title={orderNumber}/>
-            </Modal>
-        )}
-        {isIngredientDetailOpened && (
-            <Modal onOverlayClick={closeModals} closeModals={closeModals} title={'Детали ингредиента'}>
-                <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient}/>
-            </Modal>
-        )}
-    </div>
-  );
+    const currentIngredient = useSelector(store => store.setCurrentIngredients.dataIngredient, shallowEqual)
+    const orderNumber = useSelector(store => store.getOrderNumber.data, shallowEqual)
+
+    return (
+        <div className={appStyle.App}>
+            <AppHeader/>
+            <main className={appStyle.app__main}>
+                <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients onClick={handleIngredientClick}/>
+                    <BurgerConstructor
+                        onClick={handleIngredientClick}
+                        openOrderDetails={openOrderDetails}/>
+                </DndProvider>
+            </main>
+            {isOrderDetailsOpened && (
+                <Modal onOverlayClick={closeModals} closeModals={closeModals}>
+                    <OrderDetails onOverlayClick={closeModals} title={orderNumber}/>
+                </Modal>
+            )}
+            {isIngredientDetailOpened && (
+                <Modal onOverlayClick={closeModals} closeModals={closeModals} title={'Детали ингредиента'}>
+                    <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient}/>
+                </Modal>
+            )}
+            {isLoader && (
+                <Loader />
+            )}
+        </div>
+    );
 }
 
 export default App;
