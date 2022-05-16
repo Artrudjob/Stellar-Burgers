@@ -41,6 +41,15 @@ function BurgerConstructor(props) {
         dispatch(sortIngredient(element, toIndex))
     }
 
+    const openOrder = () => {
+        if (props.openOrderDetails() === false) {
+            setIngredientsValidation(false)
+        } else {
+            setIngredientsValidation(true)
+            props.openOrderDetails()
+        }
+    }
+
     const topBun = ingredientsBurger.map(element => {
         if (element.type === 'bun') {
             return (
@@ -86,14 +95,7 @@ function BurgerConstructor(props) {
                         <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>{ingredientsPrice}</p>
                         <CurrencyIcon type="primary"/>
                     </div>
-                    <Button type="primary" size="medium" onClick={() => {
-                        if (props.openOrderDetails() === false) {
-                            setIngredientsValidation(false)
-                        } else {
-                            setIngredientsValidation(true)
-                            props.openOrderDetails()
-                        }
-                    }}>
+                    <Button type="primary" size="medium" onClick={openOrder}>
                         Оформить заказ
                     </Button>
                 </div>
