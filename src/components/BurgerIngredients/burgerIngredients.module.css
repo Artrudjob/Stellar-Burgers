@@ -34,3 +34,6 @@
     display: flex;
 }
 
+.burgersMenu__link {
+    text-decoration: none;
+}
