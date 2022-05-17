@@ -1,0 +1,46 @@
+.login {
+    width: 100%;
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login__container {
+    width: 480px;
+}
+
+.login__title {
+    text-align: center;
+}
+
+.login__fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login__input,
+.login__input div:not(login__input) {
+    width: 100%;
+    position: relative;
+}
+
+.login__text {
+    color: #8585AD;
+}
+
+.login__link {
+    text-decoration: none;
+    color: #4c4cff;
+}
+
+.login__image {
+    width: 24px;
+    position: absolute;
+    top: -45px;
+    right: -430px;
+}
