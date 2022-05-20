@@ -5,6 +5,8 @@ import AppHeader from '../AppHeader/AppHeader';
 import HomePage from '../../pages/HomePage';
 import LoginPage from '../../pages/LoginPage';
 import RegisterPage from '../../pages/RegisterPage';
+import ForgotPasswordPage from '../../pages/ForgotPasswordPage';
+import ResetPasswordPage from '../../pages/ResetPasswordPage';
 /* import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
@@ -64,9 +66,11 @@ function App() {
         <div className={appStyle.App}>
             <Routes>
                 <Route path="/" element={<AppHeader />}>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
+                    <Route index element={<HomePage />} />
+                    <Route path="login" element={<LoginPage />} />
+                    <Route path="register" element={<RegisterPage />} />
+                    <Route path="forgot-password" element={<ForgotPasswordPage />} />
+                    <Route path="reset-password" element={<ResetPasswordPage />} />
                 </Route>
             </Routes>
             {/*<main className={appStyle.app__main}>
