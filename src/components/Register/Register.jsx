@@ -1,25 +1,43 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import registerStyle from './register.module.css';
-import {Button, Input, ShowIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, Input, ShowIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import {fetchRegisterUser} from '../../services/actions/resgisterUser';
 
 function Register() {
-    const [value, setValue] = React.useState('')
+    const dispatch = useDispatch();
+
+    const [name, setName] = React.useState('');
+    const [userEmail, setUserEmail] = React.useState('');
+    const [userPassword, setUserPassword] = React.useState('');
+
+    function handleChange(e, value) {
+        value(e.target.value);
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        dispatch(fetchRegisterUser(userEmail, userPassword, name));
+    }
 
     return (
         <section className={registerStyle.register}>
             <div className={registerStyle.register__container}>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <h2 className={`text text_type_main-medium ${registerStyle.register__title}`}>Регистрация</h2>
                     <fieldset className={registerStyle.register__fieldset}>
                         <div className={`mt-6 ${registerStyle.register__input}`}>
-                            <Input value={value} type="text" placeholder="Имя" name="new-name" size="default" onChange={() => {}}/>
+                            <Input value={name} type="text" placeholder="Имя" name="new-name" size="default"
+                                   onChange={(e) => {handleChange(e, setName)}}/>
                         </div>
                         <div className={`mt-6 ${registerStyle.register__input}`}>
-                            <Input value={value} type="email" placeholder="E-mail" name="new-email" size="default" onChange={() => {}}/>
+                            <Input value={userEmail} type="email" placeholder="E-mail" name="new-email" size="default"
+                                   onChange={(e) => {handleChange(e, setUserEmail)}}/>
                         </div>
                         <div className={`mt-6 ${registerStyle.register__input}`}>
-                            <Input value={value} type="password" placeholder="Пароль" name="new-password" size="default" onChange={() => {}} />
+                            <Input value={userPassword} type="password" placeholder="Пароль" name="new-password" size="default"
+                                   onChange={(e) => {handleChange(e, setUserPassword)}} />
                             <div className={registerStyle.register__image}>
                                 <ShowIcon type={"primary"} />
                             </div>
