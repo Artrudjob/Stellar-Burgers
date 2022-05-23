@@ -1,0 +1,44 @@
+.profile {
+    width: 63%;
+    margin: 120px auto 0 auto;
+}
+
+.profile__gridBox {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 320px 480px;
+    column-gap: 60px;
+    grid-template-areas:
+    "nav inputs";
+}
+
+.profile__navigation {
+    display: flex;
+    flex-direction: column;
+    grid-area: nav;
+}
+
+.profile__inputs {
+    grid-area: inputs;
+}
+
+.profile_text {
+    opacity: .4;
+}
+
+.profile__links {
+    text-decoration: none;
+}
+
+.profile__box,
+.profile__box div:not(profile__box) {
+    width: 100%;
+    position: relative;
+}
+
+.profile__image {
+    width: 24px;
+    position: absolute;
+    top: -45px;
+    right: -430px;
+}

@@ -7,6 +7,7 @@ import LoginPage from '../../pages/LoginPage';
 import RegisterPage from '../../pages/RegisterPage';
 import ForgotPasswordPage from '../../pages/ForgotPasswordPage';
 import ResetPasswordPage from '../../pages/ResetPasswordPage';
+import ProfilePage from '../../pages/ProfilePage';
 /* import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
@@ -67,6 +68,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<AppHeader />}>
                     <Route index element={<HomePage />} />
+                    <Route path="profile" element={<ProfilePage />} />
                     <Route path="login" element={<LoginPage />} />
                     <Route path="register" element={<RegisterPage />} />
                     <Route path="forgot-password" element={<ForgotPasswordPage />} />
