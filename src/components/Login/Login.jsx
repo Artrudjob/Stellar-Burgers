@@ -4,7 +4,12 @@ import React from 'react';
 import loginStyle from './login.module.css'
 
 function Login() {
-    const [value, setValue] = React.useState('')
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
+    function handleChange(e, value) {
+        value(e.target.value);
+    }
 
     return (
         <section className={loginStyle.login}>
@@ -13,10 +18,12 @@ function Login() {
                     <h2 className={`text text_type_main-medium ${loginStyle.login__title}`}>Вход</h2>
                     <fieldset className={loginStyle.login__fieldset}>
                         <div className={`mt-6 ${loginStyle.login__input}`}>
-                            <Input value={value} type="email" placeholder="E-mail" name="user-email" size="default" onChange={() => {}}/>
+                            <Input value={email} type="email" placeholder="E-mail" name="user-email"
+                                   size="default" onChange={(e) => {handleChange(e, setEmail)}}/>
                         </div>
                         <div className={`mt-6 ${loginStyle.login__input}`}>
-                            <Input value={value} type="password" placeholder="Пароль" name="user-password" size="default" onChange={() => {}} />
+                            <Input value={password} type="password" placeholder="Пароль" name="user-password"
+                                   size="default" onChange={(e) => {handleChange(e, setPassword)}} />
                             <div className={loginStyle.login__image}>
                                 <ShowIcon type={"primary"} />
                             </div>
