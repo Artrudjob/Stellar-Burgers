@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './resetPassword.module.css';
 import {Button, Input, ShowIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import { fetchNewPassword } from '../../services/actions/postNewPassword';
 
@@ -10,8 +10,8 @@ function ResetPassword() {
     const [codeMessage, setCodeMessage] = React.useState('');
     const dispatch = useDispatch();
 
-    function handleChange(e, input) {
-        input(e.target.value);
+    function handleChange(e, value) {
+        value(e.target.value);
     }
 
     function handleSubmit(e) {
