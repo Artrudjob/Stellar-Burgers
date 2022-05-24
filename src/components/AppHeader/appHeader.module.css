@@ -27,6 +27,10 @@
     text-decoration: none;
 }
 
+.header_link_active {
+    color: red;
+}
+
 .header__text {
     color: white;
 }
