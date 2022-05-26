@@ -6,6 +6,7 @@ import burgerConstructor from './reducers/burgerConstructor';
 import restorePassword from './reducers/restorePassword';
 import resetPassword from './reducers/resetPassword';
 import registerUserReducer from './reducers/registerUser';
+import authReducer from './reducers/authReducer';
 
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     burgerConstructor,
     restorePassword,
     resetPassword,
-    registerUserReducer
+    registerUserReducer,
+    authReducer
 });
 export default rootReducer;

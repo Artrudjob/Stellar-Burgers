@@ -1,9 +1,13 @@
-import {Button, Input, ShowIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {Link} from 'react-router-dom';
+import { Button, Input, ShowIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 import React from 'react';
+import { fetchPostAuth } from '../../services/actions/postAuth';
 import loginStyle from './login.module.css'
+import {useDispatch} from "react-redux";
 
 function Login() {
+    const dispatch = useDispatch();
+
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
@@ -11,10 +15,15 @@ function Login() {
         value(e.target.value);
     }
 
+    function handleSubmit(e) {
+        e.preventDefault();
+        dispatch(fetchPostAuth(email, password));
+    }
+
     return (
         <section className={loginStyle.login}>
             <div className={loginStyle.login__container}>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <h2 className={`text text_type_main-medium ${loginStyle.login__title}`}>Вход</h2>
                     <fieldset className={loginStyle.login__fieldset}>
                         <div className={`mt-6 ${loginStyle.login__input}`}>
