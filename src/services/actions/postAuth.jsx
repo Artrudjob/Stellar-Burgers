@@ -7,7 +7,7 @@ const postAuth = (answer) => ({
     payload: answer
 });
 
-const fetchPostAuth = (userEmail, userPassword) => {
+const fetchPostAuth = (userEmail, userPassword, navigate) => {
     return function (dispatch) {
         dispatch({
             type: POST_AUTH
@@ -24,7 +24,8 @@ const fetchPostAuth = (userEmail, userPassword) => {
     })
         .then(checkResponse)
         .then(result => {
-            dispatch(postAuth(result))
+            dispatch(postAuth(result));
+            navigate('/');
         })
         .catch((err) => {
             console.log(`Что-то пошло не так: ${err}`);

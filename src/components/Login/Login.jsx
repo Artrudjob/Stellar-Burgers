@@ -1,5 +1,5 @@
 import { Button, Input, ShowIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import React from 'react';
 import { fetchPostAuth } from '../../services/actions/postAuth';
 import loginStyle from './login.module.css'
@@ -7,6 +7,7 @@ import {useDispatch} from "react-redux";
 
 function Login() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -17,7 +18,7 @@ function Login() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch(fetchPostAuth(email, password));
+        dispatch(fetchPostAuth(email, password, navigate));
     }
 
     return (

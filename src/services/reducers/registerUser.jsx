@@ -6,7 +6,6 @@ const initialState = {
 
 function registerUserReducer(state = initialState, action) {
     if (action.type === REGISTER_USER) {
-        console.log(action.payload);
         return ({
             data: action.payload
         })

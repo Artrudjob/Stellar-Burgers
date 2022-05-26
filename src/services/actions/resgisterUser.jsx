@@ -7,7 +7,7 @@ const registerUser = (answer) => ({
     payload: answer
 })
 
-const fetchRegisterUser = (email, password, name) => {
+const fetchRegisterUser = (email, password, name, navigate) => {
     return function (dispatch) {
         dispatch ({
             type: REGISTER_USER
@@ -26,6 +26,7 @@ const fetchRegisterUser = (email, password, name) => {
             .then(checkResponse)
             .then((result) => {
                 dispatch(registerUser(result));
+                navigate('/');
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);
