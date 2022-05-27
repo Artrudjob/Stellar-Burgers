@@ -6,7 +6,6 @@ const initialState = {
 
 function authReducer(state = initialState, action) {
     if (action.type === POST_AUTH) {
-        console.log(action)
         return ({
             data: action.payload
         })
