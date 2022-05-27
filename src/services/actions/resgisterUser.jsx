@@ -26,6 +26,7 @@ const fetchRegisterUser = (email, password, name, navigate) => {
             .then(checkResponse)
             .then((result) => {
                 dispatch(registerUser(result));
+                localStorage.setItem('refreshToken', result.refreshToken);
                 navigate('/');
             })
             .catch((err) => {

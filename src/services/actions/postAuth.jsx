@@ -25,6 +25,7 @@ const fetchPostAuth = (userEmail, userPassword, navigate) => {
         .then(checkResponse)
         .then(result => {
             dispatch(postAuth(result));
+            localStorage.setItem('refreshToken', result.refreshToken);
             navigate('/');
         })
         .catch((err) => {
