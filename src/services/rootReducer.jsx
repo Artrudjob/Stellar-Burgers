@@ -7,6 +7,7 @@ import restorePassword from './reducers/restorePassword';
 import resetPassword from './reducers/resetPassword';
 import registerUserReducer from './reducers/registerUser';
 import authReducer from './reducers/authReducer';
+import signOutReducer from './reducers/signOutReducer';
 
 
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     restorePassword,
     resetPassword,
     registerUserReducer,
-    authReducer
+    authReducer,
+    signOutReducer
 });
 export default rootReducer;
