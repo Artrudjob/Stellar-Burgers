@@ -9,9 +9,6 @@ const signOutAccount = (answer) => ({
 
 const fetchSignOut = (refreshToken) => {
     return function (dispatch) {
-        dispatch({
-            type: SIGN_OUT_ACCOUNT
-        })
         fetch(`${baseUrl}auth/logout`, {
             method: 'POST',
             headers: {
@@ -25,6 +22,8 @@ const fetchSignOut = (refreshToken) => {
             .then(result => {
                 dispatch(signOutAccount(result));
                 localStorage.removeItem('refreshToken');
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('ExpiredTime');
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);

@@ -3,11 +3,8 @@ import getAllIngredients from './reducers/getAllIngredients'
 import setCurrentIngredients from './reducers/setCurrentIngredients';
 import getOrderNumber from './reducers/getOrderNumber';
 import burgerConstructor from './reducers/burgerConstructor';
-import restorePassword from './reducers/restorePassword';
-import resetPassword from './reducers/resetPassword';
-import registerUserReducer from './reducers/registerUser';
 import authReducer from './reducers/authReducer';
-import signOutReducer from './reducers/signOutReducer';
+import getTokenReducer from './reducers/getTokenReducer';
 
 
 const rootReducer = combineReducers({
@@ -15,10 +12,7 @@ const rootReducer = combineReducers({
     setCurrentIngredients,
     getOrderNumber,
     burgerConstructor,
-    restorePassword,
-    resetPassword,
-    registerUserReducer,
     authReducer,
-    signOutReducer
+    getTokenReducer
 });
 export default rootReducer;

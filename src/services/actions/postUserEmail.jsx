@@ -2,16 +2,15 @@ import { baseUrl, checkResponse } from '../../consts/consts';
 
 const POST_USER_EMAIL = 'POST_USER_EMAIL';
 
-const postUserEmail = (answer) => ({
+const postUserEmail = (successMessage) => ({
     type: POST_USER_EMAIL,
-    payload: answer
+    payload: {
+        message: successMessage
+    }
 })
 
 const fetchUserEmail = (userEmail, navigateResetPassword) => {
     return function (dispatch) {
-        dispatch ({
-            type: POST_USER_EMAIL
-        })
         fetch(`${baseUrl}password-reset`, {
             method: 'POST',
             headers: {
@@ -23,8 +22,7 @@ const fetchUserEmail = (userEmail, navigateResetPassword) => {
         })
             .then(checkResponse)
             .then((result) => {
-                console.log(result);
-                dispatch(postUserEmail(result));
+                dispatch(postUserEmail(result.message));
                 navigateResetPassword('/reset-password', {replace: true});
             })
             .catch((err) => {

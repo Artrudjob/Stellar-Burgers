@@ -2,16 +2,15 @@ import { baseUrl, checkResponse } from '../../consts/consts';
 
 const POST_NEW_PASSWORD = 'POST_NEW_PASSWORD';
 
-const postNewPassword = (answer) => ({
+const postNewPassword = (successMessage) => ({
     type: POST_NEW_PASSWORD,
-    payload: answer
+    payload: {
+        message: successMessage
+    }
 })
 
 const fetchNewPassword = (newPassword, token) => {
     return function (dispatch) {
-        dispatch ({
-            type: POST_NEW_PASSWORD
-        })
         fetch(`${baseUrl}password-reset/reset`, {
             method: 'POST',
             headers: {
@@ -24,8 +23,7 @@ const fetchNewPassword = (newPassword, token) => {
         })
             .then(checkResponse)
             .then((result) => {
-                console.log(result)
-                postNewPassword(result)
+                postNewPassword(result.message)
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);

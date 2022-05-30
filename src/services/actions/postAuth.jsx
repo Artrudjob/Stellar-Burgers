@@ -2,16 +2,16 @@ import {baseUrl, checkResponse} from "../../consts/consts";
 
 const POST_AUTH = 'POST_AUTH';
 
-const postAuth = (answer) => ({
+const postAuth = (userEmail, userName) => ({
     type: POST_AUTH,
-    payload: answer
+    payload: {
+        email: userEmail,
+        name: userName
+    }
 });
 
 const fetchPostAuth = (userEmail, userPassword, navigate) => {
     return function (dispatch) {
-        dispatch({
-            type: POST_AUTH
-        })
     fetch(`${baseUrl}auth/login`, {
         method: 'POST',
         headers: {
@@ -24,8 +24,10 @@ const fetchPostAuth = (userEmail, userPassword, navigate) => {
     })
         .then(checkResponse)
         .then(result => {
-            dispatch(postAuth(result));
+            dispatch(postAuth(result.user.email, result.user.name));
             localStorage.setItem('refreshToken', result.refreshToken);
+            localStorage.setItem('accessToken', result.accessToken);
+            localStorage.setItem('ExpiredTime', new Date());
             navigate('/');
         })
         .catch((err) => {

@@ -9,8 +9,6 @@ function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    console.log(document.cookie);
-
     const [name, setName] = React.useState('');
     const [userEmail, setUserEmail] = React.useState('');
     const [userPassword, setUserPassword] = React.useState('');

@@ -2,16 +2,16 @@ import {baseUrl, checkResponse} from "../../consts/consts";
 
 const REGISTER_USER = 'REGISTER_USER';
 
-const registerUser = (answer) => ({
+const registerUser = (userEmail, userName) => ({
     type: REGISTER_USER,
-    payload: answer
+    payload: {
+        email: userEmail,
+        name: userName
+    }
 })
 
 const fetchRegisterUser = (email, password, name, navigate) => {
     return function (dispatch) {
-        dispatch ({
-            type: REGISTER_USER
-        })
         fetch(`${baseUrl}auth/register`, {
             method: 'POST',
             headers: {
@@ -25,8 +25,10 @@ const fetchRegisterUser = (email, password, name, navigate) => {
         })
             .then(checkResponse)
             .then((result) => {
-                dispatch(registerUser(result));
+                dispatch(registerUser(result.user.email, result.user.name));
                 localStorage.setItem('refreshToken', result.refreshToken);
+                localStorage.setItem('accessToken', result.accessToken);
+                localStorage.setItem('ExpiredTime', new Date());
                 navigate('/');
             })
             .catch((err) => {
