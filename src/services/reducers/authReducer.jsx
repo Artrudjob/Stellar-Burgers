@@ -1,9 +1,10 @@
 import {POST_AUTH} from '../actions/postAuth';
-import {REGISTER_USER} from "../actions/resgisterUser";
-import {GET_USER_INFO} from "../actions/getUserInfo";
-import {POST_USER_EMAIL} from "../actions/postUserEmail";
-import {POST_NEW_PASSWORD} from "../actions/postNewPassword";
-import {SIGN_OUT_ACCOUNT} from "../actions/signOutAccount";
+import {REGISTER_USER} from '../actions/resgisterUser';
+import {GET_USER_INFO} from '../actions/getUserInfo';
+import {UPDATE_USER_INFO} from '../actions/updateUserInfo';
+import {POST_USER_EMAIL} from '../actions/postUserEmail';
+import {POST_NEW_PASSWORD} from '../actions/postNewPassword';
+import {SIGN_OUT_ACCOUNT} from '../actions/signOutAccount';
 
 const initialState = {
     isAuthorization: false,
@@ -18,8 +19,8 @@ function authReducer(state = initialState, action) {
     switch (action.type) {
         case POST_AUTH:
         case REGISTER_USER:
-        case GET_USER_INFO: {
-            console.log(action)
+        case GET_USER_INFO:
+        case UPDATE_USER_INFO: {
             return {
                 isAuthorization: true,
                 name: action.payload.name,

@@ -41,4 +41,11 @@
     position: absolute;
     top: -45px;
     right: -430px;
+    cursor: pointer;
+}
+
+.profile__container {
+    display: flex;
+    justify-content: right;
+    align-items: center;
 }
