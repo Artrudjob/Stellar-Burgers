@@ -1,5 +1,4 @@
 import { GET_TOKEN } from '../actions/getToken';
-import {act} from "react-dom/test-utils";
 
 const initialState = {
     data: {}

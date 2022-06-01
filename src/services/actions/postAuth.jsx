@@ -12,28 +12,28 @@ const postAuth = (userEmail, userName) => ({
 
 const fetchPostAuth = (userEmail, userPassword, navigate) => {
     return function (dispatch) {
-    fetch(`${baseUrl}auth/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            'email': `${userEmail}`,
-            'password': `${userPassword}`
+        fetch(`${baseUrl}auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'email': `${userEmail}`,
+                'password': `${userPassword}`
+            })
         })
-    })
-        .then(checkResponse)
-        .then(result => {
-            dispatch(postAuth(result.user.email, result.user.name));
-            localStorage.setItem('refreshToken', result.refreshToken);
-            localStorage.setItem('accessToken', result.accessToken);
-            localStorage.setItem('ExpiredTime', new Date());
-            navigate('/');
-        })
-        .catch((err) => {
-            console.log(`Что-то пошло не так: ${err}`);
-        })
-    }
+            .then(checkResponse)
+            .then(result => {
+                dispatch(postAuth(result.user.email, result.user.name));
+                localStorage.setItem('refreshToken', result.refreshToken);
+                localStorage.setItem('accessToken', result.accessToken);
+                localStorage.setItem('ExpiredTime', new Date());
+                navigate('/');
+            })
+            .catch((err) => {
+                console.log(`Что-то пошло не так: ${err}`);
+            })
+        }
 }
 
 export {POST_AUTH, fetchPostAuth};
