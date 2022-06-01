@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import {Link, Navigate, useNavigate} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
 import registerStyle from './register.module.css';
 import {Button, Input, ShowIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {fetchRegisterUser} from '../../services/actions/resgisterUser';
@@ -8,6 +8,8 @@ import {fetchRegisterUser} from '../../services/actions/resgisterUser';
 function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const userData = useSelector(store => store.authReducer);
 
     const [name, setName] = React.useState('');
     const [userEmail, setUserEmail] = React.useState('');
@@ -20,6 +22,12 @@ function Register() {
     function handleSubmit(e) {
         e.preventDefault();
         dispatch(fetchRegisterUser(userEmail, userPassword, name, navigate));
+    }
+
+    if (userData.isAuthorization) {
+        return (
+            <Navigate to='/' />
+        )
     }
 
     return (

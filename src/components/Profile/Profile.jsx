@@ -7,6 +7,7 @@ import style from './profile.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchGetUserInfo} from "../../services/actions/getUserInfo";
 import {fetchGetToken} from '../../services/actions/getToken';
+import LoginPage from "../../pages/LoginPage";
 
 function Profile() {
     const userData = useSelector(store => store.authReducer);

@@ -1,14 +1,16 @@
 import React from 'react';
 import style from './forgotPassword.module.css';
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, Navigate, useNavigate} from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { fetchUserEmail } from '../../services/actions/postUserEmail';
 
 function ForgotPassword() {
     const dispatch = useDispatch();
     const [value, setValue] = React.useState('')
     const navigate = useNavigate();
+
+    const userData = useSelector(store => store.authReducer);
 
     function handleChange(e) {
         setValue(e.target.value)
@@ -17,6 +19,12 @@ function ForgotPassword() {
     function handleSubmit(e) {
         e.preventDefault();
         dispatch(fetchUserEmail(value, navigate))
+    }
+
+    if (userData.isAuthorization) {
+        return (
+            <Navigate to='/' />
+        )
     }
 
     return (

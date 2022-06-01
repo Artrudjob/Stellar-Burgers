@@ -1,14 +1,16 @@
 import React from 'react';
 import style from './resetPassword.module.css';
 import {Button, Input, ShowIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {Link, Navigate} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
 import { fetchNewPassword } from '../../services/actions/postNewPassword';
 
 function ResetPassword() {
     const [newPassword, setNewPassword] = React.useState('');
     const [codeMessage, setCodeMessage] = React.useState('');
     const dispatch = useDispatch();
+
+    const userData = useSelector(store => store.authReducer);
 
     function handleChange(e, value) {
         value(e.target.value);
@@ -17,6 +19,12 @@ function ResetPassword() {
     function handleSubmit(e) {
         e.preventDefault();
         dispatch(fetchNewPassword(newPassword, codeMessage));
+    }
+
+    if (userData.isAuthorization) {
+        return (
+            <Navigate to='/' />
+        )
     }
 
     return (
