@@ -7,25 +7,23 @@ const getToken = (answer) => ({
     payload: answer
 })
 
-const fetchGetToken = () => {
+const fetchGetToken = () => { //обновление токена
     return function (dispatch) {
-        dispatch({
-            type: GET_TOKEN
-        })
-
         const refreshToken = localStorage.getItem('refreshToken');
 
         fetch(`${baseUrl}auth/token`,{
-            method: 'GET',
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
                 'token': `${refreshToken}`
-            }
+            })
         })
             .then(checkResponse)
             .then(result => {
                 dispatch(getToken(result))
-                localStorage.setItem('accessToken', result);
+                localStorage.setItem('accessToken', result.accessToken);
                 localStorage.setItem('ExpiredTime', new Date());
                 return result;
             })
@@ -35,15 +33,4 @@ const fetchGetToken = () => {
     }
 }
 
-function getValidToken() {
-    const expiredTime = Date.parse(localStorage.getItem('ExpiredTime'));
-    const currentTime = new Date();
-    console.log((currentTime - expiredTime) / 60000 )
-    if ((currentTime - expiredTime) / 60000 > 20) {
-        fetchGetToken();
-    } else {
-        return localStorage.getItem('accessToken');
-    }
-}
-
-export { GET_TOKEN, fetchGetToken, getValidToken };
+export { GET_TOKEN, fetchGetToken };

@@ -14,13 +14,13 @@ const getUserInfo = (userEmail, userName) => ({
 const fetchGetUserInfo = () => {
     return function (dispatch) {
 
-        //const accessToken = localStorage.getItem('accessToken');
+        const accessToken = localStorage.getItem('accessToken');
 
         fetch(`${baseUrl}auth/user`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `${getValidToken()}`
+                Authorization: `${accessToken}`
             }
         })
             .then(checkResponse)
