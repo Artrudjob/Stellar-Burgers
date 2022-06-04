@@ -25,7 +25,6 @@ function Profile() {
         const currentTime = new Date();
 
         if ((currentTime - expiredTime) / 60000 > 19) {
-            console.log('test');
             dispatch(fetchGetToken());
         } else {
             return localStorage.getItem('accessToken');
