@@ -4,7 +4,6 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 import { fetchIngredients } from '../../services/actions/getAllIngredients';
 import { fetchOrderNumber } from '../../services/actions/orderNumber'
 import { addCurrentIngredient } from '../../services/actions/addCurrentIngredient';
@@ -20,10 +19,9 @@ function Home() {
     const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
 
     React.useEffect(() => {
-        dispatch(fetchIngredients(arrData))
+        dispatch(fetchIngredients(arrData));
     }, [])
 
-    const [isIngredientDetailOpened, setIsIngredientDetailOpened] = React.useState(false)
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
     const [isLoader, setIsLoader] = React.useState(false) //Состояние загрузки
 
@@ -41,16 +39,13 @@ function Home() {
 
     function closeModals() {
         setIsOrderDetailsOpened(false)
-        setIsIngredientDetailOpened(false)
         dispatch(removeCurrentIngredient)
     }
 
     function handleIngredientClick(ingredient) {
         dispatch(addCurrentIngredient(ingredient))
-        setIsIngredientDetailOpened(true);
     }
 
-    const currentIngredient = useSelector(store => store.setCurrentIngredients.dataIngredient, shallowEqual)
     const orderNumber = useSelector(store => store.getOrderNumber.data, shallowEqual)
 
     return (
@@ -66,11 +61,6 @@ function Home() {
             {isOrderDetailsOpened && (
                 <Modal onOverlayClick={closeModals} closeModals={closeModals}>
                     <OrderDetails onOverlayClick={closeModals} title={orderNumber}/>
-                </Modal>
-            )}
-            {isIngredientDetailOpened && (
-                <Modal onOverlayClick={closeModals} closeModals={closeModals} title={'Детали ингредиента'}>
-                    <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient}/>
                 </Modal>
             )}
             {isLoader && (
