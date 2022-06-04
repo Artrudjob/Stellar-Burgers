@@ -8,11 +8,14 @@ import { addToConstructor } from '../../services/actions/addToConstructor';
 import { sortIngredient } from '../../services/actions/sortIngredient'
 import {v4 as uuid} from 'uuid'
 import IngredientToConstructor from "../ingredientToConstructor/ingredientToConstructor";
+import {useNavigate} from "react-router-dom";
 
 function BurgerConstructor(props) {
     const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual);
     const openIngredient = props.onClick;
     const dispatch = useDispatch();
+    const userData = useSelector(store => store.authReducer);
+    const navigate = useNavigate();
 
     const [ingredientsValidation, setIngredientsValidation] = useState(true)
     const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
@@ -75,6 +78,14 @@ function BurgerConstructor(props) {
         }
     })
 
+    function checkAuth() {
+        if (!userData.isAuthorization) {
+                navigate('login');
+        } else {
+            openOrder()
+        }
+    }
+
     return (
         <>
             {ingredientsBurger.length === 0 ?
@@ -95,7 +106,7 @@ function BurgerConstructor(props) {
                         <p className={`text text_type_digits-medium ${constructorStyle.constructor__infoText}`}>{ingredientsPrice}</p>
                         <CurrencyIcon type="primary"/>
                     </div>
-                    <Button type="primary" size="medium" onClick={openOrder}>
+                    <Button type="primary" size="medium" onClick={checkAuth}>
                         Оформить заказ
                     </Button>
                 </div>
