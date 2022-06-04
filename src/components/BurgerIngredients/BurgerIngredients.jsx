@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import burgersStyle from './burgerIngredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient'
+import {Link, useLocation} from "react-router-dom";
 
 function BurgerIngredients(props) {
+    const location = useLocation();
     const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual);
     const test = props.onClick;
 
@@ -14,19 +16,25 @@ function BurgerIngredients(props) {
 
     const bunsList = arrData.filter(dataItem => dataItem.type === "bun").map(item => {
         return (
-            <BurgerIngredient element={item} onClick={test} key={item._id}/>
+            <Link to={`ingredients/:${item._id}`} state={{background: location}} style={{textDecoration: "none", color: "white"}} key={item._id}>
+                <BurgerIngredient element={item} onClick={test} />
+            </Link>
         )
     });
 
     const saucesList = arrData.filter(dataItem => dataItem.type === "sauce").map(item => {
         return (
-            <BurgerIngredient element={item} onClick={test} key={item._id}/>
+            <Link to={`ingredients/:${item._id}`} state={{background: location}} style={{textDecoration: "none", color: "white"}} key={item._id}>
+                <BurgerIngredient element={item} onClick={test} />
+            </Link>
         )
     });
 
     const toppingsList = arrData.filter(dataItem => dataItem.type === "main").map(item => {
         return (
-            <BurgerIngredient element={item} onClick={test} key={item._id}/>
+            <Link to={`ingredients/:${item._id}`} state={{background: location}} style={{textDecoration: "none", color: "white"}} key={item._id}>
+                <BurgerIngredient element={item} onClick={test} />
+            </Link>
         )
     });
 
