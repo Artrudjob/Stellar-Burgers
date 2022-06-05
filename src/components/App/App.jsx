@@ -17,6 +17,7 @@ import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 import IngredientPage from '../../pages/IngredientPage';
 
 import {fetchIngredients} from "../../services/actions/getAllIngredients";
+import {fetchGetUserInfo} from "../../services/actions/getUserInfo";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
 
     useEffect(() => {
         dispatch(fetchIngredients());
+        dispatch(fetchGetUserInfo());
     }, [dispatch]);
 
     function closeModals() {
