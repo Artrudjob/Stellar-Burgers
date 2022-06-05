@@ -1,4 +1,4 @@
-import {baseUrl, checkResponse} from "../../consts/consts";
+import {baseUrl, checkResponse} from '../../consts/consts';
 
 const SIGN_OUT_ACCOUNT = 'SIGN_OUT_ACCOUNT';
 
@@ -22,7 +22,7 @@ const fetchSignOut = (refreshToken) => {
             .then(result => {
                 dispatch(signOutAccount(result));
                 localStorage.removeItem('refreshToken');
-                localStorage.removeItem('accessToken');
+                document.cookie = 'accessToken=;max-age=-1';
                 localStorage.removeItem('ExpiredTime');
             })
             .catch((err) => {
