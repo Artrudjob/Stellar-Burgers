@@ -1,5 +1,3 @@
-import React from "react";
-
 const baseUrl = 'https://norma.nomoreparties.space/api/';
 const checkResponse = (res) => {
     if (res.ok) {
@@ -7,4 +5,10 @@ const checkResponse = (res) => {
     }
     return Promise.reject(`Ошибка ${res.status}`);
 };
-export { baseUrl, checkResponse }
+const getCookie = (name) => {
+    const matches = document.cookie.match(
+        new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
+    );
+    return matches ? decodeURIComponent(matches[1]) : undefined
+}
+export { baseUrl, checkResponse, getCookie }
