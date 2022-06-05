@@ -27,7 +27,7 @@ const fetchRegisterUser = (email, password, name, navigate) => {
             .then((result) => {
                 dispatch(registerUser(result.user.email, result.user.name));
                 localStorage.setItem('refreshToken', result.refreshToken);
-                localStorage.setItem('accessToken', result.accessToken);
+                document.cookie = `accessToken=${result.accessToken}`;
                 localStorage.setItem('ExpiredTime', new Date());
                 navigate('/');
             })

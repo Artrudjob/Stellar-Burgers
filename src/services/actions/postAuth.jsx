@@ -26,7 +26,7 @@ const fetchPostAuth = (userEmail, userPassword, navigate) => {
             .then(result => {
                 dispatch(postAuth(result.user.email, result.user.name));
                 localStorage.setItem('refreshToken', result.refreshToken);
-                localStorage.setItem('accessToken', result.accessToken);
+                document.cookie = `accessToken=${result.accessToken}`;
                 localStorage.setItem('ExpiredTime', new Date());
                 navigate('/');
             })
