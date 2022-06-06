@@ -23,7 +23,7 @@ const fetchUserEmail = (userEmail, navigateResetPassword) => {
             .then(checkResponse)
             .then((result) => {
                 dispatch(postUserEmail(result.message));
-                navigateResetPassword('/reset-password', {replace: true});
+                navigateResetPassword('/reset-password', {replace: true, state: 'forgot-password'});
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);

@@ -1,14 +1,16 @@
 import React from 'react';
 import style from './resetPassword.module.css';
 import {Button, Input, ShowIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, Navigate} from 'react-router-dom';
+import {Link, Navigate, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import { fetchNewPassword } from '../../services/actions/postNewPassword';
 
 function ResetPassword() {
+    const dispatch = useDispatch();
+    const location = useLocation();
+
     const [newPassword, setNewPassword] = React.useState('');
     const [codeMessage, setCodeMessage] = React.useState('');
-    const dispatch = useDispatch();
 
     const userData = useSelector(store => store.authReducer);
 
@@ -21,7 +23,7 @@ function ResetPassword() {
         dispatch(fetchNewPassword(newPassword, codeMessage));
     }
 
-    if (userData.isAuthorization) {
+    if ((userData.isAuthorization) || (location.state !== 'forgot-password')) {
         return (
             <Navigate to='/' />
         )

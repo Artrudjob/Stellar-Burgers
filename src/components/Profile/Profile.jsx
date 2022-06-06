@@ -4,10 +4,9 @@ import { Button, EditIcon, Input, CloseIcon } from "@ya.praktikum/react-develope
 import { fetchSignOut } from '../../services/actions/signOutAccount';
 import { fetchUpdateUserInfo} from '../../services/actions/updateUserInfo';
 import style from './profile.module.css';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
 import {fetchGetUserInfo} from "../../services/actions/getUserInfo";
 import {fetchGetToken} from '../../services/actions/getToken';
-import LoginPage from "../../pages/LoginPage";
 
 function Profile() {
     const userData = useSelector(store => store.authReducer);
@@ -20,7 +19,7 @@ function Profile() {
 
     const [isDisabled, setIsDisabled] = React.useState(true);
 
-    function getValidToken() {
+    /*function getValidToken() {
         const expiredTime = Date.parse(localStorage.getItem('ExpiredTime'));
         const currentTime = new Date();
 
@@ -29,11 +28,11 @@ function Profile() {
         } else {
             return localStorage.getItem('accessToken');
         }
-    }
+    }*/
 
     useEffect(() => {
         dispatch(fetchGetUserInfo());
-        getValidToken()
+        //getValidToken()
     }, [])
 
     function toggleBlockInput() {
