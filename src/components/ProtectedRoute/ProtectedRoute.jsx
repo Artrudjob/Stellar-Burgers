@@ -6,7 +6,6 @@ import {Navigate, useLocation} from 'react-router-dom';
 // на незащищенный маршрут. Если авторизирован, то пользователь может перейти на защищенный маршрут.
 function ProtectedRoute({children, ...rest}) {
     const location = useLocation();
-    console.log(location);
 
     const userData = useSelector(store => store.authReducer); //получаем из хранилища данные о пользователе(авторизован ли он, его email и его имя)
 
