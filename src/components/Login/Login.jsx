@@ -1,5 +1,5 @@
 import { Button, Input, ShowIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {Link, Navigate, useNavigate} from 'react-router-dom';
+import {Link, Navigate, useLocation, useNavigate} from 'react-router-dom';
 import React from 'react';
 import { fetchPostAuth } from '../../services/actions/postAuth';
 import loginStyle from './login.module.css'
@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const userData = useSelector(store => store.authReducer);
 
@@ -25,7 +26,7 @@ function Login() {
 
     if (userData.isAuthorization) {
         return (
-            <Navigate to='/' />
+            <Navigate to={ location.state || '/'} />
         )
     }
 
