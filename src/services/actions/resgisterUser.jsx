@@ -1,6 +1,7 @@
 import {baseUrl, checkResponse} from "../../consts/consts";
 
 const REGISTER_USER = 'REGISTER_USER';
+const RESISTER_USER_FAILURE = 'RESISTER_USER_FAILURE';
 
 const registerUser = (userEmail, userName) => ({
     type: REGISTER_USER,
@@ -34,8 +35,12 @@ const fetchRegisterUser = (email, password, name, navigate) => {
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);
+                dispatch({
+                    type: RESISTER_USER_FAILURE,
+                    status: err
+                });
             })
     }
 }
 
-export {REGISTER_USER, fetchRegisterUser};
+export {REGISTER_USER, RESISTER_USER_FAILURE, fetchRegisterUser};

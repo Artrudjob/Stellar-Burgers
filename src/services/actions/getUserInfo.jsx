@@ -1,6 +1,7 @@
 import { getUserInfo } from '../../consts/consts';
 
 const GET_USER_INFO = 'GET_USER_INFO';
+const GET_USER_INFO_FAILURE = 'GET_USER_INFO_FAILED';
 
 const userData = (userEmail, userName) => ({
     type: GET_USER_INFO,
@@ -18,8 +19,12 @@ const getUser = () => {
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);
+                dispatch({
+                    type: GET_USER_INFO_FAILURE,
+                    status: err
+                });
             })
     }
 }
 
-export {GET_USER_INFO, getUser};
+export {GET_USER_INFO, GET_USER_INFO_FAILURE, getUser};

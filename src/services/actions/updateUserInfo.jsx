@@ -1,6 +1,7 @@
 import { updateUserInfo } from '../../consts/consts';
 
 const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
+const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 
 const updateUserData = (userEmail, userName) => ({
     type: UPDATE_USER_INFO,
@@ -18,8 +19,12 @@ const updateInfo = (userEmail, userName) => {
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);
+                dispatch({
+                    type: UPDATE_USER_FAILURE,
+                    status: err
+                })
             })
     }
 }
 
-export {UPDATE_USER_INFO, updateInfo};
+export {UPDATE_USER_INFO, UPDATE_USER_FAILURE, updateInfo};

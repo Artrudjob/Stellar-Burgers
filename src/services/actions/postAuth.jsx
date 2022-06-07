@@ -1,6 +1,7 @@
 import {baseUrl, checkResponse} from "../../consts/consts";
 
 const POST_AUTH = 'POST_AUTH';
+const POST_AUTH_FAILURE = 'POST_AUTH_FAILURE';
 
 const postAuth = (userEmail, userName) => ({
     type: POST_AUTH,
@@ -33,8 +34,12 @@ const fetchPostAuth = (userEmail, userPassword, navigate) => {
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);
+                dispatch({
+                    type: POST_AUTH_FAILURE,
+                    status: err
+                });
             })
         }
 }
 
-export {POST_AUTH, fetchPostAuth};
+export {POST_AUTH, POST_AUTH_FAILURE, fetchPostAuth};

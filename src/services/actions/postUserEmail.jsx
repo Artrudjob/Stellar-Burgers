@@ -1,6 +1,7 @@
 import { baseUrl, checkResponse } from '../../consts/consts';
 
 const POST_USER_EMAIL = 'POST_USER_EMAIL';
+const POST_USER_EMAIL_FAILURE = 'POST_USER_EMAIL_FAILURE';
 
 const postUserEmail = (successMessage) => ({
     type: POST_USER_EMAIL,
@@ -26,9 +27,13 @@ const fetchUserEmail = (userEmail, navigateResetPassword) => {
                 navigateResetPassword('/reset-password', {replace: true, state: 'forgot-password'});
             })
             .catch((err) => {
-                console.log(`Что-то пошло не так: ${err}`);
+                console.log(`Что-то пошло не так: ${err}`)
+                dispatch({
+                    type: POST_USER_EMAIL_FAILURE,
+                    status: err
+                })
             })
     }
 }
 
-export { POST_USER_EMAIL, postUserEmail, fetchUserEmail };
+export { POST_USER_EMAIL, POST_USER_EMAIL_FAILURE, postUserEmail, fetchUserEmail };

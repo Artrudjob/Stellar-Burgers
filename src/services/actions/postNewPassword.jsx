@@ -1,6 +1,7 @@
 import { baseUrl, checkResponse } from '../../consts/consts';
 
 const POST_NEW_PASSWORD = 'POST_NEW_PASSWORD';
+const POST_NEW_PASSWORD_FAILURE = 'POST_NEW_PASSWORD_FAILURE';
 
 const postNewPassword = (successMessage) => ({
     type: POST_NEW_PASSWORD,
@@ -27,8 +28,12 @@ const fetchNewPassword = (newPassword, token) => {
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);
+                dispatch({
+                    type: POST_NEW_PASSWORD_FAILURE,
+                    status: err
+                })
             })
     }
 }
 
-export {POST_NEW_PASSWORD, fetchNewPassword}
+export {POST_NEW_PASSWORD, POST_NEW_PASSWORD_FAILURE, fetchNewPassword}
