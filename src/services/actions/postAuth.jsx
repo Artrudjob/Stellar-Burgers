@@ -25,9 +25,10 @@ const fetchPostAuth = (userEmail, userPassword, navigate) => {
             .then(checkResponse)
             .then(result => {
                 dispatch(postAuth(result.user.email, result.user.name));
+
                 localStorage.setItem('refreshToken', result.refreshToken);
                 document.cookie = `accessToken=${result.accessToken}`;
-                localStorage.setItem('ExpiredTime', new Date());
+
                 navigate('/');
             })
             .catch((err) => {

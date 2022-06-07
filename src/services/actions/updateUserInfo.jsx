@@ -1,4 +1,3 @@
-import {baseUrl, checkResponse} from "../../consts/consts";
 import { updateUserInfo } from '../../consts/consts';
 
 const UPDATE_USER_INFO = 'UPDATE_USER_INFO';

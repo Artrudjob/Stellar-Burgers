@@ -26,9 +26,10 @@ const fetchRegisterUser = (email, password, name, navigate) => {
             .then(checkResponse)
             .then((result) => {
                 dispatch(registerUser(result.user.email, result.user.name));
+
                 localStorage.setItem('refreshToken', result.refreshToken);
                 document.cookie = `accessToken=${result.accessToken}`;
-                localStorage.setItem('ExpiredTime', new Date());
+
                 navigate('/');
             })
             .catch((err) => {
