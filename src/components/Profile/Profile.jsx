@@ -2,11 +2,10 @@ import React, {useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, EditIcon, Input, CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { fetchSignOut } from '../../services/actions/signOutAccount';
-import { fetchUpdateUserInfo} from '../../services/actions/updateUserInfo';
+import { updateInfo } from '../../services/actions/updateUserInfo';
 import style from './profile.module.css';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchGetUserInfo} from "../../services/actions/getUserInfo";
-import {fetchGetToken} from '../../services/actions/getToken';
+import { getUser } from "../../services/actions/getUserInfo";
 
 function Profile() {
     const userData = useSelector(store => store.authReducer);
@@ -19,20 +18,8 @@ function Profile() {
 
     const [isDisabled, setIsDisabled] = React.useState(true);
 
-    /*function getValidToken() {
-        const expiredTime = Date.parse(localStorage.getItem('ExpiredTime'));
-        const currentTime = new Date();
-
-        if ((currentTime - expiredTime) / 60000 > 19) {
-            dispatch(fetchGetToken());
-        } else {
-            return localStorage.getItem('accessToken');
-        }
-    }*/
-
     useEffect(() => {
-        dispatch(fetchGetUserInfo());
-        //getValidToken()
+        dispatch(getUser());
     }, [])
 
     function toggleBlockInput() {
@@ -44,7 +31,7 @@ function Profile() {
     }
 
     function updateUserInfo() {
-        dispatch(fetchUpdateUserInfo(login, name));
+        dispatch(updateInfo(login, name));
         setIsDisabled(true);
     }
 

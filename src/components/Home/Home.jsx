@@ -18,9 +18,9 @@ function Home() {
     const dispatch = useDispatch();
     const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
 
-    React.useEffect(() => {
+    /*React.useEffect(() => {
         dispatch(fetchIngredients(arrData));
-    }, [])
+    }, [])*/
 
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
     const [isLoader, setIsLoader] = React.useState(false) //Состояние загрузки

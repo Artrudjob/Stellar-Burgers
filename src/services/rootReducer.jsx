@@ -4,7 +4,6 @@ import setCurrentIngredients from './reducers/setCurrentIngredients';
 import getOrderNumber from './reducers/getOrderNumber';
 import burgerConstructor from './reducers/burgerConstructor';
 import authReducer from './reducers/authReducer';
-import getTokenReducer from './reducers/getTokenReducer';
 
 
 const rootReducer = combineReducers({
@@ -12,7 +11,6 @@ const rootReducer = combineReducers({
     setCurrentIngredients,
     getOrderNumber,
     burgerConstructor,
-    authReducer,
-    getTokenReducer
+    authReducer
 });
 export default rootReducer;

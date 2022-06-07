@@ -1,9 +1,8 @@
-import {baseUrl, checkResponse} from "../../consts/consts";
-import { getCookie } from '../../consts/consts';
+import { getUserInfo } from '../../consts/consts';
 
 const GET_USER_INFO = 'GET_USER_INFO';
 
-const getUserInfo = (userEmail, userName) => ({
+const userData = (userEmail, userName) => ({
     type: GET_USER_INFO,
     payload: {
         email: userEmail,
@@ -11,21 +10,11 @@ const getUserInfo = (userEmail, userName) => ({
     }
 });
 
-const fetchGetUserInfo = () => {
+const getUser = () => {
     return function (dispatch) {
-
-        const accessToken= getCookie('accessToken');
-
-        fetch(`${baseUrl}auth/user`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `${accessToken}`
-            }
-        })
-            .then(checkResponse)
-            .then(result => {
-                dispatch(getUserInfo(result.user.email, result.user.name));
+        getUserInfo()
+            .then((res) => {
+                dispatch(userData(res.user.email, res.user.name));
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);
@@ -33,4 +22,4 @@ const fetchGetUserInfo = () => {
     }
 }
 
-export {GET_USER_INFO, fetchGetUserInfo};
+export {GET_USER_INFO, getUser};

@@ -17,7 +17,7 @@ import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 import IngredientPage from '../../pages/IngredientPage';
 
 import {fetchIngredients} from "../../services/actions/getAllIngredients";
-import {fetchGetUserInfo} from "../../services/actions/getUserInfo";
+import {getUser} from "../../services/actions/getUserInfo";
 
 function App() {
 
@@ -27,9 +27,14 @@ function App() {
     const location = useLocation();
     const background = location.state?.background;
 
+    const refreshToken = localStorage.getItem('refreshToken');
+
     useEffect(() => {
         dispatch(fetchIngredients());
-        dispatch(fetchGetUserInfo());
+
+        if (refreshToken !== null) {
+            dispatch(getUser());
+        }
     }, [dispatch]);
 
     function closeModals() {

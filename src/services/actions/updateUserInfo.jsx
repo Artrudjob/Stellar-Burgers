@@ -1,8 +1,9 @@
 import {baseUrl, checkResponse} from "../../consts/consts";
+import { updateUserInfo } from '../../consts/consts';
 
 const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 
-const updateUserInfo = (userEmail, userName) => ({
+const updateUserData = (userEmail, userName) => ({
     type: UPDATE_USER_INFO,
     payload: {
         email: userEmail,
@@ -10,24 +11,11 @@ const updateUserInfo = (userEmail, userName) => ({
     }
 });
 
-const fetchUpdateUserInfo = (userEmail, userName) => {
-    return function(dispatch) {
-        const accessToken = localStorage.getItem('accessToken')
-
-        fetch(`${baseUrl}auth/user`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': `${accessToken}`
-            },
-            body: JSON.stringify({
-                'email': `${userEmail}`,
-                'name': `${userName}`
-            })
-        })
-            .then(checkResponse)
-            .then(result => {
-                dispatch(updateUserInfo(result.user.email, result.user.name))
+const updateInfo = (userEmail, userName) => {
+    return function (dispatch) {
+        updateUserInfo(userEmail, userName)
+            .then((res) => {
+                dispatch(updateUserData(userEmail, userName))
             })
             .catch((err) => {
                 console.log(`Что-то пошло не так: ${err}`);
@@ -35,4 +23,4 @@ const fetchUpdateUserInfo = (userEmail, userName) => {
     }
 }
 
-export {UPDATE_USER_INFO, fetchUpdateUserInfo};
+export {UPDATE_USER_INFO, updateInfo};
