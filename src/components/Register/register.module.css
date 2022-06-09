@@ -1,0 +1,46 @@
+.register {
+    width: 100%;
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register__container {
+    width: 480px;
+}
+
+.register__title {
+    text-align: center;
+}
+
+.register__fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.register__input,
+.register__input div:not(login__input) {
+    width: 100%;
+    position: relative;
+}
+
+.register__text {
+    color: #8585AD;
+}
+
+.register__link {
+    text-decoration: none;
+    color: #4c4cff;
+}
+
+.register__image {
+    width: 24px;
+    position: absolute;
+    top: -45px;
+    right: -430px;
+}

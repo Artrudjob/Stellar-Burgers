@@ -1,85 +1,67 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {Routes, Route, useLocation, useNavigate} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 import appStyle from './app.module.css';
-import AppHeader from '../AppHeader/AppHeader';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import Modal from '../Modal/Modal';
-import OrderDetails from '../OrderDetails/OrderDetails';
-import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
-import { fetchIngredients } from '../../services/actions/getAllIngredients';
-import { fetchOrderNumber } from '../../services/actions/orderNumber'
-import { addCurrentIngredient } from '../../services/actions/addCurrentIngredient';
-import { removeAllElToConstructor } from '../../services/actions/removeAllElToConstructor';
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import { DndProvider} from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { removeCurrentIngredient } from "../../services/actions/removeCurrentIngredient";
-import Loader from "../Loader/Loader";
 
-//export let arrData;
+import AppHeader from '../AppHeader/AppHeader';
+import HomePage from '../../pages/HomePage';
+import LoginPage from '../../pages/LoginPage';
+import RegisterPage from '../../pages/RegisterPage';
+import ForgotPasswordPage from '../../pages/ForgotPasswordPage';
+import ResetPasswordPage from '../../pages/ResetPasswordPage';
+import ProfilePage from '../../pages/ProfilePage';
+import NotFoundPage from '../../pages/NotFoundPage';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Modal from '../Modal/Modal';
+import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
+import IngredientPage from '../../pages/IngredientPage';
+
+import {fetchIngredients} from "../../services/actions/getAllIngredients";
+import {getUser} from "../../services/actions/getUserInfo";
 
 function App() {
+
     const dispatch = useDispatch();
-    const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
+    const navigate = useNavigate();
 
-    React.useEffect(() => {
-        dispatch(fetchIngredients(arrData))
-    }, [])
+    const location = useLocation();
+    const background = location.state?.background;
 
-    const [isIngredientDetailOpened, setIsIngredientDetailOpened] = React.useState(false)
-    const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
-    const [isLoader, setIsLoader] = React.useState(false) //Состояние загрузки
+    const refreshToken = localStorage.getItem('refreshToken');
 
-    const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual);
+    useEffect(() => {
+        dispatch(fetchIngredients());
 
-    //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
-    function openOrderDetails() {
-        const ingredientsType = ingredientsBurger.map(item => item.type)
-        if ((ingredientsType.includes('bun')) && ((ingredientsType.includes('sauce')) || (ingredientsType.includes('main')))) {
-            dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
-        } else {
-            return false
+        if (refreshToken !== null) {
+            dispatch(getUser());
         }
-    }
+    }, [dispatch]);
 
     function closeModals() {
-        setIsOrderDetailsOpened(false)
-        setIsIngredientDetailOpened(false)
-        dispatch(removeCurrentIngredient)
+        navigate('/');
     }
-
-    function handleIngredientClick(ingredient) {
-        dispatch(addCurrentIngredient(ingredient))
-        setIsIngredientDetailOpened(true);
-    }
-
-    const currentIngredient = useSelector(store => store.setCurrentIngredients.dataIngredient, shallowEqual)
-    const orderNumber = useSelector(store => store.getOrderNumber.data, shallowEqual)
 
     return (
         <div className={appStyle.App}>
-            <AppHeader/>
-            <main className={appStyle.app__main}>
-                <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients onClick={handleIngredientClick}/>
-                    <BurgerConstructor
-                        onClick={handleIngredientClick}
-                        openOrderDetails={openOrderDetails}/>
-                </DndProvider>
-            </main>
-            {isOrderDetailsOpened && (
-                <Modal onOverlayClick={closeModals} closeModals={closeModals}>
-                    <OrderDetails onOverlayClick={closeModals} title={orderNumber}/>
-                </Modal>
-            )}
-            {isIngredientDetailOpened && (
-                <Modal onOverlayClick={closeModals} closeModals={closeModals} title={'Детали ингредиента'}>
-                    <IngredientsDetails onOverlayClick={closeModals} ingredient={currentIngredient}/>
-                </Modal>
-            )}
-            {isLoader && (
-                <Loader />
-            )}
+            <Routes location={background || location}>
+                <Route path="/" element={<AppHeader />}>
+                    <Route index element={<HomePage />} />
+                    <Route path="ingredients/:id" element={<IngredientPage />} />
+                    <Route path="profile" element={<ProtectedRoute children={<ProfilePage />} />} />
+                    <Route path="login" element={<LoginPage />} />
+                    <Route path="register" element={<RegisterPage />} />
+                    <Route path="forgot-password" element={<ForgotPasswordPage />} />
+                    <Route path="reset-password" element={<ResetPasswordPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                </Route>
+            </Routes>
+            {background && <Routes>
+                <Route path="ingredients/:id" element={
+                    <Modal onOverlayClick={closeModals} closeModals={closeModals} title={'Детали ингредиента'}>
+                        <IngredientsDetails onOverlayClick={closeModals} />
+                    </Modal>
+                } />
+            </Routes>}
         </div>
     );
 }

@@ -7,12 +7,12 @@ const getAllIngredients = (ingredients) => ({
     payload: ingredients
 })
 
-const fetchIngredients = (ingredients) => {
+const fetchIngredients = (/*ingredients*/) => {
     return function (dispatch) {
-        dispatch({
+        /*dispatch({
             type: GET_ALL_INGREDIENTS,
             payload: ingredients
-        })
+        }) */
         fetch(`${baseUrl}ingredients`)
             .then(checkResponse)
             .then((result) => {

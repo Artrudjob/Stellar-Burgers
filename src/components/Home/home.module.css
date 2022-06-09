@@ -1,0 +1,6 @@
+.home__main {
+    display: flex;
+    column-gap: 36px;
+    max-width: 1244px;
+    margin: 0 auto 40px auto;
+}
