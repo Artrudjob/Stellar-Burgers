@@ -15,6 +15,8 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Modal from '../Modal/Modal';
 import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 import IngredientPage from '../../pages/IngredientPage';
+import OrdersPage from '../../pages/OrdersPage';
+import UserInfoPage from '../../pages/UserInfoPage';
 
 import {fetchIngredients} from "../../services/actions/getAllIngredients";
 import {getUser} from "../../services/actions/getUserInfo";
@@ -47,7 +49,10 @@ function App() {
                 <Route path="/" element={<AppHeader />}>
                     <Route index element={<HomePage />} />
                     <Route path="ingredients/:id" element={<IngredientPage />} />
-                    <Route path="profile" element={<ProtectedRoute children={<ProfilePage />} />} />
+                    <Route path="profile/*" element={<ProtectedRoute children={<ProfilePage />} />} >
+                        <Route path="" element={<UserInfoPage />} />
+                        <Route path="orders" element={<OrdersPage />} />
+                    </Route>
                     <Route path="login" element={<LoginPage />} />
                     <Route path="register" element={<RegisterPage />} />
                     <Route path="forgot-password" element={<ForgotPasswordPage />} />

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { NavLink } from 'react-router-dom';
+import {NavLink, Outlet, useLocation} from 'react-router-dom';
 import { Button, EditIcon, Input, CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { fetchSignOut } from '../../services/actions/signOutAccount';
 import { updateInfo } from '../../services/actions/updateUserInfo';
@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import { getUser } from "../../services/actions/getUserInfo";
 
 function Profile() {
-    const userData = useSelector(store => store.authReducer);
+   /* const userData = useSelector(store => store.authReducer);
 
     const dispatch = useDispatch();
 
@@ -16,13 +16,15 @@ function Profile() {
     const [login, setLogin] = React.useState(userData.email);
     const [password, setPassword] = React.useState('');
 
-    const [isDisabled, setIsDisabled] = React.useState(true);
+    const [isDisabled, setIsDisabled] = React.useState(true);*/
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getUser());
     }, [])
 
-    function toggleBlockInput() {
+    /*function toggleBlockInput() {
         if (isDisabled) {
             setIsDisabled(false)
         } else {
@@ -43,7 +45,9 @@ function Profile() {
 
     function handleChange(e, value) {
         value(e.target.value);
-    }
+    }*/
+
+    const location = useLocation();
 
     //Выйти с аккаунта
     function signOut() {
@@ -51,13 +55,38 @@ function Profile() {
         dispatch(fetchSignOut(refreshToken))
     };
 
+    const activeStyle = {
+        color: 'white'
+    }
+
+    const styleLink = ({isActive}) => isActive ? activeStyle : undefined;
 
     return (
         <section className={style.profile}>
             <div className={style.profile__gridBox}>
                 <nav className={style.profile__navigation}>
-                    <NavLink to="" className={`text text_type_main-medium mt-5 ${style.profile__links}`} style={({isActive}) => ({color: isActive ? "white" : "darkgray"})}>Профиль</NavLink>
-                    <NavLink to="orders" className={`text text_type_main-medium text_color_inactive mt-8 ${style.profile__links}`}>История заказов</NavLink>
+                    <NavLink to="" end className={`text text_type_main-medium text_color_inactive mt-5 ${style.profile__links}`} style={styleLink}>Профиль</NavLink>
+                    <NavLink to="orders" className={`text text_type_main-medium text_color_inactive mt-8 ${style.profile__links}`} style={styleLink}>История заказов</NavLink>
+                    <NavLink to="/" className={`text text_type_main-medium text_color_inactive mt-8 ${style.profile__links}`} onClick={signOut}>Выход</NavLink>
+                    {location.pathname === '/profile' ?
+                        <p className={`text text_type_main-default text_color_inactive mt-25 ${style.profile_text}`}>В этом разделе вы можете
+                            изменить свои персональные данные</p>
+                        :
+                        <p className={`text text_type_main-default text_color_inactive mt-25 ${style.profile_text}`}>В этом разделе вы можете
+                            просмотреть свою историю заказов</p>
+                    }
+                </nav>
+                <Outlet />
+            </div>
+        </section>
+    )
+
+    /*return (
+        <section className={style.profile}>
+            <div className={style.profile__gridBox}>
+                <nav className={style.profile__navigation}>
+                    <NavLink to="" className={`text text_type_main-medium text_color_inactive mt-5 ${style.profile__links}`} >Профиль</NavLink>
+                    <NavLink to="orders" className={`text text_type_main-medium text_color_inactive mt-8 ${style.profile__links}`} >История заказов</NavLink>
                     <NavLink to="/" className={`text text_type_main-medium text_color_inactive mt-8 ${style.profile__links}`} onClick={signOut}>Выход</NavLink>
                     <p className={`text text_type_main-default text_color_inactive mt-25 ${style.profile_text}`}>В этом разделе вы можете
                         изменить свои персональные данные</p>
@@ -100,7 +129,7 @@ function Profile() {
                 </div>
             </div>
         </section>
-    )
+    )*/
 }
 
 export default Profile;
