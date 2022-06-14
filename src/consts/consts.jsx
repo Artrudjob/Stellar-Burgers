@@ -1,4 +1,5 @@
 const baseUrl = 'https://norma.nomoreparties.space/api/';
+const wssUrl = 'wss://norma.nomoreparties.space/orders';
 
 const checkResponse = (res) => {
     if (res.ok) {
@@ -83,4 +84,4 @@ const fetchWithRefresh = async (url, options) => {
     }
 };
 
-export { baseUrl, checkResponse, getCookie, getUserInfo, updateUserInfo }
+export { baseUrl, wssUrl, checkResponse, getCookie, getUserInfo, updateUserInfo }

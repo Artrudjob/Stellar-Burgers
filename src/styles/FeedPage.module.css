@@ -1,0 +1,35 @@
+.feed {
+    display: flex;
+    flex-direction: column;
+    max-width: 1244px;
+    margin: 0 auto 0px auto;
+}
+
+.feed__flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.feed__box {
+    max-width: 600px;
+}
+
+.feed_scrollbar {
+    height: 800px;
+    overflow: auto;
+}
+
+.feed__box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.feed__box::-webkit-scrollbar-track {
+    background: #2F2F37;
+    margin-top: 20px;
+    margin-bottom: 52px;
+}
+
+.feed__box::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    height: 600px;
+}
