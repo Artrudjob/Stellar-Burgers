@@ -1,3 +1,5 @@
+import {ru} from "date-fns/locale";
+
 const baseUrl = 'https://norma.nomoreparties.space/api/';
 const wssUrl = 'wss://norma.nomoreparties.space/orders';
 
@@ -7,6 +9,17 @@ const checkResponse = (res) => {
     }
     return Promise.reject(`Ошибка ${res.status}`);
 };
+
+const orderTime = (createdAt, formatDistance) => {
+    const orderDate = new Date(Date.parse(createdAt));
+    const orderTime = orderDate.toLocaleTimeString().slice(0, -3);
+    const timeInterval = formatDistance(
+        new Date(),
+        orderDate,
+        {locale: ru}
+    );
+    return `${timeInterval} назад, ${orderTime} i-GMT+3`;
+}
 
 const getCookie = (name) => {
     const matches = document.cookie.match(
@@ -84,4 +97,4 @@ const fetchWithRefresh = async (url, options) => {
     }
 };
 
-export { baseUrl, wssUrl, checkResponse, getCookie, getUserInfo, updateUserInfo }
+export { baseUrl, wssUrl, orderTime, checkResponse, getCookie, getUserInfo, updateUserInfo }
