@@ -23,7 +23,7 @@ function AppHeader() {
                                 </>
                             }
                         </NavLink>
-                        <NavLink className={`${appHeaderStyle.header__link} pl-4`} to="orderFeed">
+                        <NavLink className={`${appHeaderStyle.header__link} pl-4`} to="feed">
                             { ({isActive}) => isActive ?
                                 <>
                                     <ListIcon type="primary" />

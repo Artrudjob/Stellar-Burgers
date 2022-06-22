@@ -1,21 +1,18 @@
 import React from 'react';
 import style from './ordersFeed.module.css';
-import {formatDistance} from 'date-fns';
-import { ru } from 'date-fns/locale';
-import {useSelector} from "react-redux";
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import { formatDistanceStrict } from 'date-fns';
+import {useSelector} from 'react-redux';
+import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import {useNavigate} from 'react-router-dom';
+import { orderTime } from '../../consts/consts';
 
 function OrdersFeed(props) {
     const allIngredients = useSelector(store => store.getAllIngredients.ingredients);
+    const navigate = useNavigate()
 
     const allOrders = props.wsData?.orders.map(order => {
         const arrIngredientsId = order.ingredients;
         const matchedIngredients = allIngredients.filter(item => arrIngredientsId.includes(item._id));
-
-        const distanceDate = formatDistance(
-            new Date(2022, 5, 14, 10, 32, 0),
-            new Date(Date.parse(order.createdAt)),
-            {locale: ru});
 
         const arrDataPrice = matchedIngredients.map(item => {
             if (item.type === 'bun') {
@@ -42,12 +39,17 @@ function OrdersFeed(props) {
             }
         })
 
+        function openFeedDetails() {
+            const currentId = order.number;
+            navigate(`/feed/:${currentId}`);
+        }
+
         return (
-            <div className={`mr-2 ${style.order__box}`} key={order.number}>
+            <div className={`mr-2 ${style.order__box}`} key={order.number} onClick={openFeedDetails}>
                 <div className={style.order__container}>
                     <div className={style.order__flexContainer}>
                         <p className={`text text_type_digits-default pt-6`}>#{order.number}</p>
-                        <p className={`text text_type_main-small text_color_inactive pt-6`}>{distanceDate}</p>
+                        <p className={`text text_type_main-small text_color_inactive pt-6`}>{orderTime(order.createdAt, formatDistanceStrict)}</p>
                     </div>
                     <h2 className={`text text_type_main-medium pt-6`}>{order.name}</h2>
                     <div className={`${style.order__flexContainer} mt-6 pb-6`}>

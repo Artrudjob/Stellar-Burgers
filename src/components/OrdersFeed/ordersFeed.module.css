@@ -3,6 +3,7 @@
     border-radius: 40px;
     max-width: 584px;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 .order__box:nth-child(n+2) {
