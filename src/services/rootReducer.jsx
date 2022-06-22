@@ -5,6 +5,7 @@ import getOrderNumber from './reducers/getOrderNumber';
 import burgerConstructor from './reducers/burgerConstructor';
 import authReducer from './reducers/authReducer';
 import wsReducer from './reducers/wsReducer';
+import orderReducer from './reducers/getOrderInfo';
 
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     getOrderNumber,
     burgerConstructor,
     authReducer,
-    wsReducer
+    wsReducer,
+    orderReducer
 });
 export default rootReducer;
