@@ -3,12 +3,13 @@ import style from './ordersFeed.module.css';
 import { formatDistanceStrict } from 'date-fns';
 import {useSelector} from 'react-redux';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {useNavigate} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { orderTime } from '../../consts/consts';
 
 function OrdersFeed(props) {
     const allIngredients = useSelector(store => store.getAllIngredients.ingredients);
     const navigate = useNavigate()
+    const location = useLocation();
 
     const allOrders = props.wsData?.orders.map(order => {
         const arrIngredientsId = order.ingredients;
@@ -39,14 +40,22 @@ function OrdersFeed(props) {
             }
         })
 
-        function openFeedDetails() {
+        /*function openFeedDetails() {
             const currentId = order.number;
             navigate(`/feed/:${currentId}`);
+        }*/
+
+        const currentId = order.number;
+        const activeStyle = {
+            color: 'white',
+            textDecoration: 'none',
         }
 
+        const styleLink = ({isActive}) => isActive ? activeStyle : activeStyle;
+
         return (
-            <div className={`mr-2 ${style.order__box}`} key={order.number} onClick={openFeedDetails}>
-                <div className={style.order__container}>
+            <div className={`mr-2 ${style.order__box}`} key={order.number}>
+                <Link className={style.order__container} to={`/feed/:${currentId}`} state={{background: location}} style={activeStyle}>
                     <div className={style.order__flexContainer}>
                         <p className={`text text_type_digits-default pt-6`}>#{order.number}</p>
                         <p className={`text text_type_main-small text_color_inactive pt-6`}>{orderTime(order.createdAt, formatDistanceStrict)}</p>
@@ -66,7 +75,7 @@ function OrdersFeed(props) {
                             <CurrencyIcon type="primary"/>
                         </div>
                     </div>
-                </div>
+                </Link>
             </div>
         )
     });

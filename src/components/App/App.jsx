@@ -19,6 +19,7 @@ import OrdersPage from '../../pages/OrdersPage';
 import UserInfoPage from '../../pages/UserInfoPage';
 import FeedPage from '../../pages/FeedPage';
 import FeedDetailsPage from '../../pages/FeedDetailsPage';
+import SpecificOrderDetails from '../SpecificOrderDetails/SpecificOrderDetails';
 
 import {fetchIngredients} from "../../services/actions/getAllIngredients";
 import {getUser} from "../../services/actions/getUserInfo";
@@ -30,6 +31,7 @@ function App() {
 
     const location = useLocation();
     const background = location.state?.background;
+    const numberOrder = location.pathname.split(':')[1];
 
     const refreshToken = localStorage.getItem('refreshToken');
 
@@ -42,7 +44,7 @@ function App() {
     }, [dispatch]);
 
     function closeModals() {
-        navigate('/');
+        navigate(-1);
     }
 
     return (
@@ -67,7 +69,14 @@ function App() {
             {background && <Routes>
                 <Route path="ingredients/:id" element={
                     <Modal onOverlayClick={closeModals} closeModals={closeModals} title={'Детали ингредиента'}>
-                        <IngredientsDetails onOverlayClick={closeModals} />
+                        <IngredientsDetails />
+                    </Modal>
+                } />
+            </Routes>}
+            {background && <Routes>
+                <Route path="feed/:id" element={
+                    <Modal onOverlayClick={closeModals} closeModals={closeModals} title={`#${numberOrder}`}>
+                        <SpecificOrderDetails onOverlayClick={closeModals} />
                     </Modal>
                 } />
             </Routes>}
