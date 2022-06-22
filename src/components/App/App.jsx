@@ -18,10 +18,10 @@ import IngredientPage from '../../pages/IngredientPage';
 import OrdersPage from '../../pages/OrdersPage';
 import UserInfoPage from '../../pages/UserInfoPage';
 import FeedPage from '../../pages/FeedPage';
+import FeedDetailsPage from '../../pages/FeedDetailsPage';
 
 import {fetchIngredients} from "../../services/actions/getAllIngredients";
 import {getUser} from "../../services/actions/getUserInfo";
-import {wsConnectionStart} from "../../services/actions/wsActionTypes";
 
 function App() {
 
@@ -56,6 +56,7 @@ function App() {
                         <Route path="orders" element={<OrdersPage />} />
                     </Route>
                     <Route path="feed" element={<FeedPage />} />
+                    <Route path="feed/:id" element={<FeedDetailsPage />} />
                     <Route path="login" element={<LoginPage />} />
                     <Route path="register" element={<RegisterPage />} />
                     <Route path="forgot-password" element={<ForgotPasswordPage />} />
