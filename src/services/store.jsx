@@ -10,7 +10,6 @@ import {
     WS_GET_MESSAGE,
     WS_SEND_MESSAGE
 } from './actions/wsActionTypes';
-import { wssUrl } from '../consts/consts';
 
 const wsActions = {
     wsStart: WS_CONNECTION_START,
@@ -22,7 +21,7 @@ const wsActions = {
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(`${wssUrl}/all`, wsActions)));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsActions)));
 const store = createStore(rootReducer, enhancer);
 
 export default store;

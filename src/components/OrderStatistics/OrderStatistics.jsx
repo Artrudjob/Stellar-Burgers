@@ -1,11 +1,9 @@
 import React from 'react';
 import style from './orderStatistics.module.css';
-import { useSelector } from 'react-redux';
 
 function OrderStatistics(props) {
     const total = props.wsData.total;
     const totalToday = props.wsData.totalToday;
-    console.log(props.wsData.orders)
 
     const completedOrders = props.wsData.orders.map(item => {
         if (item.status === 'done') {

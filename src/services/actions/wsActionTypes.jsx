@@ -5,9 +5,10 @@ const WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED';
 const WS_GET_MESSAGE = 'WS_GET_MESSAGE';
 const WS_SEND_MESSAGE = 'WS_SEND_MESSAGE';
 
-const wsConnectionStart = () => {
+const wsConnectionStart = (payload) => {
     return {
-        type: WS_CONNECTION_START
+        type: WS_CONNECTION_START,
+        payload: payload
     }
 
 }

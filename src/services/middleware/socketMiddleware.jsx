@@ -1,6 +1,6 @@
 import {getCookie} from "../../consts/consts";
 
-export const socketMiddleware = (wsUrl, wsActions) => {
+export const socketMiddleware = (wsActions) => {
     return store => {
         let socket = null;
 
@@ -10,7 +10,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
             const { wsStart, onOpen, onClose, onError, onMessage, wsSendMessage } = wsActions;
 
             if (type === wsStart) {
-                socket = new WebSocket(wsUrl);
+                socket = new WebSocket(payload);
             }
 
             if (socket) {

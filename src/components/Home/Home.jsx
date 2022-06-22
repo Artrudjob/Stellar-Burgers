@@ -4,7 +4,6 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { fetchIngredients } from '../../services/actions/getAllIngredients';
 import { fetchOrderNumber } from '../../services/actions/orderNumber'
 import { addCurrentIngredient } from '../../services/actions/addCurrentIngredient';
 import { removeAllElToConstructor } from '../../services/actions/removeAllElToConstructor';
@@ -17,10 +16,6 @@ import Loader from "../Loader/Loader";
 function Home() {
     const dispatch = useDispatch();
     const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
-
-    /*React.useEffect(() => {
-        dispatch(fetchIngredients(arrData));
-    }, [])*/
 
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
     const [isLoader, setIsLoader] = React.useState(false) //Состояние загрузки
