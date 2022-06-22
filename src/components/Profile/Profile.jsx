@@ -8,44 +8,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import { getUser } from "../../services/actions/getUserInfo";
 
 function Profile() {
-   /* const userData = useSelector(store => store.authReducer);
-
-    const dispatch = useDispatch();
-
-    const [name, setName] = React.useState(userData.name);
-    const [login, setLogin] = React.useState(userData.email);
-    const [password, setPassword] = React.useState('');
-
-    const [isDisabled, setIsDisabled] = React.useState(true);*/
-
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getUser());
     }, [])
-
-    /*function toggleBlockInput() {
-        if (isDisabled) {
-            setIsDisabled(false)
-        } else {
-            setIsDisabled(true)
-        }
-    }
-
-    function updateUserInfo() {
-        dispatch(updateInfo(login, name));
-        setIsDisabled(true);
-    }
-
-    function cancelInput() {
-        setName(userData.name);
-        setLogin(userData.email);
-        setPassword('');
-    }
-
-    function handleChange(e, value) {
-        value(e.target.value);
-    }*/
 
     const location = useLocation();
 
