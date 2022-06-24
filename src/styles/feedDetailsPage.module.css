@@ -41,7 +41,7 @@
 
 .feedDetails__gridBox {
     display: grid;
-    grid-template-columns: 64px 1fr 112px;
+    grid-template-columns: 64px 1fr 1fr;
     column-gap: 16px;
 }
 

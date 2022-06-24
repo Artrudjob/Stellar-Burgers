@@ -12,9 +12,12 @@ import { DndProvider} from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { removeCurrentIngredient } from "../../services/actions/removeCurrentIngredient";
 import Loader from "../Loader/Loader";
+import {useLocation} from "react-router-dom";
 
 function Home() {
     const dispatch = useDispatch();
+    const location = useLocation();
+    location.state = {background: location.pathname}
     const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
 
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
@@ -26,7 +29,7 @@ function Home() {
     function openOrderDetails() {
         const ingredientsType = ingredientsBurger.map(item => item.type)
         if ((ingredientsType.includes('bun')) && ((ingredientsType.includes('sauce')) || (ingredientsType.includes('main')))) {
-            dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
+            dispatch(fetchOrderNumber(ingredientsBurger, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
         } else {
             return false
         }
@@ -41,7 +44,7 @@ function Home() {
         dispatch(addCurrentIngredient(ingredient))
     }
 
-    const orderNumber = useSelector(store => store.getOrderNumber.data, shallowEqual)
+    const orderNumber = useSelector(store => store.getOrderNumber.data, shallowEqual);
 
     return (
         <>

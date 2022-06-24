@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {wsConnectionStart, wsGetMessage} from '../services/actions/wsActionTypes';
+import {wsConnectionClosed, wsConnectionStart, wsGetMessage} from '../services/actions/wsActionTypes';
 import OrdersFeed from '../components/OrdersFeed/OrdersFeed';
 import OrderStatistics from '../components/OrderStatistics/OrderStatistics';
 import style from '../styles/FeedPage.module.css';
@@ -13,6 +13,10 @@ function FeedPage() {
 
     useEffect(() => {
         dispatch(wsConnectionStart(`${wssUrl}/all`));
+
+        return () => {
+          dispatch(wsConnectionClosed());
+        };
     }, [dispatch])
 
     const wsReducer = useSelector(store => store.wsReducer);

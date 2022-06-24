@@ -1,4 +1,4 @@
-import { baseUrl, checkResponse } from '../../consts/consts';
+import {baseUrl, checkResponse, getCookie} from '../../consts/consts';
 
 const ORDER_NUMBER = 'ORDER_NUMBER';
 
@@ -17,7 +17,8 @@ const fetchOrderNumber = (ingredients, openModal, stateLoader, removeIngredients
         fetch(`${baseUrl}orders`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'authorization': getCookie('accessToken')
             },
             body: JSON.stringify({
                 'ingredients': ingredients.map(item => {

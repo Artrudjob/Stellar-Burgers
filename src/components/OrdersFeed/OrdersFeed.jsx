@@ -3,12 +3,11 @@ import style from './ordersFeed.module.css';
 import { formatDistanceStrict } from 'date-fns';
 import {useSelector} from 'react-redux';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import { orderTime } from '../../consts/consts';
 
 function OrdersFeed(props) {
     const allIngredients = useSelector(store => store.getAllIngredients.ingredients);
-    const navigate = useNavigate()
     const location = useLocation();
 
     const allOrders = props.wsData?.orders.map(order => {
@@ -40,18 +39,11 @@ function OrdersFeed(props) {
             }
         })
 
-        /*function openFeedDetails() {
-            const currentId = order.number;
-            navigate(`/feed/:${currentId}`);
-        }*/
-
         const currentId = order.number;
         const activeStyle = {
             color: 'white',
             textDecoration: 'none',
-        }
-
-        const styleLink = ({isActive}) => isActive ? activeStyle : activeStyle;
+        };
 
         return (
             <div className={`mr-2 ${style.order__box}`} key={order.number}>

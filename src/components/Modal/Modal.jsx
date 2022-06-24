@@ -28,7 +28,7 @@ function Modal({ closeModals, onOverlayClick, title, children }) {
     return ReactDOM.createPortal(
         <div className={styleModal.popup__container}>
             <div className={styleModal.popup} >
-                {(location.state.background.pathname === '/feed') ?
+                {(location.state.background?.pathname !== '/') ?
                     <div className={styleModal.popup__boxBtn} style={{top: 40}}>
                         <CloseIcon type={"primary"} onClick={onOverlayClick}/>
                     </div>
@@ -37,7 +37,7 @@ function Modal({ closeModals, onOverlayClick, title, children }) {
                         <CloseIcon type={"primary"} onClick={onOverlayClick}/>
                     </div>
                 }
-                {(location.state.background.pathname === '/feed') ?
+                {(location.state.background?.pathname !== '/') ?
                     <h3 className={`${styleModal.popup__titleOrder} text text_type_digits-default mt-10`}>{title}</h3>
                     :
                     <h3 className={`${styleModal.popup__title} text text_type_main-large mt-10`}>{title}</h3>}

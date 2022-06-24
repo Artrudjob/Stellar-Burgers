@@ -23,7 +23,7 @@ function wsReducer(state = initialState, action) {
             };
         case WS_CONNECTION_CLOSED:
             return {
-                ...state, wsConnected: false, error: undefined
+                wsConnected: false, error: undefined, messages: []
             };
         case WS_GET_MESSAGE:
             return {

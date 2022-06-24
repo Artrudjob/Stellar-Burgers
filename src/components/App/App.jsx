@@ -57,6 +57,7 @@ function App() {
                         <Route path="" element={<UserInfoPage />} />
                         <Route path="orders" element={<OrdersPage />} />
                     </Route>
+                    <Route path="orders/:id" element={<FeedDetailsPage />} />
                     <Route path="feed" element={<FeedPage />} />
                     <Route path="feed/:id" element={<FeedDetailsPage />} />
                     <Route path="login" element={<LoginPage />} />
@@ -75,6 +76,13 @@ function App() {
             </Routes>}
             {background && <Routes>
                 <Route path="feed/:id" element={
+                    <Modal onOverlayClick={closeModals} closeModals={closeModals} title={`#${numberOrder}`}>
+                        <SpecificOrderDetails onOverlayClick={closeModals} />
+                    </Modal>
+                } />
+            </Routes>}
+            {background && <Routes>
+                <Route path="orders/:id" element={
                     <Modal onOverlayClick={closeModals} closeModals={closeModals} title={`#${numberOrder}`}>
                         <SpecificOrderDetails onOverlayClick={closeModals} />
                     </Modal>

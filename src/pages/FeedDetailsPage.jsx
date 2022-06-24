@@ -43,15 +43,22 @@ function FeedDetailsPage() {
         const arrIngredientsId = orderData.data.orders.map(item => item.ingredients);
 
         const matchedIngredients = allIngredients.filter(item => arrIngredientsId[0].includes(item._id));
-
+        console.log(matchedIngredients);
         const burgerComposition = matchedIngredients.map(element => {
+            let countIngredient;
+            if (element.type === 'bun') {
+                countIngredient = 2;
+            } else {
+                countIngredient = 1;
+            }
+
             return (
                 <li key={element._id} className={style.feedDetails__list}>
                     <div className={style.feedDetails__gridBox}>
                         <img src={element.image_mobile} alt={element.name} className={style.feedDetails__img}></img>
                         <p className={`text text_type_main-default ${style.feedDetails__text}`}>{element.name}</p>
                         <div className={style.feedDetails__flexContainer}>
-                            <p className={`text text_type_digits-default mr-2`}>{element.price}</p>
+                            <p className={`text text_type_digits-default mr-2`}>{`${countIngredient} x ${element.price}`}</p>
                             <CurrencyIcon type="primary"/>
                         </div>
                     </div>
