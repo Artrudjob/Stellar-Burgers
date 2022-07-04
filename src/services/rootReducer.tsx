@@ -7,7 +7,6 @@ import authReducer from './reducers/authReducer';
 import wsReducer from './reducers/wsReducer';
 import orderReducer from './reducers/getOrderInfo';
 
-
 const rootReducer = combineReducers({
     getAllIngredients,
     setCurrentIngredients,
@@ -17,4 +16,6 @@ const rootReducer = combineReducers({
     wsReducer,
     orderReducer
 });
+
+export type RootState = ReturnType<typeof rootReducer>
 export default rootReducer;
