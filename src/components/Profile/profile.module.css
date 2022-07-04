@@ -6,7 +6,7 @@
 .profile__gridBox {
     display: grid;
     width: 100%;
-    grid-template-columns: 320px 480px;
+    grid-template-columns: 320px 844px;
     column-gap: 60px;
     grid-template-areas:
     "nav inputs";
@@ -18,9 +18,9 @@
     grid-area: nav;
 }
 
-.profile__inputs {
+/*.profile__inputs {
     grid-area: inputs;
-}
+}*/
 
 .profile_text {
     opacity: .4;
@@ -30,6 +30,7 @@
     text-decoration: none;
 }
 
+/*
 .profile__box,
 .profile__box div:not(profile__box) {
     width: 100%;
@@ -48,4 +49,4 @@
     display: flex;
     justify-content: right;
     align-items: center;
-}
+}*/

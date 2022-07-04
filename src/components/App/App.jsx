@@ -15,6 +15,11 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Modal from '../Modal/Modal';
 import IngredientsDetails from '../IngredientDetails/IngredientsDetails';
 import IngredientPage from '../../pages/IngredientPage';
+import OrdersPage from '../../pages/OrdersPage';
+import UserInfoPage from '../../pages/UserInfoPage';
+import FeedPage from '../../pages/FeedPage';
+import FeedDetailsPage from '../../pages/FeedDetailsPage';
+import SpecificOrderDetails from '../SpecificOrderDetails/SpecificOrderDetails';
 
 import {fetchIngredients} from "../../services/actions/getAllIngredients";
 import {getUser} from "../../services/actions/getUserInfo";
@@ -26,6 +31,7 @@ function App() {
 
     const location = useLocation();
     const background = location.state?.background;
+    const numberOrder = location.pathname.split(':')[1];
 
     const refreshToken = localStorage.getItem('refreshToken');
 
@@ -38,7 +44,7 @@ function App() {
     }, [dispatch]);
 
     function closeModals() {
-        navigate('/');
+        navigate(-1);
     }
 
     return (
@@ -47,7 +53,13 @@ function App() {
                 <Route path="/" element={<AppHeader />}>
                     <Route index element={<HomePage />} />
                     <Route path="ingredients/:id" element={<IngredientPage />} />
-                    <Route path="profile" element={<ProtectedRoute children={<ProfilePage />} />} />
+                    <Route path="profile/*" element={<ProtectedRoute children={<ProfilePage />} />} >
+                        <Route path="" element={<UserInfoPage />} />
+                        <Route path="orders" element={<OrdersPage />} />
+                    </Route>
+                    <Route path="orders/:id" element={<FeedDetailsPage />} />
+                    <Route path="feed" element={<FeedPage />} />
+                    <Route path="feed/:id" element={<FeedDetailsPage />} />
                     <Route path="login" element={<LoginPage />} />
                     <Route path="register" element={<RegisterPage />} />
                     <Route path="forgot-password" element={<ForgotPasswordPage />} />
@@ -58,7 +70,21 @@ function App() {
             {background && <Routes>
                 <Route path="ingredients/:id" element={
                     <Modal onOverlayClick={closeModals} closeModals={closeModals} title={'Детали ингредиента'}>
-                        <IngredientsDetails onOverlayClick={closeModals} />
+                        <IngredientsDetails />
+                    </Modal>
+                } />
+            </Routes>}
+            {background && <Routes>
+                <Route path="feed/:id" element={
+                    <Modal onOverlayClick={closeModals} closeModals={closeModals} title={`#${numberOrder}`}>
+                        <SpecificOrderDetails onOverlayClick={closeModals} />
+                    </Modal>
+                } />
+            </Routes>}
+            {background && <Routes>
+                <Route path="orders/:id" element={
+                    <Modal onOverlayClick={closeModals} closeModals={closeModals} title={`#${numberOrder}`}>
+                        <SpecificOrderDetails onOverlayClick={closeModals} />
                     </Modal>
                 } />
             </Routes>}

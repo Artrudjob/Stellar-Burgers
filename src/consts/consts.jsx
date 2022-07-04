@@ -1,4 +1,7 @@
+import {ru} from "date-fns/locale";
+
 const baseUrl = 'https://norma.nomoreparties.space/api/';
+const wssUrl = 'wss://norma.nomoreparties.space/orders';
 
 const checkResponse = (res) => {
     if (res.ok) {
@@ -6,6 +9,17 @@ const checkResponse = (res) => {
     }
     return Promise.reject(`Ошибка ${res.status}`);
 };
+
+const orderTime = (createdAt, formatDistance) => {
+    const orderDate = new Date(Date.parse(createdAt));
+    const orderTime = orderDate.toLocaleTimeString().slice(0, -3);
+    const timeInterval = formatDistance(
+        new Date(),
+        orderDate,
+        {locale: ru}
+    );
+    return `${timeInterval} назад, ${orderTime} i-GMT+3`;
+}
 
 const getCookie = (name) => {
     const matches = document.cookie.match(
@@ -19,7 +33,7 @@ const getUserInfo = () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `${getCookie('accessToken')}`
+            'authorization': `${getCookie('accessToken')}`
         }
     })
 }
@@ -83,42 +97,4 @@ const fetchWithRefresh = async (url, options) => {
     }
 };
 
-/*const refreshToken = () => {
-        const refreshToken = localStorage.getItem('refreshToken');
-
-        fetch(`${baseUrl}auth/token`,{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'token': `${refreshToken}`
-            })
-        })
-            .then(checkResponse)
-            .then(result => {
-                document.cookie = `accessToken=${result.accessToken}`;
-            })
-            .catch((err) => {
-                console.log(`Что-то пошло не так: ${err}`);
-            })
-}
-
-const fetchWithRefresh = async (url, options) => {
-    try {
-        const res = await fetch(url, options);
-        return await checkResponse(res)
-    } catch (err) {
-        if (err.message === 'jwt expired') {
-            const refreshToken = await refreshToken();
-            options.headers.authorization = refreshToken.accessToken;
-
-            const res = await fetch(url, options);
-            return await checkResponse(res);
-        } else {
-            return Promise.reject(`ошибка - ${err}`);
-        }
-    }
-};*/
-
-export { baseUrl, checkResponse, getCookie, getUserInfo, updateUserInfo }
+export { baseUrl, wssUrl, orderTime, checkResponse, getCookie, getUserInfo, updateUserInfo }

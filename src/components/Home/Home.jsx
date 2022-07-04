@@ -4,7 +4,6 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { fetchIngredients } from '../../services/actions/getAllIngredients';
 import { fetchOrderNumber } from '../../services/actions/orderNumber'
 import { addCurrentIngredient } from '../../services/actions/addCurrentIngredient';
 import { removeAllElToConstructor } from '../../services/actions/removeAllElToConstructor';
@@ -13,14 +12,13 @@ import { DndProvider} from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { removeCurrentIngredient } from "../../services/actions/removeCurrentIngredient";
 import Loader from "../Loader/Loader";
+import {useLocation} from "react-router-dom";
 
 function Home() {
     const dispatch = useDispatch();
+    const location = useLocation();
+    location.state = {background: location.pathname}
     const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
-
-    /*React.useEffect(() => {
-        dispatch(fetchIngredients(arrData));
-    }, [])*/
 
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
     const [isLoader, setIsLoader] = React.useState(false) //Состояние загрузки
@@ -31,7 +29,7 @@ function Home() {
     function openOrderDetails() {
         const ingredientsType = ingredientsBurger.map(item => item.type)
         if ((ingredientsType.includes('bun')) && ((ingredientsType.includes('sauce')) || (ingredientsType.includes('main')))) {
-            dispatch(fetchOrderNumber(arrData, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
+            dispatch(fetchOrderNumber(ingredientsBurger, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
         } else {
             return false
         }
@@ -46,7 +44,7 @@ function Home() {
         dispatch(addCurrentIngredient(ingredient))
     }
 
-    const orderNumber = useSelector(store => store.getOrderNumber.data, shallowEqual)
+    const orderNumber = useSelector(store => store.getOrderNumber.data, shallowEqual);
 
     return (
         <>
