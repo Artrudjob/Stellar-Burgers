@@ -1,33 +1,31 @@
 import { Button, Input, ShowIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {Link, Navigate, useLocation, useNavigate} from 'react-router-dom';
-import React from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import React, {ChangeEvent, FormEvent} from 'react';
 import { fetchPostAuth } from '../../services/actions/postAuth';
 import loginStyle from './login.module.css'
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
+import { RootState } from '../../services/rootReducer';
 
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
 
-    const userData = useSelector(store => store.authReducer);
+    const userData = useSelector((store: RootState) => store.authReducer);
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    function handleChange(e, value) {
+    function handleChange(e: ChangeEvent<HTMLInputElement>, value: (e: string) => void): void {
         value(e.target.value);
     }
 
-    function handleSubmit(e) {
+    function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         dispatch(fetchPostAuth(email, password, navigate));
     }
 
     if (userData.isAuthorization) {
-        return (
-            <Navigate to={ location.state || '/'} />
-        )
+        navigate(-1);
     }
 
     return (
