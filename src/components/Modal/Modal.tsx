@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {FunctionComponent} from 'react';
 import ReactDOM from 'react-dom';
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import styleModal from './modal.module.css';
@@ -8,13 +7,24 @@ import {useLocation} from "react-router-dom";
 
 const modalsContainer = document.querySelector('#modals');
 
-function Modal({ closeModals, onOverlayClick, title, children }) {
+interface IProps {
+    closeModals: () => void;
+    onOverlayClick: () => void;
+    title: string;
+}
+
+const Modal: FunctionComponent<IProps> = ({
+    closeModals,
+    onOverlayClick,
+    title,
+    children
+}) => {
     const location = useLocation();
 
     React.useEffect(() => {
-        function handleEscKeydown(e) {
+        function handleEscKeydown(e: { key: string; }) {
             if (e.key === 'Escape') {
-                closeModals()
+                closeModals();
             }
         }
 
@@ -25,10 +35,13 @@ function Modal({ closeModals, onOverlayClick, title, children }) {
         }
     }, [closeModals])
 
+    // @ts-ignore
+    const urlBackground: string = location.state.background?.pathname;
+
     return ReactDOM.createPortal(
         <div className={styleModal.popup__container}>
             <div className={styleModal.popup} >
-                {(location.state.background?.pathname !== '/') ?
+                {(urlBackground !== '/') ?
                     <div className={styleModal.popup__boxBtn} style={{top: 40}}>
                         <CloseIcon type={"primary"} onClick={onOverlayClick}/>
                     </div>
@@ -37,7 +50,7 @@ function Modal({ closeModals, onOverlayClick, title, children }) {
                         <CloseIcon type={"primary"} onClick={onOverlayClick}/>
                     </div>
                 }
-                {(location.state.background?.pathname !== '/') ?
+                {(urlBackground !== '/') ?
                     <h3 className={`${styleModal.popup__titleOrder} text text_type_digits-default mt-10`}>{title}</h3>
                     :
                     <h3 className={`${styleModal.popup__title} text text_type_main-large mt-10`}>{title}</h3>}
@@ -45,15 +58,8 @@ function Modal({ closeModals, onOverlayClick, title, children }) {
             </div>
             <ModalOverlay onClick={onOverlayClick}></ModalOverlay>
         </div>,
-        modalsContainer
+        modalsContainer as Element
     )
-}
-
-Modal.propTypes = {
-    closeModals: PropTypes.func.isRequired,
-    onOverlayClick: PropTypes.func.isRequired,
-    title: PropTypes.string,
-    children: PropTypes.object.isRequired
 }
 
 export default Modal;
