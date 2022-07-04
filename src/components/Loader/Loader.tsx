@@ -1,6 +1,6 @@
 import React from 'react';
 import styleLoader from './loader.module.css'
-import LoaderOverlay from "../LoaderOverlay/LoaderOverlay";
+import LoaderOverlay from '../LoaderOverlay/LoaderOverlay';
 
 function Loader() {
     return (
