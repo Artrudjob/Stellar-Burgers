@@ -43,7 +43,7 @@ function FeedDetailsPage() {
         const arrIngredientsId = orderData.data.orders.map(item => item.ingredients);
 
         const matchedIngredients = allIngredients.filter(item => arrIngredientsId[0].includes(item._id));
-        console.log(matchedIngredients);
+
         const burgerComposition = matchedIngredients.map(element => {
             let countIngredient;
             if (element.type === 'bun') {
