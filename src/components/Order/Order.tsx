@@ -1,29 +1,58 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import style from './order.module.css';
 import { orderTime } from '../../consts/consts';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { formatDistanceStrict } from 'date-fns';
 import {shallowEqual, useSelector} from "react-redux";
 import {Link, useLocation} from "react-router-dom";
+import { RootState } from '../../services/rootReducer';
 
-function Order(props) {
+interface IProps {
+    userOrders: undefined | IOrder[];
+}
+
+interface IOrder {
+    createdAt: string;
+    ingredients: string[];
+    name: string;
+    number: number;
+    status: string;
+    updatedAt: string;
+    _id: string;
+}
+
+interface IIngredients {
+    calories: number;
+    carbohydrates: number;
+    fat: number;
+    image: string;
+    image_large: string;
+    image_mobile: string;
+    name: string;
+    price: number;
+    proteins: number;
+    type: string;
+    __v: number;
+    _id: string
+}
+
+const Order: FunctionComponent<IProps> = (props) => {
     const location = useLocation();
-    const allIngredients = useSelector(store => store.getAllIngredients.ingredients, shallowEqual);
-
-    const order = props.userOrders?.map(order => {
+    const allIngredients = useSelector((store: RootState) => store.getAllIngredients.ingredients, shallowEqual);
+    const order = props.userOrders?.map((order) => {
         const arrIngredientsId = order.ingredients;
-        const matchedIngredients = allIngredients.filter(item => arrIngredientsId.includes(item._id));
+        const matchedIngredients = allIngredients.filter((item: IIngredients) => arrIngredientsId.includes(item._id));
 
-        const arrDataPrice = matchedIngredients.map(item => {
+        const arrDataPrice = matchedIngredients.map((item: IIngredients) => {
             if (item.type === 'bun') {
                 return  item.price * 2
             } else {
                 return  item.price
             }
         });
-        const sumPrice = arrDataPrice.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+        const sumPrice = arrDataPrice.reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0);
 
-        const imageIngredients = matchedIngredients.map(image => {
+        const imageIngredients = matchedIngredients.map((image: IIngredients) => {
             if (matchedIngredients.length < 6) {
                 return (
                     <li className={style.order__list} key={image._id}>
@@ -87,26 +116,6 @@ function Order(props) {
             {order}
         </div>
     )
-
-    /*return (
-        <div className={style.order__box}>
-            <div className={style.order__container}>
-                <div className={style.order__flexContainer}>
-                    <p className={`text text_type_digits-default pt-6`}>#034535</p>
-                    <p className={`text text_type_main-small text_color_inactive pt-6`}>Сегодня, 16:20, i-GMT+3</p>
-                </div>
-                <h2 className={`text text_type_main-medium pt-6`}>Death Star Starship Main бургер</h2>
-                <p className={`text text_type_main-small`}>Создан</p>
-                <div className={`${style.order__flexContainer} mt-6 pb-6`}>
-                    <img alt="img"/>
-                    <div className={style.order__flexContainer}>
-                        <p className={`text text_type_digits-default mr-2`}>480</p>
-                        <CurrencyIcon type="primary" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    )*/
 }
 
 export default Order;
