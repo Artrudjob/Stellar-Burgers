@@ -6,34 +6,10 @@ import { formatDistanceStrict } from 'date-fns';
 import {shallowEqual, useSelector} from "react-redux";
 import {Link, useLocation} from "react-router-dom";
 import { RootState } from '../../services/rootReducer';
+import { IIngredients, IOrder} from '../../services/interface/interface';
 
 interface IProps {
     userOrders: undefined | IOrder[];
-}
-
-interface IOrder {
-    createdAt: string;
-    ingredients: string[];
-    name: string;
-    number: number;
-    status: string;
-    updatedAt: string;
-    _id: string;
-}
-
-interface IIngredients {
-    calories: number;
-    carbohydrates: number;
-    fat: number;
-    image: string;
-    image_large: string;
-    image_mobile: string;
-    name: string;
-    price: number;
-    proteins: number;
-    type: string;
-    __v: number;
-    _id: string
 }
 
 const Order: FunctionComponent<IProps> = (props) => {
