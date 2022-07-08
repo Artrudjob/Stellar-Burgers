@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {useLocation} from "react-router-dom";
-import {wsConnectionStart} from "../../services/actions/wsActionTypes";
-import {orderTime, wssUrl} from "../../consts/consts";
-import {getOrderInfo} from "../../services/actions/getOrder";
-import Loader from "../Loader/Loader";
-import style from "../../styles/feedDetailsPage.module.css";
-import {formatDistanceStrict} from "date-fns";
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useDispatch, useSelector} from 'react-redux';
+import {useLocation} from 'react-router-dom';
+import {wsConnectionStart} from '../../services/actions/wsActionTypes';
+import {orderTime, wssUrl} from '../../consts/consts';
+import {getOrderInfo} from '../../services/actions/getOrder';
+import Loader from '../Loader/Loader';
+import style from '../../styles/feedDetailsPage.module.css';
+import {formatDistanceStrict} from 'date-fns';
+import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import {RootState} from '../../services/rootReducer';
+import { IIngredients, IOrder } from '../../services/interface/interface';
 
 
 function SpecificOrderDetails() {
@@ -22,14 +24,14 @@ function SpecificOrderDetails() {
         dispatch(getOrderInfo(numberOrder, setLoading));
     }, [SpecificOrderDetails]);
 
-    const allIngredients = useSelector(store => store.getAllIngredients.ingredients);
-    const orderData = useSelector(store => store.orderReducer);
+    const allIngredients = useSelector((store: RootState) => store.getAllIngredients.ingredients);
+    const orderData = useSelector((store: RootState) => store.orderReducer);
 
-    const createOrderDate = orderData.data.orders?.map(item => {return item.createdAt});
+    const createOrderDate: string[] = orderData.data.orders?.map((item: IOrder) => {return item.createdAt});
     let orderDetails;
 
     if (orderData.data.length !== 0) {
-        const orderStatus = orderData.data.orders.map(item => {
+        const orderStatus: JSX.Element = orderData.data.orders.map((item: IOrder) => {
             if (item.status === 'done') {
                 return (
                     <p className={`text text_color_success mb-15`} key={item._id}>Выполнен</p>
@@ -41,11 +43,11 @@ function SpecificOrderDetails() {
             }
         });
 
-        const arrIngredientsId = orderData.data.orders.map(item => item.ingredients);
+        const arrIngredientsId: string[] = orderData.data.orders.map((item: IOrder) => item.ingredients);
 
-        const matchedIngredients = allIngredients.filter(item => arrIngredientsId[0].includes(item._id));
+        const matchedIngredients = allIngredients.filter((item: IOrder) => arrIngredientsId[0].includes(item._id));
 
-        const burgerComposition = matchedIngredients.map(element => {
+        const burgerComposition = matchedIngredients.map((element: IIngredients) => {
             let countIngredient;
             if (element.type === 'bun') {
                 countIngredient = 2;
@@ -67,16 +69,16 @@ function SpecificOrderDetails() {
             )
         });
 
-        const arrDataPrice = matchedIngredients.map(item => {
+        const arrDataPrice = matchedIngredients.map((item: IIngredients) => {
             if (item.type === 'bun') {
                 return  item.price * 2
             } else {
                 return  item.price
             }
         });
-        const sumPrice = arrDataPrice.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+        const sumPrice: number = arrDataPrice.reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0);
 
-        orderDetails = orderData.data.orders.map(item => {
+        orderDetails = orderData.data.orders.map((item: IOrder) => {
             return (
                 <div className={style.feedDetails__box} key={item._id}>
                     <p className={`text text_type_main-medium mb-3`}>{item.name}</p>
