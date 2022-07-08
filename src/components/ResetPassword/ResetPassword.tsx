@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import style from './resetPassword.module.css';
 import {Button, Input, ShowIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Navigate, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import { fetchNewPassword } from '../../services/actions/postNewPassword';
+import {RootState} from '../../services/rootReducer';
 
 function ResetPassword() {
     const dispatch = useDispatch();
@@ -12,13 +13,13 @@ function ResetPassword() {
     const [newPassword, setNewPassword] = React.useState('');
     const [codeMessage, setCodeMessage] = React.useState('');
 
-    const userData = useSelector(store => store.authReducer);
+    const userData = useSelector((store: RootState) => store.authReducer);
 
-    function handleChange(e, value) {
+    function handleChange(e: ChangeEvent<HTMLInputElement>, value: (e: string) => void): void {
         value(e.target.value);
     }
 
-    function handleSubmit(e) {
+    function handleSubmit(e: React.FormEvent): void {
         e.preventDefault();
         dispatch(fetchNewPassword(newPassword, codeMessage));
     }
@@ -37,14 +38,14 @@ function ResetPassword() {
                     <fieldset className={style.resetPassword__fieldset}>
                         <div className={`mt-6 ${style.resetPassword__input}`}>
                             <Input value={newPassword} type="password" placeholder="Введите новый пароль" name="reset-password"
-                                   size="default" onChange={(e) => {handleChange(e, setNewPassword)}} required/>
+                                   size="default" onChange={(e) => {handleChange(e, setNewPassword)}} />
                             <div className={style.resetPassword__image}>
                                 <ShowIcon type={"primary"} />
                             </div>
                         </div>
                         <div className={`mb-6 ${style.resetPassword__input}`}>
                             <Input value={codeMessage} type="text" placeholder="Введите код из письма" name="code-message"
-                                   size="default" onChange={(e) => {handleChange(e, setCodeMessage)}} required/>
+                                   size="default" onChange={(e) => {handleChange(e, setCodeMessage)}} />
                         </div>
                         <Button type={"primary"} size={"medium"} className={`text text_type_main-small mt-6`}>Сохранить</Button>
                         <p className={`text text_type_main-default mt-20 ${style.resetPassword__text}`}>Вспомнили пароль?
