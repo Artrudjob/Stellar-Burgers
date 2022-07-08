@@ -1,25 +1,26 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import {Link, Navigate, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import registerStyle from './register.module.css';
 import {Button, Input, ShowIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {fetchRegisterUser} from '../../services/actions/resgisterUser';
+import {RootState} from '../../services/rootReducer';
 
 function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const userData = useSelector(store => store.authReducer);
+    const userData = useSelector((store: RootState) => store.authReducer);
 
     const [name, setName] = React.useState('');
     const [userEmail, setUserEmail] = React.useState('');
     const [userPassword, setUserPassword] = React.useState('');
 
-    function handleChange(e, value) {
+    function handleChange(e: ChangeEvent<HTMLInputElement>, value: (e: string) => void): void {
         value(e.target.value);
     }
 
-    function handleSubmit(e) {
+    function handleSubmit(e: React.FormEvent): void {
         e.preventDefault();
         dispatch(fetchRegisterUser(userEmail, userPassword, name, navigate));
     }
