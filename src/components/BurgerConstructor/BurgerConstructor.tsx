@@ -1,26 +1,34 @@
 import React, {useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import PropTypes from 'prop-types';
 import constructorStyle from './burgerConstructor.module.css'
-import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrop} from 'react-dnd';
 import { addToConstructor } from '../../services/actions/addToConstructor';
 import { sortIngredient } from '../../services/actions/sortIngredient'
 import {v4 as uuid} from 'uuid'
-import IngredientToConstructor from "../ingredientToConstructor/ingredientToConstructor";
-import {useNavigate} from "react-router-dom";
+import IngredientToConstructor from '../ingredientToConstructor/ingredientToConstructor';
+import {useNavigate} from 'react-router-dom';
+import {RootState} from '../../services/rootReducer';
+import { IIngredients } from '../../services/interface/interface';
+import BunIngredientTop from "../BunIngredientTop/BunIngredientTop";
+import BunIngredientBottom from "../BunIngredientButtom/BunIngredientBottom";
 
-function BurgerConstructor(props) {
-    const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual);
+type TProps = {
+    onClick: () => void;
+    openOrderDetails: () => boolean;
+}
+
+const BurgerConstructor: React.FC<TProps> = (props) => {
+    const ingredientsBurger = useSelector((store: RootState) => store.burgerConstructor.data, shallowEqual);
     const openIngredient = props.onClick;
     const dispatch = useDispatch();
-    const userData = useSelector(store => store.authReducer);
+    const userData = useSelector((store: RootState) => store.authReducer);
     const navigate = useNavigate();
 
     const [ingredientsValidation, setIngredientsValidation] = useState(true)
     const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
     React.useEffect(() => {
-        const arrDataPrice = ingredientsBurger.map(item => {
+        const arrDataPrice = ingredientsBurger.map((item: IIngredients )=> {
             let cost = item.price;
             if (item.type === 'bun') {
                 cost = item.price * 2;
@@ -28,7 +36,7 @@ function BurgerConstructor(props) {
             return cost;
         })
         if (arrDataPrice.length !== 0) {
-            setIngredientsPrice(arrDataPrice.reduce((total, value) => total + value));
+            setIngredientsPrice(arrDataPrice.reduce((total: number, value: number) => total + value));
         }
     }, [ingredientsBurger])
 
@@ -40,12 +48,12 @@ function BurgerConstructor(props) {
         })
     })
 
-    function moveIngredientsToConstructor(element, toIndex) {
+    function moveIngredientsToConstructor(element: IIngredients, toIndex: number) {
         dispatch(sortIngredient(element, toIndex))
     }
 
     const openOrder = () => {
-        if (props.openOrderDetails() === false) {
+        if (!props.openOrderDetails()) {
             setIngredientsValidation(false)
         } else {
             setIngredientsValidation(true)
@@ -53,30 +61,48 @@ function BurgerConstructor(props) {
         }
     }
 
-    const topBun = ingredientsBurger.map(element => {
-        if (element.type === 'bun') {
-            return (
-                <IngredientToConstructor element={element} onClick={openIngredient} type={"top"} key={uuid()}/>
-            )
-        }
-    })
+    const topBun = () => {
+        return (
+            <>
+                {ingredientsBurger.map((element: IIngredients) => {
+                    if (element.type === 'bun') {
+                        return (
+                            <BunIngredientTop element={element} onClick={openIngredient} key={uuid()}/>
+                        )
+                    }
+                })}
+            </>
+        )
+    }
 
-   const allIngredients = ingredientsBurger.map((element, index) => {
-       if (element.type !== 'bun') {
-           return (
-               <IngredientToConstructor element={element} onClick={openIngredient} index={index}
-                                        moveIngredientsToConstructor={moveIngredientsToConstructor} key={element.uuid}/>
-           )
-       }
-    })
+    const allIngredients = () => {
+        return (
+            <>
+                {ingredientsBurger.map((element: IIngredients, index: number) => {
+                    if (element.type !== 'bun') {
+                        return (
+                            <IngredientToConstructor element={element} onClick={openIngredient} index={index}
+                                                     moveIngredientsToConstructor={moveIngredientsToConstructor} key={element.uuid}/>
+                        )
+                    }
+                })}
+            </>
+        )
+    }
 
-    const bottomBun = ingredientsBurger.map(element => {
-        if (element.type === 'bun') {
-            return (
-                <IngredientToConstructor element={element} onClick={openIngredient} type={"bottom"} key={uuid()}/>
-            )
-        }
-    })
+    const bottomBun = () => {
+        return (
+            <>
+                {ingredientsBurger.map((element: IIngredients) => {
+                    if (element.type === 'bun') {
+                        return (
+                            <BunIngredientBottom element={element} onClick={openIngredient} key={uuid()} />
+                        )
+                    }
+                })}
+            </>
+        )
+    }
 
     function checkAuth() {
         if (!userData.isAuthorization) {
@@ -95,11 +121,11 @@ function BurgerConstructor(props) {
                 :
                 <section className={`${constructorStyle.constructor} mt-25`} ref={dropTarget}>
                 <div className={`${constructorStyle.constructor__boxList}`}>
-                    {topBun}
+                    {topBun()}
                     <div className={`${constructorStyle.constructor__boxList} ${constructorStyle.constructor__boxList_scrollbar}`}>
-                        {allIngredients}
+                        {allIngredients()}
                     </div>
-                    {bottomBun}
+                    {bottomBun()}
                 </div>
                 <div className={`${constructorStyle.constructor__info} mt-10`}>
                     <div>
@@ -115,11 +141,6 @@ function BurgerConstructor(props) {
             }
         </>
     )
-}
-
-BurgerConstructor.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    openOrderDetails: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;
