@@ -10,24 +10,25 @@ import { removeAllElToConstructor } from '../../services/actions/removeAllElToCo
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import { DndProvider} from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { removeCurrentIngredient } from "../../services/actions/removeCurrentIngredient";
-import Loader from "../Loader/Loader";
-import {useLocation} from "react-router-dom";
+import { removeCurrentIngredient } from '../../services/actions/removeCurrentIngredient';
+import Loader from '../Loader/Loader';
+import {useLocation} from 'react-router-dom';
+import {RootState} from '../../services/rootReducer';
+import {IIngredients} from '../../services/interface/interface';
 
-function Home() {
+const Home: React.FC = (): JSX.Element => {
     const dispatch = useDispatch();
     const location = useLocation();
     location.state = {background: location.pathname}
-    const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual)
 
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
     const [isLoader, setIsLoader] = React.useState(false) //Состояние загрузки
 
-    const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual);
+    const ingredientsBurger = useSelector((store: RootState) => store.burgerConstructor.data, shallowEqual);
 
     //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
     function openOrderDetails() {
-        const ingredientsType = ingredientsBurger.map(item => item.type)
+        const ingredientsType = ingredientsBurger.map((item: IIngredients) => item.type)
         if ((ingredientsType.includes('bun')) && ((ingredientsType.includes('sauce')) || (ingredientsType.includes('main')))) {
             dispatch(fetchOrderNumber(ingredientsBurger, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
         } else {
@@ -40,11 +41,11 @@ function Home() {
         dispatch(removeCurrentIngredient)
     }
 
-    function handleIngredientClick(ingredient) {
+    function handleIngredientClick(ingredient: IIngredients): void {
         dispatch(addCurrentIngredient(ingredient))
     }
 
-    const orderNumber = useSelector(store => store.getOrderNumber.data, shallowEqual);
+    const orderNumber = useSelector((store: RootState) => store.getOrderNumber.data, shallowEqual);
 
     return (
         <>
@@ -57,7 +58,7 @@ function Home() {
                 </DndProvider>
             </main>
             {isOrderDetailsOpened && (
-                <Modal onOverlayClick={closeModals} closeModals={closeModals}>
+                <Modal onOverlayClick={closeModals} closeModals={closeModals} title={''}>
                     <OrderDetails onOverlayClick={closeModals} title={orderNumber}/>
                 </Modal>
             )}
