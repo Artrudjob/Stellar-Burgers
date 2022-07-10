@@ -1,20 +1,25 @@
 import React from 'react';
 import {shallowEqual, useSelector} from 'react-redux';
-import PropTypes from 'prop-types';
 import burgersStyle from './burgerIngredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient'
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation} from 'react-router-dom';
+import {RootState} from '../../services/rootReducer';
+import {IIngredients} from "../../services/interface/interface";
 
-function BurgerIngredients(props) {
+type TProps = {
+    onClick: () => void;
+}
+
+function BurgerIngredients(props: TProps) {
     const location = useLocation();
-    const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual);
+    const arrData = useSelector((store: RootState) => store.getAllIngredients.ingredients, shallowEqual);
     const test = props.onClick;
 
     const [current, setCurrent] = React.useState('bun');
-    const refItem = React.useRef();
+    const refItem = React.useRef<HTMLHeadingElement>(null);
 
-    const bunsList = arrData.filter(dataItem => dataItem.type === "bun").map(item => {
+    const bunsList = arrData.filter((dataItem: IIngredients) => dataItem.type === "bun").map((item: IIngredients) => {
         return (
             <Link to={`ingredients/:${item._id}`} state={{background: location}} style={{textDecoration: "none", color: "white"}} key={item._id}>
                 <BurgerIngredient element={item} onClick={test} />
@@ -22,7 +27,7 @@ function BurgerIngredients(props) {
         )
     });
 
-    const saucesList = arrData.filter(dataItem => dataItem.type === "sauce").map(item => {
+    const saucesList = arrData.filter((dataItem: IIngredients) => dataItem.type === "sauce").map((item: IIngredients) => {
         return (
             <Link to={`ingredients/:${item._id}`} state={{background: location}} style={{textDecoration: "none", color: "white"}} key={item._id}>
                 <BurgerIngredient element={item} onClick={test} />
@@ -30,7 +35,7 @@ function BurgerIngredients(props) {
         )
     });
 
-    const toppingsList = arrData.filter(dataItem => dataItem.type === "main").map(item => {
+    const toppingsList = arrData.filter((dataItem: IIngredients) => dataItem.type === "main").map((item: IIngredients) => {
         return (
             <Link to={`ingredients/:${item._id}`} state={{background: location}} style={{textDecoration: "none", color: "white"}} key={item._id}>
                 <BurgerIngredient element={item} onClick={test} />
@@ -40,14 +45,15 @@ function BurgerIngredients(props) {
 
     //меняем активную кнопку, в зависимости от количество пикселей, прокрученных от верха элемента
     function scrollIngredients() {
-        const scrollTopElement = refItem.current.scrollTop;
-
-        if (scrollTopElement < 299) {
-            setCurrent('bun')
-        } else if ((scrollTopElement > 298) && (scrollTopElement < 799)) {
-            setCurrent('sauce')
-        } else {
-            setCurrent('main')
+        if (refItem.current !== null) {
+            const scrollTopElement: number = refItem.current.scrollTop;
+            if (scrollTopElement < 299) {
+                setCurrent('bun')
+            } else if ((scrollTopElement > 298) && (scrollTopElement < 799)) {
+                setCurrent('sauce')
+            } else {
+                setCurrent('main')
+            }
         }
     }
 
@@ -87,10 +93,6 @@ function BurgerIngredients(props) {
             </div>
         </section>
     )
-}
-
-BurgerIngredients.propTypes = {
-    onClick: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;
