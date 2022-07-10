@@ -1,16 +1,17 @@
 import React from 'react';
-import PropTypes from "prop-types";
 import ingredientsDetailsStyle from './ingredientsDetails.module.css'
-import {useLocation} from "react-router-dom";
-import {shallowEqual, useSelector} from "react-redux";
+import {useLocation} from 'react-router-dom';
+import {shallowEqual, useSelector} from 'react-redux';
 import Loader from '../Loader/Loader';
+import {RootState} from '../../services/rootReducer';
+import {IIngredients} from '../../services/interface/interface';
 
 function IngredientsDetails() {
     const location = useLocation();
-    const arrData = useSelector(store => store.getAllIngredients.ingredients, shallowEqual);
+    const arrData = useSelector((store: RootState) => store.getAllIngredients.ingredients, shallowEqual);
 
     const currentId = location.pathname.split(':')[1];
-    const ingredient = arrData.find((el) => el._id === currentId);
+    const ingredient: IIngredients = arrData.find((el: IIngredients) => el._id === currentId);
 
 
     if (arrData.length === 0) {
@@ -48,14 +49,5 @@ function IngredientsDetails() {
     }
 };
 
-IngredientsDetails.propTypes = {
-    ingredient: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        calories: PropTypes.number.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired
-    })
-}
 
 export default IngredientsDetails;
