@@ -1,22 +1,23 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import style from './forgotPassword.module.css';
 import {Link, Navigate, useNavigate} from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDispatch, useSelector} from 'react-redux';
 import { fetchUserEmail } from '../../services/actions/postUserEmail';
+import {RootState} from '../../services/rootReducer';
 
-function ForgotPassword() {
+function ForgotPassword(): JSX.Element {
     const dispatch = useDispatch();
     const [value, setValue] = React.useState('')
     const navigate = useNavigate();
 
-    const userData = useSelector(store => store.authReducer);
+    const userData = useSelector((store: RootState) => store.authReducer);
 
-    function handleChange(e) {
+    function handleChange(e: ChangeEvent<HTMLInputElement>): void {
         setValue(e.target.value)
     }
 
-    function handleSubmit(e) {
+    function handleSubmit(e: React.FormEvent): void {
         e.preventDefault();
         dispatch(fetchUserEmail(value, navigate))
     }
@@ -34,8 +35,10 @@ function ForgotPassword() {
                     <h2 className={`text text_type_main-medium ${style.forgotPassword__title}`}>Восстановление пароля</h2>
                     <fieldset className={style.forgotPassword__fieldset}>
                         <div className={`mt-6 mb-6 ${style.forgotPassword__input}`}>
-                            <Input value={value} type="email" placeholder="E-mail" name="find-email" size="default" onChange={handleChange} required/>
+                            <Input value={value} type="email" placeholder="E-mail" name="find-email" size="default" onChange={handleChange} />
                         </div>
+                        {/*
+                        // @ts-ignore */}
                         <Button type={"primary"} size={"medium"} className={`text text_type_main-small mt-6`}>Восстановить</Button>
                         <p className={`text text_type_main-default mt-20 ${style.forgotPassword__text}`}>Вспомнили пароль?
                             <Link to="/Login" className={`pl-2 ${style.forgotPassword__link}`}>Войти</Link>
