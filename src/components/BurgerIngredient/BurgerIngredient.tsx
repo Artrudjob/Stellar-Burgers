@@ -2,11 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import burgersStyle from './burgerIngredient.module.css';
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {useDrag} from "react-dnd";
-import {shallowEqual, useSelector} from "react-redux";
+import {useDrag} from 'react-dnd';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from '../../services/rootReducer';
+import {IIngredients} from '../../services/interface/interface';
 
-function BurgerIngredient(props) {
-    const ingredientsBurger = useSelector(store => store.burgerConstructor.data, shallowEqual)
+type TProps = {
+    element: IIngredients;
+    onClick: (element: IIngredients) => void;
+}
+
+function BurgerIngredient(props: TProps): JSX.Element {
+    const ingredientsBurger = useSelector((store: RootState) => store.burgerConstructor.data, shallowEqual)
     const [countIngredient, setCountIngredient] = React.useState(0);
 
     const element = props.element;
@@ -20,15 +27,14 @@ function BurgerIngredient(props) {
     });
 
     React.useEffect(() => {
-        setCountIngredient(ingredientsBurger.filter(el => el._id === element._id).length)
+        setCountIngredient(ingredientsBurger.filter((el: IIngredients) => el._id === element._id).length)
     }, [ingredientsBurger])
 
-    const border = isDrag && '2px solid #4c4cff';
-    const borderRadius = isDrag && '10px';
+    const active = isDrag && burgersStyle.burgersMenu__active
 
     if (element.type === 'bun') {
         return (
-            <div style={{border, borderRadius}} key={keyElement} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(element)} ref={dragRef}>
+            <div key={keyElement} className={`${burgersStyle.burgersMenu__flexBox} ${active}`} onClick={() => props.onClick(element)} ref={dragRef}>
                 {countIngredient !== 0 && <Counter count={countIngredient} size={"default"}/>}
                 <img className={burgersStyle.burgersMenu__image} src={element.image} alt={element.name}/>
                 <div className={`${burgersStyle.burgersMenu__miniFlexBox} mt-2`}>
@@ -40,7 +46,7 @@ function BurgerIngredient(props) {
         )
     } else if (element.type === 'sauce') {
         return (
-            <div style={{border, borderRadius}} key={keyElement} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(element)} ref={dragRef}>
+            <div key={keyElement} className={`${burgersStyle.burgersMenu__flexBox} ${active}`} onClick={() => props.onClick(element)} ref={dragRef}>
                 {countIngredient !== 0 && <Counter count={countIngredient} size={"default"}/>}
                 <img className={burgersStyle.burgersMenu__image} src={element.image} alt={element.name}/>
                 <div className={`${burgersStyle.burgersMenu__miniFlexBox} mt-2`}>
@@ -50,9 +56,9 @@ function BurgerIngredient(props) {
                 <p className={`text text_type_main-small mt-2 ${burgersStyle.burgersMenu__text_position}`}>{element.name}</p>
             </div>
         ) 
-    } else if (element.type === 'main') {
+    } else {
         return (
-            <div style={{border, borderRadius}} key={keyElement} className={burgersStyle.burgersMenu__flexBox} onClick={() => props.onClick(element)} ref={dragRef}>
+            <div key={keyElement} className={`${burgersStyle.burgersMenu__flexBox} ${active}`} onClick={() => props.onClick(element)} ref={dragRef}>
                 {countIngredient !== 0 && <Counter count={countIngredient} size={"default"}/>}
                 <img className={burgersStyle.burgersMenu__image} src={element.image} alt={element.name}/>
                 <div className={`${burgersStyle.burgersMenu__miniFlexBox} mt-2`}>
