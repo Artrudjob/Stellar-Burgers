@@ -30,7 +30,7 @@ function BurgerIngredient(props: TProps): JSX.Element {
         setCountIngredient(ingredientsBurger.filter((el: IIngredients) => el._id === element._id).length)
     }, [ingredientsBurger])
 
-    const active = isDrag && burgersStyle.burgersMenu__active
+    const active = isDrag && burgersStyle.burgersMenu__active;
 
     if (element.type === 'bun') {
         return (
@@ -69,10 +69,6 @@ function BurgerIngredient(props: TProps): JSX.Element {
             </div>
         )
     }
-}
-
-BurgerIngredient.propTypes = {
-    onClick: PropTypes.func.isRequired
 }
 
 export default BurgerIngredient;
