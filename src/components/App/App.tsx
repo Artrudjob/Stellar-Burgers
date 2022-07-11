@@ -24,12 +24,20 @@ import SpecificOrderDetails from '../SpecificOrderDetails/SpecificOrderDetails';
 import {fetchIngredients} from "../../services/actions/getAllIngredients";
 import {getUser} from "../../services/actions/getUserInfo";
 
-function App() {
+interface ILocation {
+    pathname: string;
+    state: {
+        background: { pathname: string };
+    };
+}
+
+const App: React.FC = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const location = useLocation();
+    const location = useLocation() as ILocation;
+
     const background = location.state?.background;
     const numberOrder = location.pathname.split(':')[1];
 
@@ -77,14 +85,14 @@ function App() {
             {background && <Routes>
                 <Route path="feed/:id" element={
                     <Modal onOverlayClick={closeModals} closeModals={closeModals} title={`#${numberOrder}`}>
-                        <SpecificOrderDetails onOverlayClick={closeModals} />
+                        <SpecificOrderDetails />
                     </Modal>
                 } />
             </Routes>}
             {background && <Routes>
                 <Route path="orders/:id" element={
                     <Modal onOverlayClick={closeModals} closeModals={closeModals} title={`#${numberOrder}`}>
-                        <SpecificOrderDetails onOverlayClick={closeModals} />
+                        <SpecificOrderDetails />
                     </Modal>
                 } />
             </Routes>}
