@@ -1,14 +1,16 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {wsConnectionClosed, wsConnectionStart, wsGetMessage} from '../services/actions/wsActionTypes';
+import {wsConnectionClosed, wsConnectionStart} from '../services/actions/wsActionTypes';
 import OrdersFeed from '../components/OrdersFeed/OrdersFeed';
 import OrderStatistics from '../components/OrderStatistics/OrderStatistics';
 import style from '../styles/FeedPage.module.css';
 import Loader from '../components/Loader/Loader';
-import {wssUrl} from "../consts/consts";
+import {wssUrl} from '../consts/consts';
+import {RootState} from '../services/rootReducer';
+import {IWsMessages} from "../services/interface/interface";
 
 
-function FeedPage() {
+function FeedPage(): JSX.Element {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -19,8 +21,8 @@ function FeedPage() {
         };
     }, [dispatch])
 
-    const wsReducer = useSelector(store => store.wsReducer);
-    const wsData = wsReducer.messages[0];
+    const wsReducer = useSelector((store: RootState) => store.wsReducer);
+    const wsData: IWsMessages | undefined = wsReducer.messages;
 
     return (
         <>

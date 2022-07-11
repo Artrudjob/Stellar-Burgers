@@ -2,7 +2,7 @@ import React from 'react';
 import style from '../styles/ingredientPage.module.css'
 import IngredientsDetails from '../components/IngredientDetails/IngredientsDetails';
 
-function IngredientPage() {
+function IngredientPage(): JSX.Element {
     return (
         <section className={style.ingredient}>
             <div className={style.ingredient__container}>

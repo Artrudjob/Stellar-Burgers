@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from '../components/Home/Home';
 
-function HomePage() {
+function HomePage(): JSX.Element {
     return (
         <Home />
     )

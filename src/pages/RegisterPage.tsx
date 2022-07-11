@@ -1,7 +1,7 @@
 import React from 'react';
 import Register from '../components/Register/Register';
 
-function RegisterPage() {
+function RegisterPage(): JSX.Element {
     return (
         <Register />
     )

@@ -1,6 +1,7 @@
+import React from 'react';
 import ForgotPassword from '../components/ForgotPassword/ForgotPassword';
 
-function ForgotPasswordPage() {
+function ForgotPasswordPage(): JSX.Element {
     return (
         <ForgotPassword />
     )
