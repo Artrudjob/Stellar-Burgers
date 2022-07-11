@@ -7,9 +7,11 @@ import Loader from '../components/Loader/Loader';
 import {getOrderInfo} from '../services/actions/getOrder';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import style from '../styles/feedDetailsPage.module.css';
-import {wssUrl, orderTime} from "../consts/consts";
+import {wssUrl, orderTime} from '../consts/consts';
+import {RootState} from '../services/rootReducer';
+import {IIngredients, IOrder} from '../services/interface/interface';
 
-function FeedDetailsPage() {
+function FeedDetailsPage(): JSX.Element {
     const dispatch = useDispatch();
     const location = useLocation();
     const numberOrder = location.pathname.split(':')[1];
@@ -21,14 +23,14 @@ function FeedDetailsPage() {
         dispatch(getOrderInfo(numberOrder, setLoading));
     }, [FeedDetailsPage]);
 
-    const allIngredients = useSelector(store => store.getAllIngredients.ingredients);
-    const orderData = useSelector(store => store.orderReducer);
+    const allIngredients = useSelector((store: RootState) => store.getAllIngredients.ingredients);
+    const orderData = useSelector((store: RootState) => store.orderReducer);
 
-    const createOrderDate = orderData.data.orders?.map(item => {return item.createdAt});
-    let orderDetails;
+    const createOrderDate: string[] = orderData.data.orders?.map((item: IOrder) => {return item.createdAt});
+    let orderDetails: JSX.Element | undefined;
 
     if (orderData.data.length !== 0) {
-        const orderStatus = orderData.data.orders.map(item => {
+        const orderStatus: JSX.Element = orderData.data.orders.map((item: IOrder) => {
             if (item.status === 'done') {
                 return (
                     <p className={`text text_color_success mb-15`} key={item._id}>Выполнен</p>
@@ -39,13 +41,12 @@ function FeedDetailsPage() {
                 )
             }
         });
+        const arrIngredientsId: string[] = orderData.data.orders.map((item: IOrder) => item.ingredients);
 
-        const arrIngredientsId = orderData.data.orders.map(item => item.ingredients);
-
-        const matchedIngredients = allIngredients.filter(item => arrIngredientsId[0].includes(item._id));
+        const matchedIngredients: IIngredients[] = allIngredients.filter((item: IOrder) => arrIngredientsId[0].includes(item._id));
 
         const burgerComposition = matchedIngredients.map(element => {
-            let countIngredient;
+            let countIngredient: number;
             if (element.type === 'bun') {
                 countIngredient = 2;
             } else {
@@ -55,7 +56,7 @@ function FeedDetailsPage() {
             return (
                 <li key={element._id} className={style.feedDetails__list}>
                     <div className={style.feedDetails__gridBox}>
-                        <img src={element.image_mobile} alt={element.name} className={style.feedDetails__img}></img>
+                        <img src={element.image_mobile} alt={element.name} className={style.feedDetails__img} />
                         <p className={`text text_type_main-default ${style.feedDetails__text}`}>{element.name}</p>
                         <div className={style.feedDetails__flexContainer}>
                             <p className={`text text_type_digits-default mr-2`}>{`${countIngredient} x ${element.price}`}</p>
@@ -75,7 +76,7 @@ function FeedDetailsPage() {
         });
         const sumPrice = arrDataPrice.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
 
-        orderDetails = orderData.data.orders.map(item => {
+        orderDetails = orderData.data.orders.map((item: IOrder) => {
             return (
                 <div className={style.feedDetails__box} key={item._id}>
                     <h2 className={`text text_type_digits-default mb-10`}>#{item.number}</h2>
@@ -102,12 +103,10 @@ function FeedDetailsPage() {
             <Loader />
         )
     }
-    return !loading ?
+    return !loading &&
         <section className={style.feedDetails}>
             {orderDetails}
         </section>
-        :
-        undefined
 }
 
 export default FeedDetailsPage;
