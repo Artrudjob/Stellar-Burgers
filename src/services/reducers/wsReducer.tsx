@@ -2,16 +2,23 @@ import {
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
-    WS_GET_MESSAGE
+    WS_GET_MESSAGE, TWsActions
 } from '../actions/wsActionTypes';
+import {IOrder, IWsMessages} from "../interface/interface";
 
-const initialState = {
+interface IState {
+    wsConnected: boolean;
+    messages: undefined | IWsMessages
+    error: undefined | string;
+}
+
+const initialState: IState = {
     wsConnected: false,
-    messages: [],
+    messages: undefined,
     error: undefined
 };
 
-function wsReducer(state = initialState, action) {
+function wsReducer(state = initialState, action: TWsActions): IState {
     switch (action.type) {
         case WS_CONNECTION_SUCCESS:
             return {
@@ -23,11 +30,11 @@ function wsReducer(state = initialState, action) {
             };
         case WS_CONNECTION_CLOSED:
             return {
-                wsConnected: false, error: undefined, messages: []
+                wsConnected: false, error: undefined, messages: undefined
             };
         case WS_GET_MESSAGE:
             return {
-                ...state, messages: [...state.messages, action.payload], error: undefined
+                ...state, messages: action.payload, error: undefined
             };
         default:
             return state;
