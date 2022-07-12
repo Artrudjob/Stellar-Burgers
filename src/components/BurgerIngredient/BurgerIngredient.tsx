@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import burgersStyle from './burgerIngredient.module.css';
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag} from 'react-dnd';

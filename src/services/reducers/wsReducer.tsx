@@ -4,7 +4,7 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE, TWsActions
 } from '../actions/wsActionTypes';
-import {IOrder, IWsMessages} from "../interface/interface";
+import {IWsMessages} from '../interface/interface';
 
 interface IState {
     wsConnected: boolean;

@@ -1,16 +1,16 @@
 import React, {ChangeEvent} from 'react';
-import {Link, Navigate, useNavigate} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import registerStyle from './register.module.css';
 import {Button, Input, ShowIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {fetchRegisterUser} from '../../services/actions/resgisterUser';
+import {fetchRegisterUser} from '../../services/actions/authActions';
 import {RootState} from '../../services/rootReducer';
+import {IUserData} from '../../services/interface/interface';
 
 function Register() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-    const userData = useSelector((store: RootState) => store.authReducer);
+    const userData: IUserData = useSelector((store: RootState) => store.authReducer);
 
     const [name, setName] = React.useState('');
     const [userEmail, setUserEmail] = React.useState('');
@@ -22,7 +22,7 @@ function Register() {
 
     function handleSubmit(e: React.FormEvent): void {
         e.preventDefault();
-        dispatch(fetchRegisterUser(userEmail, userPassword, name, navigate));
+        dispatch(fetchRegisterUser(userEmail, userPassword, name));
     }
 
     if (userData.isAuthorization) {
@@ -52,6 +52,8 @@ function Register() {
                                 <ShowIcon type={"primary"} />
                             </div>
                         </div>
+                        {/*
+                            // @ts-ignore */}
                         <Button type={"primary"} size={"medium"} className={`text text_type_main-small mt-6`}>Зарегистрироваться</Button>
                         <p className={`text text_type_main-default mt-20 ${registerStyle.register__text}`}>Уже зарегистрированы?
                             <Link to="/Login" className={`pl-2 ${registerStyle.register__link}`}>Войти</Link>

@@ -283,7 +283,6 @@ const updateInfo = (userEmail: string, userName: string) => {
 
 const fetchUserEmail = (userEmail: string, navigate: any) => {
     return function (dispatch: AppDispatch) {
-        //const navigate = useNavigate();
         fetch(`${baseUrl}password-reset`, {
             method: 'POST',
             headers: {

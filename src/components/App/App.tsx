@@ -21,8 +21,8 @@ import FeedPage from '../../pages/FeedPage';
 import FeedDetailsPage from '../../pages/FeedDetailsPage';
 import SpecificOrderDetails from '../SpecificOrderDetails/SpecificOrderDetails';
 
-import {fetchIngredients} from "../../services/actions/getAllIngredients";
-import {getUser} from "../../services/actions/getUserInfo";
+import {fetchIngredients} from '../../services/actions/getAllIngredients';
+import {getUser} from '../../services/actions/authActions';
 
 interface ILocation {
     pathname: string;

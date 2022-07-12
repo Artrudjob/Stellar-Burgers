@@ -6,17 +6,13 @@ import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link, useLocation} from 'react-router-dom';
 import { orderTime } from '../../consts/consts';
 import { RootState} from '../../services/rootReducer';
-import { IIngredients, IOrder} from '../../services/interface/interface';
+import {IIngredients, IWsMessages} from '../../services/interface/interface';
 
 interface IProps {
-    wsData: {
-        orders: IOrder[];
-        total: number;
-        totalToday: number;
-    }
+    wsData: IWsMessages;
 }
 
-const OrdersFeed: FunctionComponent<IProps> = (props) => {
+const OrdersFeed: FunctionComponent<IProps> = (props): JSX.Element => {
     const allIngredients = useSelector((store: RootState) => store.getAllIngredients.ingredients);
     const location = useLocation();
 

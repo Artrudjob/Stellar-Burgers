@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {NavLink, Outlet, useLocation} from 'react-router-dom';
-import {fetchSignOut} from '../../services/actions/signOutAccount';
+import {fetchSignOut} from '../../services/actions/authActions';
 import style from './profile.module.css';
 import {useDispatch} from 'react-redux';
-import {getUser} from "../../services/actions/getUserInfo";
+import {getUser} from '../../services/actions/authActions';
 
 function Profile() {
     const dispatch = useDispatch();
@@ -16,8 +16,7 @@ function Profile() {
 
     //Выйти с аккаунта
     function signOut() {
-        const refreshToken = localStorage.getItem('refreshToken');
-        dispatch(fetchSignOut(refreshToken))
+        dispatch(fetchSignOut());
     };
 
 

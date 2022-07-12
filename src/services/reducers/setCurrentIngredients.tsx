@@ -1,11 +1,15 @@
-import { ADD_CURRENT_INGREDIENT } from '../actions/addCurrentIngredient';
-import { REMOVE_CURRENT_INGREDIENT } from '../actions/removeCurrentIngredient';
+import {ADD_CURRENT_INGREDIENT, IAddCurrentIngredient} from '../actions/addCurrentIngredient';
+import {IRemoveCurrentIngredient, REMOVE_CURRENT_INGREDIENT} from '../actions/removeCurrentIngredient';
 
-const initialState = {
+interface IState {
+    dataIngredient: null;
+}
+
+const initialState: IState = {
     dataIngredient: null
 }
 
-function setCurrentIngredients(state = initialState, action) {
+function setCurrentIngredients(state = initialState, action: IAddCurrentIngredient | IRemoveCurrentIngredient) {
     if (action.type === ADD_CURRENT_INGREDIENT) {
         return {
             ...state,

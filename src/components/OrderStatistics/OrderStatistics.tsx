@@ -1,13 +1,9 @@
 import React, {FunctionComponent} from 'react';
 import style from './orderStatistics.module.css';
-import {IOrder} from '../../services/interface/interface';
+import {IWsMessages} from '../../services/interface/interface';
 
 interface IProps {
-    wsData: {
-        orders: IOrder[];
-        total: number;
-        totalToday: number;
-    }
+    wsData: IWsMessages;
 }
 
 const OrderStatistics: FunctionComponent<IProps> = (props) => {

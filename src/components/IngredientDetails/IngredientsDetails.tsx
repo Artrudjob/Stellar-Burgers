@@ -11,7 +11,7 @@ function IngredientsDetails() {
     const arrData = useSelector((store: RootState) => store.getAllIngredients.ingredients, shallowEqual);
 
     const currentId = location.pathname.split(':')[1];
-    const ingredient: IIngredients = arrData.find((el: IIngredients) => el._id === currentId);
+    const ingredient = arrData.find((el: IIngredients) => el._id === currentId);
 
 
     if (arrData.length === 0) {

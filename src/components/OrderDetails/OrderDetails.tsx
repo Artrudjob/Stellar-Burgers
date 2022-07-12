@@ -3,6 +3,7 @@ import styleOrderDetails from './orderDetails.module.css';
 
 interface IProps {
     title: string;
+    onOverlayClick: () => void;
 }
 
 const OrderDetails: FunctionComponent<IProps> = ({title}) => {

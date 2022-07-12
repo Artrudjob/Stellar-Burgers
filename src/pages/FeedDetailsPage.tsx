@@ -43,7 +43,7 @@ function FeedDetailsPage(): JSX.Element {
         });
         const arrIngredientsId: string[] = orderData.data.orders.map((item: IOrder) => item.ingredients);
 
-        const matchedIngredients: IIngredients[] = allIngredients.filter((item: IOrder) => arrIngredientsId[0].includes(item._id));
+        const matchedIngredients: IIngredients[] = allIngredients.filter((item: IIngredients) => arrIngredientsId[0].includes(item._id));
 
         const burgerComposition = matchedIngredients.map(element => {
             let countIngredient: number;

@@ -10,7 +10,8 @@ export interface IIngredients {
     proteins: number;
     type: string;
     __v: number;
-    _id: string
+    _id: string;
+    uuid: string
 }
 
 export interface IOrder {
@@ -21,5 +22,26 @@ export interface IOrder {
     status: string;
     updatedAt: string;
     _id: string;
+}
+
+export interface IWsMessages {
+    orders: IOrder[];
+    total: number;
+    totalToday: number
+}
+
+export interface IUserData {
+    isAuthorization: boolean,
+    name: string,
+    email: string,
+    restorePassword: boolean,
+    resetPassword: false,
+    message: string
+}
+
+export interface IIngredientsData {
+    ingredients: IIngredients[];
+    loading: boolean;
+    error: null | string;
 }
 

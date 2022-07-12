@@ -12,7 +12,7 @@ import {RootState} from '../../services/rootReducer';
 import { IIngredients, IOrder } from '../../services/interface/interface';
 
 
-function SpecificOrderDetails() {
+function SpecificOrderDetails(): JSX.Element {
     const dispatch = useDispatch();
     const location = useLocation();
     const numberOrder = location.pathname.split(':')[1];
@@ -45,7 +45,7 @@ function SpecificOrderDetails() {
 
         const arrIngredientsId: string[] = orderData.data.orders.map((item: IOrder) => item.ingredients);
 
-        const matchedIngredients = allIngredients.filter((item: IOrder) => arrIngredientsId[0].includes(item._id));
+        const matchedIngredients = allIngredients.filter((item: IIngredients) => arrIngredientsId[0].includes(item._id));
 
         const burgerComposition = matchedIngredients.map((element: IIngredients) => {
             let countIngredient;
@@ -58,7 +58,7 @@ function SpecificOrderDetails() {
             return (
                 <li key={element._id} className={style.feedDetails__list}>
                     <div className={style.feedDetails__gridBox}>
-                        <img src={element.image_mobile} alt={element.name} className={style.feedDetails__img}></img>
+                        <img src={element.image_mobile} alt={element.name} className={style.feedDetails__img} />
                         <p className={`text text_type_main-default ${style.feedDetails__text}`}>{element.name}</p>
                         <div className={style.feedDetails__flexContainer}>
                             <p className={`text text_type_digits-default mr-2`}>{`${countIngredient} x ${element.price}`}</p>
@@ -104,12 +104,10 @@ function SpecificOrderDetails() {
             <Loader />
         )
     }
-    return !loading ?
+    return !loading &&
         <div className={`mt-10 mb-10`}>
             {orderDetails}
         </div>
-        :
-        undefined
 }
 
 export default SpecificOrderDetails;

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import { Input, EditIcon, CloseIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from '../styles/UserInfoPage.module.css';
-import {updateInfo} from "../services/actions/updateUserInfo";
-import {useDispatch, useSelector} from "react-redux";
+import {updateInfo} from '../services/actions/authActions';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../services/rootReducer';
+import {IUserData} from '../services/interface/interface';
 
-function UserInfoPage() {
+function UserInfoPage(): JSX.Element {
     const dispatch = useDispatch();
 
-    const userData = useSelector(store => store.authReducer);
+    const userData: IUserData = useSelector((store: RootState) => store.authReducer);
 
     const [name, setName] = React.useState(userData.name);
     const [login, setLogin] = React.useState(userData.email);
@@ -34,7 +36,7 @@ function UserInfoPage() {
         setPassword('');
     }
 
-    function handleChange(e, value) {
+    function handleChange(e: ChangeEvent<HTMLInputElement>, value: (e: string) => void) {
         value(e.target.value);
     }
 
@@ -71,6 +73,8 @@ function UserInfoPage() {
                 </div>
             </div>
             <div className={style.profile__container}>
+                {/*
+                // @ts-ignore */}
                 <Button type={'secondary'} className={`text text_type_main-default mr-7`} onClick={cancelInput}>Отмена</Button>
                 <Button type={'primary'} onClick={updateUserInfo}>Сохранить</Button>
             </div>

@@ -8,7 +8,7 @@ import {RootState} from '../../services/rootReducer';
 import {IIngredients} from "../../services/interface/interface";
 
 type TProps = {
-    onClick: () => void;
+    onClick: (ingredient: IIngredients) => void;
 }
 
 function BurgerIngredients(props: TProps) {

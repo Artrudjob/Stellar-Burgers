@@ -9,20 +9,20 @@ import {v4 as uuid} from 'uuid'
 import IngredientToConstructor from '../ingredientToConstructor/ingredientToConstructor';
 import {useNavigate} from 'react-router-dom';
 import {RootState} from '../../services/rootReducer';
-import { IIngredients } from '../../services/interface/interface';
-import BunIngredientTop from "../BunIngredientTop/BunIngredientTop";
-import BunIngredientBottom from "../BunIngredientButtom/BunIngredientBottom";
+import {IIngredients, IUserData} from '../../services/interface/interface';
+import BunIngredientTop from '../BunIngredientTop/BunIngredientTop';
+import BunIngredientBottom from '../BunIngredientButtom/BunIngredientBottom';
 
 type TProps = {
-    onClick: () => void;
-    openOrderDetails: () => boolean;
+    onClick: (ingredient: IIngredients) => void;
+    openOrderDetails: () => boolean | undefined;
 }
 
 const BurgerConstructor: React.FC<TProps> = (props) => {
     const ingredientsBurger = useSelector((store: RootState) => store.burgerConstructor.data, shallowEqual);
     const openIngredient = props.onClick;
     const dispatch = useDispatch();
-    const userData = useSelector((store: RootState) => store.authReducer);
+    const userData: IUserData = useSelector((store: RootState) => store.authReducer);
     const navigate = useNavigate();
 
     const [ingredientsValidation, setIngredientsValidation] = useState(true)
