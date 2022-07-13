@@ -1,12 +1,26 @@
-import { GET_ORDER, GET_ORDER_REQUEST, GET_ORDER_ERROR } from '../actions/getOrder';
+import {GET_ORDER, GET_ORDER_REQUEST, GET_ORDER_ERROR, TOrderActions} from '../actions/getOrder';
+import {IOrder} from "../interface/interface";
 
-const initialState = {
-    data: [],
-    loading: false,
-    error: null
+interface IState {
+    data: {
+        success: boolean;
+        orders: IOrder[];
+    };
+    loading: boolean;
+    status: string;
 }
 
-function orderReducer(state = initialState, action) {
+const initialState: IState = {
+    data: {
+        success: false,
+        orders: []
+    },
+    loading: false,
+    status: 'No error'
+}
+
+
+function orderReducer(state = initialState, action: TOrderActions) {
     switch (action.type) {
         case GET_ORDER_REQUEST:
             return {
@@ -22,7 +36,7 @@ function orderReducer(state = initialState, action) {
         case GET_ORDER_ERROR:
             return {
                 ...state,
-                error: action.error,
+                error: action.status,
                 loading: false
             }
         default: {
