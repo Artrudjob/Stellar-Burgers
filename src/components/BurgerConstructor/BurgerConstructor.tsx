@@ -20,6 +20,7 @@ type TProps = {
 
 const BurgerConstructor: React.FC<TProps> = (props) => {
     const ingredientsBurger = useSelector((store: RootState) => store.burgerConstructor.data, shallowEqual);
+
     const openIngredient = props.onClick;
     const dispatch = useDispatch();
     const userData: IUserData = useSelector((store: RootState) => store.authReducer);
@@ -42,7 +43,7 @@ const BurgerConstructor: React.FC<TProps> = (props) => {
 
     const [{ isOver }, dropTarget] = useDrop({
         accept: 'NEW_INGREDIENT',
-        drop: (item) => dispatch(addToConstructor(item)),
+        drop: (item: IIngredients) => dispatch(addToConstructor(item)),
         collect: monitor => ({
             isOver: monitor.isOver()
         })

@@ -1,16 +1,17 @@
 import {ru} from "date-fns/locale";
+import {IOptions} from "../services/interface/interface";
 
-const baseUrl = 'https://norma.nomoreparties.space/api/';
-const wssUrl = 'wss://norma.nomoreparties.space/orders';
+const baseUrl: string = 'https://norma.nomoreparties.space/api/';
+const wssUrl: string = 'wss://norma.nomoreparties.space/orders';
 
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
     if (res.ok) {
         return res.json();
     }
     return Promise.reject(`Ошибка ${res.status}`);
 };
 
-const orderTime = (createdAt, formatDistance) => {
+const orderTime = (createdAt: string, formatDistance: any) => {
     const orderDate = new Date(Date.parse(createdAt));
     const orderTime = orderDate.toLocaleTimeString().slice(0, -3);
     const timeInterval = formatDistance(
@@ -21,7 +22,7 @@ const orderTime = (createdAt, formatDistance) => {
     return `${timeInterval} назад, ${orderTime} i-GMT+3`;
 }
 
-const getCookie = (name) => {
+const getCookie = (name: string) => {
     const matches = document.cookie.match(
         new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
@@ -38,7 +39,7 @@ const getUserInfo = () => {
     })
 }
 
-const updateUserInfo = (userEmail, userName) => {
+const updateUserInfo = (userEmail: string, userName: string) => {
     return fetchWithRefresh(`${baseUrl}auth/user`, {
         method: 'PATCH',
         headers: {
@@ -79,7 +80,7 @@ const getToken = () => {
         })
 };
 
-const fetchWithRefresh = async (url, options) => {
+const fetchWithRefresh = async (url: string, options: IOptions) => {
     try {
         const res = await fetch(url, options);
         return await checkResponse(res);

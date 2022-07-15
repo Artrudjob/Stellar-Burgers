@@ -26,12 +26,11 @@ function SpecificOrderDetails(): JSX.Element {
 
     const allIngredients = useSelector((store: RootState) => store.getAllIngredients.ingredients);
     const orderData = useSelector((store: RootState) => store.orderReducer);
-
-    const createOrderDate: string[] = orderData.data.orders?.map((item: IOrder) => {return item.createdAt});
+    const createOrderDate: string = orderData.data.orders?.map((item: IOrder) => {return item.createdAt}).join();
     let orderDetails;
 
-    if (orderData.data.length !== 0) {
-        const orderStatus: JSX.Element = orderData.data.orders.map((item: IOrder) => {
+    if (orderData.data.orders.length !== 0) {
+        const orderStatus: JSX.Element[] = orderData.data.orders.map((item: IOrder) => {
             if (item.status === 'done') {
                 return (
                     <p className={`text text_color_success mb-15`} key={item._id}>Выполнен</p>
@@ -43,7 +42,7 @@ function SpecificOrderDetails(): JSX.Element {
             }
         });
 
-        const arrIngredientsId: string[] = orderData.data.orders.map((item: IOrder) => item.ingredients);
+        const arrIngredientsId: string[][] = orderData.data.orders.map((item: IOrder) => item.ingredients);
 
         const matchedIngredients = allIngredients.filter((item: IIngredients) => arrIngredientsId[0].includes(item._id));
 

@@ -1,8 +1,10 @@
-import {getCookie} from "../../consts/consts";
+import { getCookie } from '../../consts/consts';
+import { Middleware } from 'redux';
+import {IWsActions} from '../store';
 
-export const socketMiddleware = (wsActions) => {
-    return store => {
-        let socket = null;
+export const socketMiddleware = (wsActions: IWsActions): Middleware => {
+    return (store) => {
+        let socket: WebSocket | null = null;
 
         return next => action => {
             const { dispatch } = store;

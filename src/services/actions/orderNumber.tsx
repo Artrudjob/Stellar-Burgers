@@ -1,24 +1,28 @@
 import {baseUrl, checkResponse, getCookie} from '../../consts/consts';
+import {AppDispatch} from '../store';
+import {IIngredients} from '../interface/interface';
+import {IRemoveEl} from './removeAllElToConstructor';
 
-const ORDER_NUMBER = 'ORDER_NUMBER';
+const ORDER_NUMBER: 'ORDER_NUMBER' = 'ORDER_NUMBER';
 
-const burgerOrderNumber = (id) => ({
+export interface IOrderNumber {
+    readonly type: typeof ORDER_NUMBER;
+    readonly data: number
+}
+
+const burgerOrderNumber = (id: number): IOrderNumber => ({
     type: ORDER_NUMBER,
     data: id
 })
 
-const fetchOrderNumber = (ingredients, openModal, stateLoader, removeIngredients) => {
-    return function (dispatch) {
-        dispatch({
-            type: ORDER_NUMBER,
-            ingredients
-        })
+const fetchOrderNumber = (ingredients: IIngredients[], openModal: React.Dispatch<React.SetStateAction<boolean>>, stateLoader: React.Dispatch<React.SetStateAction<boolean>>, removeIngredients: IRemoveEl) => {
+    return function (dispatch: AppDispatch) {
         stateLoader(true)
         fetch(`${baseUrl}orders`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'authorization': getCookie('accessToken')
+                'authorization': `${getCookie('accessToken')}`
             },
             body: JSON.stringify({
                 'ingredients': ingredients.map(item => {

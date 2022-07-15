@@ -9,7 +9,7 @@ function OrdersPage() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(wsConnectionStart(`${wssUrl}?token=${getCookie('accessToken').replace('Bearer ', '')}`));
+        dispatch(wsConnectionStart(`${wssUrl}?token=${getCookie('accessToken')?.replace('Bearer ', '')}`));
 
         return () => {
             dispatch(wsConnectionClosed());

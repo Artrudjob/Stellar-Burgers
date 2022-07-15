@@ -45,7 +45,7 @@ const Home: React.FC = (): JSX.Element => {
         dispatch(addCurrentIngredient(ingredient))
     }
 
-    const orderNumber = useSelector((store: RootState) => store.getOrderNumber.data, shallowEqual);
+    const orderNumber = useSelector((store: RootState) => store.getOrderNumber.orderNumber, shallowEqual);
 
     return (
         <>
@@ -59,7 +59,7 @@ const Home: React.FC = (): JSX.Element => {
             </main>
             {isOrderDetailsOpened && (
                 <Modal onOverlayClick={closeModals} closeModals={closeModals} title={''}>
-                    <OrderDetails onOverlayClick={closeModals} title={orderNumber}/>
+                    <OrderDetails onOverlayClick={closeModals} title={`${orderNumber}`}/>
                 </Modal>
             )}
             {isLoader && (

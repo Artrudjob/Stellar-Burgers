@@ -45,3 +45,12 @@ export interface IIngredientsData {
     error: null | string;
 }
 
+export interface IOptions {
+    method: string;
+    headers: {
+        'Content-Type': string;
+        'authorization': string;
+    }
+    body?: string;
+}
+
