@@ -3,10 +3,10 @@ import style from './order.module.css';
 import { orderTime } from '../../consts/consts';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { formatDistanceStrict } from 'date-fns';
-import {shallowEqual, useSelector} from "react-redux";
-import {Link, useLocation} from "react-router-dom";
-import { RootState } from '../../services/rootReducer';
-import { IIngredients, IOrder} from '../../services/interface/interface';
+import {shallowEqual} from 'react-redux';
+import {useAppSelector} from '../../services/hooks/hooks';
+import {Link, useLocation} from 'react-router-dom';
+import { IOrder} from '../../services/interface/interface';
 
 interface IProps {
     userOrders: undefined | IOrder[];
@@ -14,12 +14,12 @@ interface IProps {
 
 const Order: FunctionComponent<IProps> = (props) => {
     const location = useLocation();
-    const allIngredients = useSelector((store: RootState) => store.getAllIngredients.ingredients, shallowEqual);
+    const allIngredients = useAppSelector((store) => store.getAllIngredients.ingredients, shallowEqual);
     const order = props.userOrders?.map((order) => {
         const arrIngredientsId = order.ingredients;
-        const matchedIngredients = allIngredients.filter((item: IIngredients) => arrIngredientsId.includes(item._id));
+        const matchedIngredients = allIngredients.filter((item) => arrIngredientsId.includes(item._id));
 
-        const arrDataPrice = matchedIngredients.map((item: IIngredients) => {
+        const arrDataPrice = matchedIngredients.map((item) => {
             if (item.type === 'bun') {
                 return  item.price * 2
             } else {
@@ -28,7 +28,7 @@ const Order: FunctionComponent<IProps> = (props) => {
         });
         const sumPrice = arrDataPrice.reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0);
 
-        const imageIngredients = matchedIngredients.map((image: IIngredients) => {
+        const imageIngredients = matchedIngredients.map((image) => {
             if (matchedIngredients.length < 6) {
                 return (
                     <li className={style.order__list} key={image._id}>

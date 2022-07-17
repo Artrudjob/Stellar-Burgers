@@ -2,20 +2,19 @@ import React, {ChangeEvent} from 'react';
 import style from './resetPassword.module.css';
 import {Button, Input, ShowIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Navigate, useLocation, useNavigate} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/hooks';
 import { fetchNewPassword } from '../../services/actions/authActions';
-import {RootState} from '../../services/rootReducer';
 import {IUserData} from '../../services/interface/interface';
 
 function ResetPassword() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate();
 
     const [newPassword, setNewPassword] = React.useState('');
     const [codeMessage, setCodeMessage] = React.useState('');
 
-    const userData: IUserData = useSelector((store: RootState) => store.authReducer);
+    const userData: IUserData = useAppSelector((store) => store.authReducer);
 
     function handleChange(e: ChangeEvent<HTMLInputElement>, value: (e: string) => void): void {
         value(e.target.value);

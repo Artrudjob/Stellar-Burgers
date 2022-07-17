@@ -18,7 +18,7 @@ interface IWsConnectionSuccess {
 
 interface IWsConnectionError {
     readonly type: typeof WS_CONNECTION_ERROR;
-    readonly payload: string
+    readonly payload: string;
 }
 
 interface IWsConnectionClosed {

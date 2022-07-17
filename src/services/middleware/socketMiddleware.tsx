@@ -1,9 +1,10 @@
 import { getCookie } from '../../consts/consts';
-import { Middleware } from 'redux';
-import {IWsActions} from '../store';
+import {Middleware, MiddlewareAPI} from 'redux';
+import {AppDispatch, TWebsActions} from '../store';
+import {RootState} from '../store';
 
-export const socketMiddleware = (wsActions: IWsActions): Middleware => {
-    return (store) => {
+export const socketMiddleware = (wsActions: TWebsActions): Middleware => {
+    return (store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
 
         return next => action => {
@@ -21,7 +22,7 @@ export const socketMiddleware = (wsActions: IWsActions): Middleware => {
                 };
 
                 socket.onerror = event => {
-                    dispatch({ type: onError, payload: event });
+                    dispatch({ type: onError, payload: `${event}` });
                 };
 
                 socket.onmessage = event => {

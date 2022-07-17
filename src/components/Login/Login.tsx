@@ -3,15 +3,14 @@ import {Link, Navigate, useLocation} from 'react-router-dom';
 import React, {ChangeEvent, FormEvent} from 'react';
 import { fetchPostAuth } from '../../services/actions/authActions';
 import loginStyle from './login.module.css'
-import {useDispatch, useSelector} from 'react-redux';
-import { RootState } from '../../services/rootReducer';
+import {useAppDispatch, useAppSelector} from '../../services/hooks/hooks';
 import {IUserData} from '../../services/interface/interface';
 
 function Login() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
 
-    const userData: IUserData = useSelector((store: RootState) => store.authReducer);
+    const userData: IUserData = useAppSelector((store) => store.authReducer);
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');

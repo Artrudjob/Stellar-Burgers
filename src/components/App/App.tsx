@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Routes, Route, useLocation, useNavigate} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {useAppDispatch} from '../../services/hooks/hooks';
 import appStyle from './app.module.css';
 
 import AppHeader from '../AppHeader/AppHeader';
@@ -33,7 +33,7 @@ interface ILocation {
 
 const App: React.FC = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const location = useLocation() as ILocation;

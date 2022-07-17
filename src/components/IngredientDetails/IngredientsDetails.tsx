@@ -1,17 +1,16 @@
 import React from 'react';
 import ingredientsDetailsStyle from './ingredientsDetails.module.css'
 import {useLocation} from 'react-router-dom';
-import {shallowEqual, useSelector} from 'react-redux';
+import {shallowEqual} from 'react-redux';
+import {useAppSelector} from '../../services/hooks/hooks';
 import Loader from '../Loader/Loader';
-import {RootState} from '../../services/rootReducer';
-import {IIngredients} from '../../services/interface/interface';
 
 function IngredientsDetails() {
     const location = useLocation();
-    const arrData = useSelector((store: RootState) => store.getAllIngredients.ingredients, shallowEqual);
+    const arrData = useAppSelector((store) => store.getAllIngredients.ingredients, shallowEqual);
 
     const currentId = location.pathname.split(':')[1];
-    const ingredient = arrData.find((el: IIngredients) => el._id === currentId);
+    const ingredient = arrData.find((el) => el._id === currentId);
 
 
     if (arrData.length === 0) {

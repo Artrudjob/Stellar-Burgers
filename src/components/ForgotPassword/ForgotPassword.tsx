@@ -2,17 +2,16 @@ import React, {ChangeEvent} from 'react';
 import style from './forgotPassword.module.css';
 import {Link, Navigate, useNavigate} from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import {useDispatch, useSelector} from 'react-redux';
+import {useAppDispatch, useAppSelector} from '../../services/hooks/hooks';
 import { fetchUserEmail } from '../../services/actions/authActions';
-import {RootState} from '../../services/rootReducer';
 import { IUserData } from '../../services/interface/interface';
 
 function ForgotPassword(): JSX.Element {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [value, setValue] = React.useState('')
 
-    const userData: IUserData = useSelector((store: RootState) => store.authReducer);
+    const userData: IUserData = useAppSelector((store) => store.authReducer);
 
     function handleChange(e: ChangeEvent<HTMLInputElement>): void {
         setValue(e.target.value)

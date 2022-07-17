@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useAppDispatch, useAppSelector} from '../../services/hooks/hooks';
 import {useLocation} from 'react-router-dom';
 import {wsConnectionStart} from '../../services/actions/wsActionTypes';
 import {orderTime, wssUrl} from '../../consts/consts';
@@ -8,12 +8,11 @@ import Loader from '../Loader/Loader';
 import style from '../../styles/feedDetailsPage.module.css';
 import {formatDistanceStrict} from 'date-fns';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {RootState} from '../../services/rootReducer';
-import { IIngredients, IOrder } from '../../services/interface/interface';
+
 
 
 function SpecificOrderDetails(): JSX.Element {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const numberOrder = location.pathname.split(':')[1];
 
@@ -24,13 +23,13 @@ function SpecificOrderDetails(): JSX.Element {
         dispatch(getOrderInfo(numberOrder, setLoading));
     }, [SpecificOrderDetails]);
 
-    const allIngredients = useSelector((store: RootState) => store.getAllIngredients.ingredients);
-    const orderData = useSelector((store: RootState) => store.orderReducer);
-    const createOrderDate: string = orderData.data.orders?.map((item: IOrder) => {return item.createdAt}).join();
+    const allIngredients = useAppSelector((store) => store.getAllIngredients.ingredients);
+    const orderData = useAppSelector((store) => store.orderReducer);
+    const createOrderDate: string = orderData.data.orders?.map((item) => {return item.createdAt}).join();
     let orderDetails;
 
     if (orderData.data.orders.length !== 0) {
-        const orderStatus: JSX.Element[] = orderData.data.orders.map((item: IOrder) => {
+        const orderStatus: JSX.Element[] = orderData.data.orders.map((item) => {
             if (item.status === 'done') {
                 return (
                     <p className={`text text_color_success mb-15`} key={item._id}>Выполнен</p>
@@ -42,11 +41,11 @@ function SpecificOrderDetails(): JSX.Element {
             }
         });
 
-        const arrIngredientsId: string[][] = orderData.data.orders.map((item: IOrder) => item.ingredients);
+        const arrIngredientsId: string[][] = orderData.data.orders.map((item) => item.ingredients);
 
-        const matchedIngredients = allIngredients.filter((item: IIngredients) => arrIngredientsId[0].includes(item._id));
+        const matchedIngredients = allIngredients.filter((item) => arrIngredientsId[0].includes(item._id));
 
-        const burgerComposition = matchedIngredients.map((element: IIngredients) => {
+        const burgerComposition = matchedIngredients.map((element) => {
             let countIngredient;
             if (element.type === 'bun') {
                 countIngredient = 2;
@@ -68,7 +67,7 @@ function SpecificOrderDetails(): JSX.Element {
             )
         });
 
-        const arrDataPrice = matchedIngredients.map((item: IIngredients) => {
+        const arrDataPrice = matchedIngredients.map((item) => {
             if (item.type === 'bun') {
                 return  item.price * 2
             } else {
@@ -77,7 +76,7 @@ function SpecificOrderDetails(): JSX.Element {
         });
         const sumPrice: number = arrDataPrice.reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0);
 
-        orderDetails = orderData.data.orders.map((item: IOrder) => {
+        orderDetails = orderData.data.orders.map((item) => {
             return (
                 <div className={style.feedDetails__box} key={item._id}>
                     <p className={`text text_type_main-medium mb-3`}>{item.name}</p>

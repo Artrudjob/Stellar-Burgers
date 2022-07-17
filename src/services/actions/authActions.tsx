@@ -1,5 +1,5 @@
 import {baseUrl, checkResponse, getUserInfo, updateUserInfo} from '../../consts/consts';
-import {AppDispatch} from '../store';
+import {AppDispatch, AppThunk} from '../store';
 
 const POST_AUTH: 'POST_AUTH' = 'POST_AUTH';
 const POST_AUTH_FAILURE: 'POST_AUTH_FAILURE' = 'POST_AUTH_FAILURE';
@@ -202,7 +202,7 @@ const signOutAccountFailure = (err: string): ISignOutAccountFailure => ({
 })
 
 //async functions
-const fetchPostAuth = (userEmail: string, userPassword: string) => {
+const fetchPostAuth: AppThunk = (userEmail: string, userPassword: string) => {
     return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}auth/login`, {
             method: 'POST',
@@ -228,7 +228,7 @@ const fetchPostAuth = (userEmail: string, userPassword: string) => {
     }
 };
 
-const fetchRegisterUser = (email: string, password: string, name: string) => {
+const fetchRegisterUser: AppThunk = (email: string, password: string, name: string) => {
     return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}auth/register`, {
             method: 'POST',
@@ -255,7 +255,7 @@ const fetchRegisterUser = (email: string, password: string, name: string) => {
     }
 };
 
-const getUser = () => {
+const getUser: AppThunk = () => {
     return function (dispatch: AppDispatch) {
         getUserInfo()
             .then((res) => {
@@ -268,7 +268,7 @@ const getUser = () => {
     }
 };
 
-const updateInfo = (userEmail: string, userName: string) => {
+const updateInfo: AppThunk = (userEmail: string, userName: string) => {
     return function (dispatch: AppDispatch) {
         updateUserInfo(userEmail, userName)
             .then((res) => {
@@ -281,7 +281,7 @@ const updateInfo = (userEmail: string, userName: string) => {
     }
 };
 
-const fetchUserEmail = (userEmail: string, navigate: any) => {
+const fetchUserEmail: AppThunk = (userEmail: string, navigate: any) => {
     return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}password-reset`, {
             method: 'POST',
@@ -304,7 +304,7 @@ const fetchUserEmail = (userEmail: string, navigate: any) => {
     }
 }
 
-const fetchNewPassword = (newPassword: string, token: string, navigate: any) => {
+const fetchNewPassword: AppThunk = (newPassword: string, token: string, navigate: any) => {
     return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}password-reset/reset`, {
             method: 'POST',
@@ -328,7 +328,7 @@ const fetchNewPassword = (newPassword: string, token: string, navigate: any) => 
     }
 };
 
-const fetchSignOut = () => {
+const fetchSignOut: AppThunk = () => {
     return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}auth/logout`, {
             method: 'POST',

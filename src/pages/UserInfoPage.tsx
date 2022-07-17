@@ -2,14 +2,13 @@ import React, {ChangeEvent} from 'react';
 import { Input, EditIcon, CloseIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from '../styles/UserInfoPage.module.css';
 import {updateInfo} from '../services/actions/authActions';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../services/rootReducer';
+import { useAppDispatch, useAppSelector } from '../services/hooks/hooks';
 import {IUserData} from '../services/interface/interface';
 
 function UserInfoPage(): JSX.Element {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const userData: IUserData = useSelector((store: RootState) => store.authReducer);
+    const userData: IUserData = useAppSelector((store) => store.authReducer);
 
     const [name, setName] = React.useState(userData.name);
     const [login, setLogin] = React.useState(userData.email);

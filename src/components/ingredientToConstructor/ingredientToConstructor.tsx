@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
-import {useDispatch} from 'react-redux';
+import {useAppDispatch} from '../../services/hooks/hooks';
 import constructorStyle from './ingredientToConstructor.module.css'
-import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag, useDrop} from 'react-dnd';
 import {removeToConstructor} from '../../services/actions/removeToConstructor';
 import {IIngredients} from "../../services/interface/interface";
@@ -15,7 +15,7 @@ type TProps = {
 
 function IngredientToConstructor(props: TProps): JSX.Element {
     const ref = useRef(null);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const element = props.element;
 
     const [{isDragging}, dragRef] = useDrag({

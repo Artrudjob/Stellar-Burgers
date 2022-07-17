@@ -22,7 +22,7 @@ const Modal: FunctionComponent<IProps> = ({
     const location = useLocation();
 
     React.useEffect(() => {
-        function handleEscKeydown(e: { key: string; }) {
+        function handleEscKeydown(e: KeyboardEvent) {
             if (e.key === 'Escape') {
                 closeModals();
             }

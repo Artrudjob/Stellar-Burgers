@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../services/hooks/hooks';
 import {useLocation} from 'react-router-dom';
 import {wsConnectionStart} from '../services/actions/wsActionTypes';
 import { formatDistanceStrict } from 'date-fns';
@@ -8,11 +8,10 @@ import {getOrderInfo} from '../services/actions/getOrder';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import style from '../styles/feedDetailsPage.module.css';
 import {wssUrl, orderTime} from '../consts/consts';
-import {RootState} from '../services/rootReducer';
-import {IIngredients, IOrder} from '../services/interface/interface';
+import {IIngredients} from '../services/interface/interface';
 
 function FeedDetailsPage(): JSX.Element {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const numberOrder = location.pathname.split(':')[1];
 
@@ -23,14 +22,14 @@ function FeedDetailsPage(): JSX.Element {
         dispatch(getOrderInfo(numberOrder, setLoading));
     }, [FeedDetailsPage]);
 
-    const allIngredients = useSelector((store: RootState) => store.getAllIngredients.ingredients);
-    const orderData = useSelector((store: RootState) => store.orderReducer);
+    const allIngredients = useAppSelector((store) => store.getAllIngredients.ingredients);
+    const orderData = useAppSelector((store) => store.orderReducer);
 
-    const createOrderDate: string = orderData.data.orders?.map((item: IOrder) => {return item.createdAt}).join();
+    const createOrderDate: string = orderData.data.orders?.map((item) => {return item.createdAt}).join();
     let orderDetails;
 
     if (orderData.data.orders.length !== 0) {
-        const orderStatus: JSX.Element[] = orderData.data.orders.map((item: IOrder) => {
+        const orderStatus: JSX.Element[] = orderData.data.orders.map((item) => {
             if (item.status === 'done') {
                 return (
                     <p className={`text text_color_success mb-15`} key={item._id}>Выполнен</p>
@@ -41,9 +40,9 @@ function FeedDetailsPage(): JSX.Element {
                 )
             }
         });
-        const arrIngredientsId: string[][] = orderData.data.orders.map((item: IOrder) => item.ingredients);
+        const arrIngredientsId: string[][] = orderData.data.orders.map((item) => item.ingredients);
 
-        const matchedIngredients: IIngredients[] = allIngredients.filter((item: IIngredients) => arrIngredientsId[0].includes(item._id));
+        const matchedIngredients: IIngredients[] = allIngredients.filter((item) => arrIngredientsId[0].includes(item._id));
 
         const burgerComposition = matchedIngredients.map(element => {
             let countIngredient: number;
@@ -76,7 +75,7 @@ function FeedDetailsPage(): JSX.Element {
         });
         const sumPrice = arrDataPrice.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
 
-        orderDetails = orderData.data.orders.map((item: IOrder) => {
+        orderDetails = orderData.data.orders.map((item) => {
             return (
                 <div className={style.feedDetails__box} key={item._id}>
                     <h2 className={`text text_type_digits-default mb-10`}>#{item.number}</h2>

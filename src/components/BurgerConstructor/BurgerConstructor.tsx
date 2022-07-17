@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import {shallowEqual} from 'react-redux';
+import { useAppDispatch, useAppSelector} from '../../services/hooks/hooks';
 import constructorStyle from './burgerConstructor.module.css'
 import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrop} from 'react-dnd';
@@ -8,7 +9,6 @@ import { sortIngredient } from '../../services/actions/sortIngredient'
 import {v4 as uuid} from 'uuid'
 import IngredientToConstructor from '../ingredientToConstructor/ingredientToConstructor';
 import {useNavigate} from 'react-router-dom';
-import {RootState} from '../../services/rootReducer';
 import {IIngredients, IUserData} from '../../services/interface/interface';
 import BunIngredientTop from '../BunIngredientTop/BunIngredientTop';
 import BunIngredientBottom from '../BunIngredientButtom/BunIngredientBottom';
@@ -19,17 +19,17 @@ type TProps = {
 }
 
 const BurgerConstructor: React.FC<TProps> = (props) => {
-    const ingredientsBurger = useSelector((store: RootState) => store.burgerConstructor.data, shallowEqual);
+    const ingredientsBurger = useAppSelector((store) => store.burgerConstructor.data, shallowEqual);
 
     const openIngredient = props.onClick;
-    const dispatch = useDispatch();
-    const userData: IUserData = useSelector((store: RootState) => store.authReducer);
+    const dispatch = useAppDispatch();
+    const userData: IUserData = useAppSelector((store) => store.authReducer);
     const navigate = useNavigate();
 
     const [ingredientsValidation, setIngredientsValidation] = useState(true)
     const [ingredientsPrice, setIngredientsPrice] = useState(0); // состояние начальной цены ингредиентов
     React.useEffect(() => {
-        const arrDataPrice = ingredientsBurger.map((item: IIngredients )=> {
+        const arrDataPrice = ingredientsBurger.map(item => {
             let cost = item.price;
             if (item.type === 'bun') {
                 cost = item.price * 2;
@@ -65,7 +65,7 @@ const BurgerConstructor: React.FC<TProps> = (props) => {
     const topBun = () => {
         return (
             <>
-                {ingredientsBurger.map((element: IIngredients) => {
+                {ingredientsBurger.map(element => {
                     if (element.type === 'bun') {
                         return (
                             <BunIngredientTop element={element} onClick={openIngredient} key={uuid()}/>
@@ -79,7 +79,7 @@ const BurgerConstructor: React.FC<TProps> = (props) => {
     const allIngredients = () => {
         return (
             <>
-                {ingredientsBurger.map((element: IIngredients, index: number) => {
+                {ingredientsBurger.map((element, index) => {
                     if (element.type !== 'bun') {
                         return (
                             <IngredientToConstructor element={element} onClick={openIngredient} index={index}
@@ -94,7 +94,7 @@ const BurgerConstructor: React.FC<TProps> = (props) => {
     const bottomBun = () => {
         return (
             <>
-                {ingredientsBurger.map((element: IIngredients) => {
+                {ingredientsBurger.map(element => {
                     if (element.type === 'bun') {
                         return (
                             <BunIngredientBottom element={element} onClick={openIngredient} key={uuid()} />

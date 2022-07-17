@@ -2,8 +2,8 @@ import React from 'react';
 import burgersStyle from './burgerIngredient.module.css';
 import {Counter, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useDrag} from 'react-dnd';
-import {shallowEqual, useSelector} from 'react-redux';
-import {RootState} from '../../services/rootReducer';
+import {shallowEqual} from 'react-redux';
+import {useAppSelector} from '../../services/hooks/hooks';
 import {IIngredients} from '../../services/interface/interface';
 
 type TProps = {
@@ -12,7 +12,7 @@ type TProps = {
 }
 
 function BurgerIngredient(props: TProps): JSX.Element {
-    const ingredientsBurger = useSelector((store: RootState) => store.burgerConstructor.data, shallowEqual)
+    const ingredientsBurger = useAppSelector((store) => store.burgerConstructor.data, shallowEqual)
     const [countIngredient, setCountIngredient] = React.useState(0);
 
     const element = props.element;
@@ -26,7 +26,7 @@ function BurgerIngredient(props: TProps): JSX.Element {
     });
 
     React.useEffect(() => {
-        setCountIngredient(ingredientsBurger.filter((el: IIngredients) => el._id === element._id).length)
+        setCountIngredient(ingredientsBurger.filter(el => el._id === element._id).length)
     }, [ingredientsBurger])
 
     const active = isDrag && burgersStyle.burgersMenu__active;

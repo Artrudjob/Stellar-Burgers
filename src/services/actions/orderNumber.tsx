@@ -1,5 +1,5 @@
 import {baseUrl, checkResponse, getCookie} from '../../consts/consts';
-import {AppDispatch} from '../store';
+import {AppDispatch, AppThunk} from '../store';
 import {IIngredients} from '../interface/interface';
 import {IRemoveEl} from './removeAllElToConstructor';
 
@@ -15,7 +15,10 @@ const burgerOrderNumber = (id: number): IOrderNumber => ({
     data: id
 })
 
-const fetchOrderNumber = (ingredients: IIngredients[], openModal: React.Dispatch<React.SetStateAction<boolean>>, stateLoader: React.Dispatch<React.SetStateAction<boolean>>, removeIngredients: IRemoveEl) => {
+const fetchOrderNumber: AppThunk = (ingredients: IIngredients[],
+                          openModal: React.Dispatch<React.SetStateAction<boolean>>,
+                          stateLoader: React.Dispatch<React.SetStateAction<boolean>>,
+                          removeIngredients: IRemoveEl) => {
     return function (dispatch: AppDispatch) {
         stateLoader(true)
         fetch(`${baseUrl}orders`, {

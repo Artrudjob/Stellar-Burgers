@@ -1,26 +1,25 @@
 import React, {FunctionComponent} from 'react';
 import style from './ordersFeed.module.css';
 import { formatDistanceStrict } from 'date-fns';
-import {useSelector} from 'react-redux';
+import { useAppSelector } from '../../services/hooks/hooks';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link, useLocation} from 'react-router-dom';
 import { orderTime } from '../../consts/consts';
-import { RootState} from '../../services/rootReducer';
-import {IIngredients, IWsMessages} from '../../services/interface/interface';
+import {IWsMessages} from '../../services/interface/interface';
 
 interface IProps {
     wsData: IWsMessages;
 }
 
 const OrdersFeed: FunctionComponent<IProps> = (props): JSX.Element => {
-    const allIngredients = useSelector((store: RootState) => store.getAllIngredients.ingredients);
+    const allIngredients = useAppSelector((store) => store.getAllIngredients.ingredients);
     const location = useLocation();
 
     const allOrders = props.wsData?.orders.map(order => {
         const arrIngredientsId = order.ingredients;
-        const matchedIngredients = allIngredients.filter((item: IIngredients) => arrIngredientsId.includes(item._id));
+        const matchedIngredients = allIngredients.filter((item) => arrIngredientsId.includes(item._id));
 
-        const arrDataPrice = matchedIngredients.map((item: IIngredients) => {
+        const arrDataPrice = matchedIngredients.map((item) => {
             if (item.type === 'bun') {
                 return  item.price * 2
             } else {
@@ -29,7 +28,7 @@ const OrdersFeed: FunctionComponent<IProps> = (props): JSX.Element => {
         });
         const sumPrice = arrDataPrice.reduce((previousValue: number, currentValue: number) => previousValue + currentValue, 0);
 
-        const imageIngredients = matchedIngredients.map((image: IIngredients) => {
+        const imageIngredients = matchedIngredients.map((image) => {
             if (matchedIngredients.length < 6) {
                 return (
                     <li className={style.order__list} key={image._id}>

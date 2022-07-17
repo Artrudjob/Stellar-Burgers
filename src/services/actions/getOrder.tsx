@@ -1,6 +1,6 @@
 import {baseUrl, checkResponse} from '../../consts/consts';
 import {IOrder} from '../interface/interface';
-import {AppDispatch} from '../store';
+import {AppDispatch, AppThunk} from '../store';
 
 const GET_ORDER: 'GET_ORDER' = 'GET_ORDER';
 const GET_ORDER_REQUEST: 'GET_ORDER_REQUEST' = 'GET_ORDER_REQUEST';
@@ -38,7 +38,8 @@ const getOrderFailure = (err: string): IGetOrderFailure => ({
     status: err
 })
 
-const getOrderInfo = (number: string, loading: React.Dispatch<React.SetStateAction<boolean>>) => {
+
+const getOrderInfo: AppThunk = (number: string, loading: React.Dispatch<React.SetStateAction<boolean>>) => {
     return function (dispatch: AppDispatch) {
         dispatch({
             type: GET_ORDER_REQUEST

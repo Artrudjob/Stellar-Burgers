@@ -1,10 +1,10 @@
 import React from 'react';
-import {shallowEqual, useSelector} from 'react-redux';
+import {shallowEqual} from 'react-redux';
+import {useAppSelector} from '../../services/hooks/hooks';
 import burgersStyle from './burgerIngredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../BurgerIngredient/BurgerIngredient'
 import {Link, useLocation} from 'react-router-dom';
-import {RootState} from '../../services/rootReducer';
 import {IIngredients} from "../../services/interface/interface";
 
 type TProps = {
@@ -13,13 +13,13 @@ type TProps = {
 
 function BurgerIngredients(props: TProps) {
     const location = useLocation();
-    const arrData = useSelector((store: RootState) => store.getAllIngredients.ingredients, shallowEqual);
+    const arrData = useAppSelector((store) => store.getAllIngredients.ingredients, shallowEqual);
     const test = props.onClick;
 
     const [current, setCurrent] = React.useState('bun');
     const refItem = React.useRef<HTMLHeadingElement>(null);
 
-    const bunsList = arrData.filter((dataItem: IIngredients) => dataItem.type === "bun").map((item: IIngredients) => {
+    const bunsList = arrData.filter((dataItem) => dataItem.type === "bun").map((item) => {
         return (
             <Link to={`ingredients/:${item._id}`} state={{background: location}} style={{textDecoration: "none", color: "white"}} key={item._id}>
                 <BurgerIngredient element={item} onClick={test} />
@@ -27,7 +27,7 @@ function BurgerIngredients(props: TProps) {
         )
     });
 
-    const saucesList = arrData.filter((dataItem: IIngredients) => dataItem.type === "sauce").map((item: IIngredients) => {
+    const saucesList = arrData.filter((dataItem) => dataItem.type === "sauce").map((item) => {
         return (
             <Link to={`ingredients/:${item._id}`} state={{background: location}} style={{textDecoration: "none", color: "white"}} key={item._id}>
                 <BurgerIngredient element={item} onClick={test} />
@@ -35,7 +35,7 @@ function BurgerIngredients(props: TProps) {
         )
     });
 
-    const toppingsList = arrData.filter((dataItem: IIngredients) => dataItem.type === "main").map((item: IIngredients) => {
+    const toppingsList = arrData.filter((dataItem) => dataItem.type === "main").map((item) => {
         return (
             <Link to={`ingredients/:${item._id}`} state={{background: location}} style={{textDecoration: "none", color: "white"}} key={item._id}>
                 <BurgerIngredient element={item} onClick={test} />

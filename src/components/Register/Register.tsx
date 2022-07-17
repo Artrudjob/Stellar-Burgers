@@ -1,16 +1,15 @@
 import React, {ChangeEvent} from 'react';
 import {Link, Navigate} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/hooks';
 import registerStyle from './register.module.css';
 import {Button, Input, ShowIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {fetchRegisterUser} from '../../services/actions/authActions';
-import {RootState} from '../../services/rootReducer';
 import {IUserData} from '../../services/interface/interface';
 
 function Register() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const userData: IUserData = useSelector((store: RootState) => store.authReducer);
+    const userData: IUserData = useAppSelector((store) => store.authReducer);
 
     const [name, setName] = React.useState('');
     const [userEmail, setUserEmail] = React.useState('');

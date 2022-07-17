@@ -7,28 +7,28 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import { fetchOrderNumber } from '../../services/actions/orderNumber'
 import { addCurrentIngredient } from '../../services/actions/addCurrentIngredient';
 import { removeAllElToConstructor } from '../../services/actions/removeAllElToConstructor';
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {shallowEqual} from 'react-redux';
+import {useAppDispatch, useAppSelector} from '../../services/hooks/hooks';
 import { DndProvider} from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { removeCurrentIngredient } from '../../services/actions/removeCurrentIngredient';
 import Loader from '../Loader/Loader';
 import {useLocation} from 'react-router-dom';
-import {RootState} from '../../services/rootReducer';
 import {IIngredients} from '../../services/interface/interface';
 
 const Home: React.FC = (): JSX.Element => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
     location.state = {background: location.pathname}
 
     const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false);
     const [isLoader, setIsLoader] = React.useState(false) //Состояние загрузки
 
-    const ingredientsBurger = useSelector((store: RootState) => store.burgerConstructor.data, shallowEqual);
+    const ingredientsBurger = useAppSelector((store) => store.burgerConstructor.data, shallowEqual);
 
     //Функция, которая отправляет данные с id ингредиентов и при успешном запросе возвращает номер заказа и открывает модальное окно
     function openOrderDetails() {
-        const ingredientsType = ingredientsBurger.map((item: IIngredients) => item.type)
+        const ingredientsType = ingredientsBurger.map((item) => item.type)
         if ((ingredientsType.includes('bun')) && ((ingredientsType.includes('sauce')) || (ingredientsType.includes('main')))) {
             dispatch(fetchOrderNumber(ingredientsBurger, setIsOrderDetailsOpened, setIsLoader, removeAllElToConstructor));
         } else {
@@ -45,7 +45,7 @@ const Home: React.FC = (): JSX.Element => {
         dispatch(addCurrentIngredient(ingredient))
     }
 
-    const orderNumber = useSelector((store: RootState) => store.getOrderNumber.orderNumber, shallowEqual);
+    const orderNumber = useAppSelector((store) => store.getOrderNumber.orderNumber, shallowEqual);
 
     return (
         <>

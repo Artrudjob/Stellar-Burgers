@@ -1,6 +1,7 @@
 import { baseUrl, checkResponse } from '../../consts/consts';
 import {IIngredients} from '../interface/interface';
-import {AppDispatch} from '../store';
+import {AppDispatch, AppThunk} from '../store';
+
 
 const GET_ALL_INGREDIENTS: 'GET_ALL_INGREDIENTS' = 'GET_ALL_INGREDIENTS';
 const GET_ALL_INGREDIENTS_FAILURE: 'GET_ALL_INGREDIENTS_FAILURE' = 'GET_ALL_INGREDIENTS_FAILURE';
@@ -25,7 +26,7 @@ const getAllIngredientsFailure = (err: string): IGetAllIngredientsFailure => ({
     status: err
 })
 
-const fetchIngredients = () => {
+const fetchIngredients: AppThunk = () => {
     return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}ingredients`)
             .then(checkResponse)
