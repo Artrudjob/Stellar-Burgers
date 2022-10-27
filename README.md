@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+# Проект: «Stellar-burgers»
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Краткое описание: 
+Данный проект представляет собой онлайн сервис для заказов космических бургеров. 
+### Доступные разделы:
+#### Конструктор 
+В конструкторе возможно просмотреть доступные ингредиенты для заказа. При клики по ингредиенту узнать подробную информацию об ингредиенте (открывается модальное окно).
+А также оформить заказ, переместив выбранную вами булочку и другие ингредиенты в специальное поле. В случае, если пользователь не был авторизован, то он будет перенаправлен на страницу для входа в свой аккаунт. После успешной авторизации, пользователь будет возвращен в "Конструктор", где сможет оформить заказ снова(добавленные ранее ингредиенты не будут потеряны). При успешном оформлении, пользователь получит номер заказа.
 
-## Available Scripts
+#### Лента заказов 
+Лента заказов предоставляет пользователю возможность узнать какое количество заказов было выполнено за всё время и за сегодня. А также узнать более подробную информацию о заказах выполненных сегодня. При клике на заказ открывается модальное окно отображающие номер заказа, статус, состав, цену и время когда заказ был выполнен. Заказы отображаются в режиме реального времени (реализовано с использованием websocket).
 
-In the project directory, you can run:
+#### Личный кабинет
+Личный кабинет содержит в себе 2 подраздела - профиль, история заказов. А также возможность выйти с аккаунта.
+* В профиле имеется возможность изменить своё имя и логин.
+* В истории заказов можно просмотреть заказы, которые были совершены пользователем.
 
-### `npm start`
+### Авторизация:
+* Неавторизованный пользователь не может попасть во вкладку "Профиль" и "оформить заказ".
+* Авторизованный пользователь не может попасть на страницу входа, регистрации и сброса пароля.
+* При регистрации пользователю присваивается refreshToken, а также accessToken (срок жизни которого 20 минут). RefreshToken используется для выхода из системы и для получения нового accessToken, если у последнего истёк срок и он перестал подходить.
+* В случае, если пользователь забыл пароль, то он может воспользоваться разделом "Восстановить пароль". После успешного восстановления на почту пользователя приходит инструкция с кодом для восстановления пароля.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Технологии:
+* Typescript: ^4.6.2
+* React: ^16.8.6
+* React-redux: 7.2.8
+* React-dnd: ^15.1.2
+* React-router-dom: ^6.3.0
+* Fetch api, webSocket
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Инструкция по развёртыванию:
+1. Клонировать 
+2. Установить зависимости
+3. Ввести в терминале команду - npm start
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Демонстрация оформления заказа:
+![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/71271134/198257080-6099a0bb-993b-4b77-a741-6a16e4d0710d.gif)
